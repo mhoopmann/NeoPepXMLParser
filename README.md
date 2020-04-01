@@ -5,6 +5,8 @@ Requires expat: https://libexpat.github.io/
 
 Until I put together a Makefile, you're on your own for compiling.
 
+The pepXML format is defined here: http://tools.proteomecenter.org/wiki/index.php?title=Formats:pepXML
+
 No documentation yet, so here's the quick and dirty:
 
 ```cplusplus
