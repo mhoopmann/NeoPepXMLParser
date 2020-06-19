@@ -34,6 +34,9 @@ public:
   CnpxUIPSM& operator[](const size_t& index);
 
   void addMSMSPipelineAnalysis(std::string date, std::string summary_xml);
+  void setFilterProbability(double probability);
+  void setFilterRunSummary(std::string str);
+  void setFilterSearchHit(std::string str);
   bool setRunSummaries(const size_t pipeIndex);
   bool setSpectra(const size_t pipeIndex, const size_t runIndex);
   size_t size();
@@ -66,6 +69,12 @@ private:
 
   CnpxUIPSM psm;
   size_t sz;
+  double probFilter;
+  std::string rsFilter;
+  std::string shFilter;
+
+  double pProb;
+  double iProb;
 
   std::string elements[PEPXML_NUM_ELEMENTS];
   

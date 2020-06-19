@@ -85,6 +85,44 @@ void NeoPepXMLParser::endElement(const XML_Char *el) {
       break;
     }
   }
+
+  if (isElement("interprophet_result", el)) {
+    iProb= msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().interprophet_result.probability;
+  } else if (isElement("msms_run_summary", el)) {
+    if(rsFilter.size()>0){
+      if(msms_pipeline_analysis.back().msms_run_summary.back().base_name.find(rsFilter)==string::npos) msms_pipeline_analysis.back().msms_run_summary.pop_back();
+    }
+  } else if (isElement("peptideprophet_result", el)) {
+    pProb= msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().peptide_prophet_result.probability;
+  } else if (isElement("search_hit", el)) {
+    if (rsFilter.size() > 0) {
+      if (msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().peptide.compare(shFilter) != string::npos) msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.pop_back();
+    }
+  } else if (isElement("spectrum_query", el)) {
+    bool bPop=false;
+    if(probFilter>-0.1){
+      if(iProb>-0.1){
+        if(iProb<probFilter && !bPop) {
+          msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.pop_back();
+          bPop=true;
+        }
+      } else if(pProb>-0.1){
+        if (pProb < probFilter && !bPop) {
+          msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.pop_back();
+          bPop=true;
+        }
+      }
+    }
+    if (shFilter.size() > 0 && !bPop) {
+      if (msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result[0].search_hit[0].peptide.compare(shFilter) != 0){
+        msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.pop_back();
+        bPop=true;
+      }
+    }
+    iProb=-1;
+    pProb=-1;
+  }
+
 }
 
 void NeoPepXMLParser::init() {
@@ -94,6 +132,11 @@ void NeoPepXMLParser::init() {
   XML_SetCharacterDataHandler(parser, CMzIdentML_charactersCallback);
 
   version = 22;
+  probFilter=-1;
+  rsFilter.clear();
+  shFilter.clear();
+  pProb=-1;
+  iProb=-1;
 
   elements[pxAlternativeProtein] = "alternative_protein";
   elements[pxAminoAcidModification] = "aminoacid_modification";
@@ -167,8 +210,6 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
       cout << "Error: stray alternative_protein element" << endl;
       break;
     }
-
-    
 
   } else if (isElement("aminoacid_modification",el)){
     activeEl.push_back(pxAminoAcidModification);
@@ -812,6 +853,18 @@ bool NeoPepXMLParser::read(const char* fn){
   if (fileBase.find_last_of(".") != string::npos) fileBase = fileBase.substr(0, fileBase.find_last_of("."));
   */
   return true;
+}
+
+void NeoPepXMLParser::setFilterProbability(double probability){
+  probFilter=probability;
+}
+
+void NeoPepXMLParser::setFilterRunSummary(string str) {
+  rsFilter = str;
+}
+
+void NeoPepXMLParser::setFilterSearchHit(string str) {
+  shFilter = str;
 }
 
 bool NeoPepXMLParser::setRunSummaries(const size_t pipeIndex){

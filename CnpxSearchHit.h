@@ -15,6 +15,7 @@ public:
 
   CnpxAlternativeProtein* addAlternativeProtein(std::string protein);
   CnpxSearchScore* addSearchScore(std::string name, std::string value);
+  std::string getModifiedPeptide();
   void write(FILE* f);
 
   int hit_rank;

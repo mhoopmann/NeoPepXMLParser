@@ -38,6 +38,24 @@ CnpxSearchScore* CnpxSearchHit::addSearchScore(std::string name, std::string val
   return &search_score.back();
 }
 
+string CnpxSearchHit::getModifiedPeptide(){
+  if(modification_info.modified_peptide.size()==0) return peptide;
+  size_t i,j;
+  char str[32];
+  string pep;
+  for(i=0;i<peptide.size();i++){
+    pep+=peptide[i];
+    for(j=0;j<modification_info.mod_aminoacid_mass.size();j++){
+      if(modification_info.mod_aminoacid_mass[j].position==(i+1)){
+        sprintf(str,"[%.2lf]",modification_info.mod_aminoacid_mass[j].mass);
+        pep+=str;
+        break;
+      }
+    }
+  }
+  return pep;
+}
+
 void CnpxSearchHit::write(FILE* f){
   size_t i;
 
