@@ -26,6 +26,21 @@ CnpxSpectrumQuery* CnpxMSMSRunSummary::addSpectrumQuery(std::string spec, int st
   return &spectrum_query.back();
 }
 
+void CnpxMSMSRunSummary::clear(){
+  base_name.clear();
+  msDetector.clear();
+  msIonization.clear();
+  msManufacturer.clear();
+  msMassAnalyzer.clear();
+  msModel.clear();
+  raw_data.clear();
+  raw_data_type.clear();
+  sample_enzyme.clear();
+  search_summary.clear();
+  analysis_timestamp.clear();
+  spectrum_query.clear();
+}
+
 void CnpxMSMSRunSummary::write(FILE* f){
   size_t i;
 

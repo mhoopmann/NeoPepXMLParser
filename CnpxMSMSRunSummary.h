@@ -13,6 +13,7 @@ public:
 
   CnpxSearchSummary* addSearchSummary(std::string baseName, std::string searchEngine, std::string precursorMassType, std::string fragmentMassType, int searchID);
   CnpxSpectrumQuery* addSpectrumQuery(std::string spec, int startScan, int endScan, double precursorNeutMass, int assumedCharge, int index);
+  void clear();
   void write(FILE* f);
 
   std::string base_name;
