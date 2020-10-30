@@ -10,6 +10,9 @@ void CnpxAnalysisSummary::write(FILE* f){
   if (version.size()>0) fprintf(f, " version=\"%s\"", version.c_str());
   fprintf(f, ">\n");
 
+  for (i = 0; i<ptmprophet_summary.size(); i++) ptmprophet_summary[i].write(f);
+  for (i = 0; i<quantic_summary.size(); i++) quantic_summary[i].write(f);
+  for (i = 0; i<xpresslabelfree_summary.size(); i++) xpresslabelfree_summary[i].write(f);
   for(i=0;i<interprophet_summary.size();i++) interprophet_summary[i].write(f);
   for (i = 0; i < peptideprophet_summary.size(); i++) peptideprophet_summary[i].write(f);
   for (i = 0; i<interact_summary.size(); i++) interact_summary[i].write(f);

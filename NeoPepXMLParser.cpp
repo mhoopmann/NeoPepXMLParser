@@ -159,6 +159,7 @@ void NeoPepXMLParser::init() {
   elements[pxMixturemodel] = "mixturemodel";
   elements[pxMixturemodelDistribution] = "mixturemodel_distribution";
   elements[pxModAminoAcidMass] = "mod_aminoacid_mass";
+  elements[pxModAminoAcidProbability] = "mod_aminoacid_probability";
   elements[pxModificationInfo] = "modification_info";
   elements[pxMSMSPipelineAnalysis] = "msms_pipeline_analysis";
   elements[pxMSMSRunSummary] = "msms_run_summary";
@@ -168,6 +169,10 @@ void NeoPepXMLParser::init() {
   elements[pxPeptideprophetSummary] = "peptideprophet_summary";
   elements[pxPoint] = "point";
   elements[pxPosmodelDistribution] = "posmodel_distribution";
+  elements[pxPTMProphetResult] = "ptmprophet_result";
+  elements[pxPTMProphetSummary] = "ptmprophet_summary";
+  elements[pxQuanticResult] = "quantic_result";
+  elements[pxQuanticSummary] = "quantic_summary";
   elements[pxROCDataPoint] = "roc_data_point";
   elements[pxROCErrorData] = "roc_error_data";
   elements[pxSampleEnzyme] = "sample_enzyme";
@@ -182,6 +187,8 @@ void NeoPepXMLParser::init() {
   elements[pxTerminalModification] = "terminal_modification";
   elements[pxXLink] = "xlink";
   elements[pxXLinkScore] = "xlink_score";
+  elements[pxXpressLabelFreeResult] = "xpresslabelfree_result";
+  elements[pxXpressLabelFreeSummary] = "xpresslabelfree_summary";
 }
 
 void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
@@ -332,6 +339,9 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     case pxPeptideprophetSummary:
       msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().roc_error_data.back().error_point.push_back(c);
       break;
+    case pxPTMProphetSummary:
+      msms_pipeline_analysis.back().analysis_summary.back().ptmprophet_summary.back().roc_error_data.back().error_point.push_back(c);
+      break;
     default:
       cout << "Error: stray error_point element" << endl;
       break;
@@ -352,6 +362,12 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     case pxPeptideprophetSummary:
       msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().inputfile.push_back(c);
       break;
+    case pxPTMProphetSummary:
+      msms_pipeline_analysis.back().analysis_summary.back().ptmprophet_summary.back().inputfile.push_back(c);
+      break;
+    case pxQuanticSummary:
+      msms_pipeline_analysis.back().analysis_summary.back().quantic_summary.back().inputfile.push_back(c);
+      break;
     default:
       cout << "Error: stray inputfile element" << endl;
       break;
@@ -370,7 +386,6 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.all_ntt_prob = getAttrValue("all_ntt_prob", attr);
     c.probability = atof(getAttrValue("probability", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().interprophet_result = c;
-
 
   } else if (isElement("interprophet_summary", el)){
     activeEl.push_back(pxInterprophetSummary);
@@ -419,6 +434,9 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     case pxMixture_Model:
       msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel.push_back(c);
       break;
+    case pxPTMProphetSummary:
+      msms_pipeline_analysis.back().analysis_summary.back().ptmprophet_summary.back().mixturemodel.push_back(c);
+      break;
     default:
       cout << "Error: stray mixturemodel element" << endl;
       break;
@@ -440,6 +458,19 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.staticMass = atof(getAttrValue("static", attr));
     c.variable = atof(getAttrValue("variable", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().modification_info.mod_aminoacid_mass.push_back(c);
+
+  } else if (isElement("mod_aminoacid_probability", el)) {
+    activeEl.push_back(pxModAminoAcidProbability);
+    CnpxModAminoAcidProbability c;
+    c.position = atoi(getAttrValue("position", attr));
+    c.probability = atof(getAttrValue("probability", attr));
+    c.oscore = atof(getAttrValue("oscore", attr));
+    c.mscore = atof(getAttrValue("mscore", attr));
+    c.direct_oscore = atof(getAttrValue("direct_oscore", attr));
+    c.direct_mscore = atof(getAttrValue("direct_mscore", attr));
+    c.cterm_score = atof(getAttrValue("cterm_score", attr));
+    c.nterm_score = atof(getAttrValue("nterm_score", attr));
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.mod_amino_acid_probability.push_back(c);
 
   } else if (isElement("modification_info", el)) {
     activeEl.push_back(pxModificationInfo);
@@ -482,6 +513,9 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.type = getAttrValue("type", attr);
     c.value = getAttrValue("value", attr);
     switch (activeEl[activeEl.size() - 2]) {
+    case pxAnalysisResult:
+      msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().parameter.push_back(c);
+      break;
     case pxSearchScoreSummary:
       if (activeEl[activeEl.size() - 3] == pxPeptideProphetResult) {
         msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().peptide_prophet_result.search_score_summary.parameter.push_back(c);
@@ -500,8 +534,11 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     case pxPosmodelDistribution:
       msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.back().posmodel_distribution.back().parameter.push_back(c);
       break;
+    case pxPTMProphetResult:
+      msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.parameter.push_back(c);
+      break;
     default:
-      cout << "Error: stray parameter element" << endl;
+      cout << "Error: stray parameter element: " << elements[activeEl[activeEl.size() - 2]] << endl;
       break;
     }
 
@@ -560,6 +597,9 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
       case pxMixture_Model:
         msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel.back().point.push_back(m);
         break;
+      case pxPTMProphetSummary:
+        msms_pipeline_analysis.back().analysis_summary.back().ptmprophet_summary.back().mixturemodel.back().point.push_back(m);
+        break;
       default:
         cout << "Error: stray point element" << endl;
         break;
@@ -576,6 +616,39 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.type = getAttrValue("type",attr);
     msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.back().posmodel_distribution.push_back(c);
 
+  } else if (isElement("ptmprophet_result", el)) {
+    activeEl.push_back(pxPTMProphetResult);
+    CnpxPTMProphetResult c(true);
+    c.ptm = getAttrValue("ptm", attr);
+    c.prior = getAttrValue("prior", attr);
+    c.ptm_peptide = getAttrValue("ptm_peptide", attr);
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result = c;
+
+  } else if (isElement("ptmprophet_summary", el)) {
+    activeEl.push_back(pxPTMProphetSummary);
+    CnpxPTMProphetSummary c;
+    c.frag_ppm_tol = getAttrValue("frag_ppm_tol", attr);
+    c.min_o = getAttrValue("min_o", attr);
+    c.min_o_factors = getAttrValue("min_o_factors", attr);
+    c.mod_string = getAttrValue("mod_string", attr);
+    c.options = getAttrValue("options", attr);
+    c.version = getAttrValue("version", attr);
+    msms_pipeline_analysis.back().analysis_summary.back().ptmprophet_summary.push_back(c);
+
+  } else if (isElement("quantic_result", el)) {
+    activeEl.push_back(pxQuanticResult);
+    CnpxQuanticResult c(true);
+    c.antic = atof(getAttrValue("antic", attr));
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().quantic_result = c;
+
+  } else if (isElement("quantic_summary", el)) {
+    activeEl.push_back(pxQuanticSummary);
+    CnpxQuanticSummary c;
+    c.options = getAttrValue("options", attr);
+    c.version = getAttrValue("version", attr);
+    msms_pipeline_analysis.back().analysis_summary.back().quantic_summary.push_back(c);
+
+
   } else if (isElement("roc_error_data", el)){
     activeEl.push_back(pxROCErrorData);
     CnpxROCErrorData c;
@@ -587,6 +660,9 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
       break;
     case pxPeptideprophetSummary:
       msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().roc_error_data.push_back(c);
+      break;
+    case pxPTMProphetSummary:
+      msms_pipeline_analysis.back().analysis_summary.back().ptmprophet_summary.back().roc_error_data.push_back(c);
       break;
     default:
       cout << "Error: stray roc_error_data element" << endl;
@@ -607,6 +683,9 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
       break;
     case pxPeptideprophetSummary:
       msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().roc_error_data.back().roc_data_point.push_back(c);
+      break;
+    case pxPTMProphetSummary:
+      msms_pipeline_analysis.back().analysis_summary.back().ptmprophet_summary.back().roc_error_data.back().roc_data_point.push_back(c);
       break;
     default:
       cout << "Error: stray roc_data_point element" << endl;
@@ -765,6 +844,35 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
       cout << "Error: stray xlink_score element: " << (int)activeEl[activeEl.size() - 2] << endl;
       break;
     }
+
+  } else if (isElement("xpresslabelfree_result", el)) {
+    activeEl.push_back(pxXpressLabelFreeResult);
+    CnpxXpressLabelFreeResult c(true);
+    c.charge = atoi(getAttrValue("charge", attr));
+    c.first_scan = atoi(getAttrValue("first_scan", attr));
+    c.last_scan = atoi(getAttrValue("last_scan", attr));
+    c.first_scan_RT_seconds = getAttrValue("first_scan_RT_seconds", attr);
+    c.last_scan_RT_seconds = getAttrValue("last_scan_RT_seconds", attr);
+    c.precursor_mz = getAttrValue("precursor_mz", attr);
+    c.peak_area = getAttrValue("peak_area", attr);
+    c.peak_intensity = getAttrValue("peak_intensity", attr);
+    c.peak_intensity_RT_seconds = getAttrValue("peak_intensity_RT_seconds", attr);
+    c.peak_intensity_scan = atoi(getAttrValue("peak_intensity_scan", attr));
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().expresslabelfree_result = c;
+
+  } else if (isElement("xpresslabelfree_summary", el)) {
+    activeEl.push_back(pxXpressLabelFreeSummary);
+    CnpxXpressLabelFreeSummary c;
+    c.masstol = getAttrValue("masstol", attr);
+    c.ppmtol = getAttrValue("ppmtol", attr);
+    c.min_num_chromatogram_points = getAttrValue("min_num_chromatogram_points", attr);
+    c.min_num_isotope_peaks = getAttrValue("min_num_isotope_peaks", attr);
+    c.author = getAttrValue("author", attr);
+    c.version = getAttrValue("version", attr);
+    msms_pipeline_analysis.back().analysis_summary.back().xpresslabelfree_summary.push_back(c);
+
+  } else if (isElement("xpresslabelfree_timestamp", el)) {
+    cout << "Ignoring: xpresslabelfree_timestamp" << endl;
     
 
   } else {

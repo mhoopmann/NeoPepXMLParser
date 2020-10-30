@@ -7,6 +7,9 @@
 #include "CnpxInteractSummary.h"
 #include "CnpxInterprophetSummary.h"
 #include "CnpxPeptideProphetSummary.h"
+#include "CnpxPTMProphetSummary.h"
+#include "CnpxQuanticSummary.h"
+#include "CnpxXpressLabelFreeSummary.h"
 #include <string>
 #include <vector>
 
@@ -23,6 +26,9 @@ public:
   std::vector<CnpxInteractSummary> interact_summary;
   std::vector<CnpxInterprophetSummary> interprophet_summary;
   std::vector<CnpxPeptideprophetSummary> peptideprophet_summary;
+  std::vector<CnpxPTMProphetSummary> ptmprophet_summary;
+  std::vector<CnpxQuanticSummary> quantic_summary;
+  std::vector<CnpxXpressLabelFreeSummary> xpresslabelfree_summary;
 
 private:
 

@@ -5,18 +5,18 @@ using namespace std;
 CnpxPeptideProphetResult::CnpxPeptideProphetResult() {
   all_ntt_prob.clear();
   analysis.clear();
-  probability = 0;
-  pep1_probability=0;
-  pep2_probability=0;
+  probability = -1;
+  pep1_probability=-1;
+  pep2_probability=-1;
   active = false;
 }
 
 CnpxPeptideProphetResult::CnpxPeptideProphetResult(bool b) {
   all_ntt_prob.clear();
   analysis.clear();
-  probability = 0;
-  pep1_probability = 0;
-  pep2_probability = 0;
+  probability = -1;
+  pep1_probability = -1;
+  pep2_probability = -1;
   active = b;
 }
 

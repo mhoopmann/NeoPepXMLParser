@@ -25,6 +25,7 @@ enum pepXMLElement:int{
   pxMixturemodel,
   pxMixturemodelDistribution,
   pxModAminoAcidMass,
+  pxModAminoAcidProbability,
   pxModificationInfo,
   pxMSMSPipelineAnalysis,
   pxMSMSRunSummary,
@@ -34,6 +35,10 @@ enum pepXMLElement:int{
   pxPeptideprophetSummary,
   pxPoint,
   pxPosmodelDistribution,
+  pxPTMProphetResult,
+  pxPTMProphetSummary,
+  pxQuanticResult,
+  pxQuanticSummary,
   pxROCDataPoint,
   pxROCErrorData,
   pxSampleEnzyme,
@@ -48,6 +53,8 @@ enum pepXMLElement:int{
   pxTerminalModification,
   pxXLink,
   pxXLinkScore,
+  pxXpressLabelFreeResult,
+  pxXpressLabelFreeSummary,
   PEPXML_NUM_ELEMENTS
 };
 
