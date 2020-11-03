@@ -6,7 +6,7 @@
 #include "CnpxDecoyAnalysisSummary.h"
 #include "CnpxInteractSummary.h"
 #include "CnpxInterprophetSummary.h"
-#include "CnpxPeptideProphetSummary.h"
+#include "CnpxPeptideprophetSummary.h"
 #include "CnpxPTMProphetSummary.h"
 #include "CnpxQuanticSummary.h"
 #include "CnpxXpressLabelFreeSummary.h"
