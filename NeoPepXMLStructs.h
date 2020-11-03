@@ -33,6 +33,7 @@ enum pepXMLElement:int{
   pxParameter,
   pxPeptideProphetResult,
   pxPeptideprophetSummary,
+  pxPepXMLQuantResult,
   pxPoint,
   pxPosmodelDistribution,
   pxPTMProphetResult,

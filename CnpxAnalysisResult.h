@@ -3,6 +3,7 @@
 
 #include "CnpxInterprophetResult.h"
 #include "CnpxPeptideProphetResult.h"
+#include "CnpxPepXMLQuantResult.h"
 #include "CnpxPTMProphetResult.h"
 #include "CnpxQuanticResult.h"
 #include "CnpxXpressLabelFreeResult.h"
@@ -20,6 +21,7 @@ public:
 
   CnpxInterprophetResult interprophet_result;
   CnpxPeptideProphetResult peptide_prophet_result;
+  CnpxPepXMLQuantResult pepxmlquant_result;
   CnpxQuanticResult quantic_result;
   CnpxXpressLabelFreeResult expresslabelfree_result;
   CnpxPTMProphetResult ptmprophet_result;
