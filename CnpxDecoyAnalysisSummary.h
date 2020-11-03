@@ -2,6 +2,7 @@
 #define _CNPXDECOYANALYSISSUMMARY_H
 
 #include <string>
+#include <stdio.h>
 
 class CnpxDecoyAnalysisSummary {
 public:

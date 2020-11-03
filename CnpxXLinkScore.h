@@ -2,6 +2,7 @@
 #define _CNPXXLINKSCORE_H
 
 #include <string>
+#include <stdio.h>
 
 class CnpxXLinkScore {
 public:

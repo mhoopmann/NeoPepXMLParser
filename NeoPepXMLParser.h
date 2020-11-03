@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <vector>
+#include <stdio.h>
 
 #define XMLCLASS		
 #ifndef XML_STATIC

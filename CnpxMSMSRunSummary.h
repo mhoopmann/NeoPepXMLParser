@@ -2,7 +2,7 @@
 #define _CNPXMSMSRUNSUMMARY_H
 
 #include "CnpxAnalysisTimestamp.h"
-#include "CNPXSampleEnzyme.h"
+#include "CnpxSampleEnzyme.h"
 #include "CnpxSearchSummary.h"
 #include "CnpxSpectrumQuery.h"
 #include <string>

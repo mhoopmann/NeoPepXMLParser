@@ -42,7 +42,7 @@ NEO_DST = $(patsubst ${NEO_SRCDIR}%.cpp, ${NEO_DSTDIR}%.o, $(NEO_SRC))
 .PHONY : NeoPepXMLParser
 
 NeoPepXMLParser : $(NEO_DST)
-	ar rcs $(BUILD_DIR)/libneopepxmlparser.a $(NEO_DST)
+	ar rcs libneopepxmlparser.a $(NEO_DST)
 
 $(NEO_DST) : | $(BUILD_DIR)/
 $(NEO_DST) : $(NEO_DSTDIR)%.o : $(NEO_SRCDIR)%.cpp
@@ -52,7 +52,7 @@ NeoPepXMLParser-clean :
 	rm -rf $(NEO_DST)
 
 NeoPepXMLParser-realclean : mstoolkit-clean
-	rm -rf $(NEO_DST) $(BUILD_DIR)/libneopepxmlparser.a
+	rm -rf $(NEO_DST) libneopepxmlparser.a
 	
 
 # -- cleanup  ----------------------------------------------------------
