@@ -16,6 +16,7 @@ void CnpxAnalysisResult::write(FILE* f) {
 
   if (peptide_prophet_result.present()) peptide_prophet_result.write(f);
   if (interprophet_result.present()) interprophet_result.write(f);
+  if (pepxmlquant_result.present()) pepxmlquant_result.write(f);
   if (quantic_result.present()) quantic_result.write(f);
   if (expresslabelfree_result.present()) expresslabelfree_result.write(f);
 

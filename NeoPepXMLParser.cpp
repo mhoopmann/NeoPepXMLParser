@@ -167,6 +167,7 @@ void NeoPepXMLParser::init() {
   elements[pxParameter] = "parameter";
   elements[pxPeptideProphetResult] = "peptideprophet_result";
   elements[pxPeptideprophetSummary] = "peptideprophet_summary";
+  elements[pxPepXMLQuantResult] = "pepxmlquant_result";
   elements[pxPoint] = "point";
   elements[pxPosmodelDistribution] = "posmodel_distribution";
   elements[pxPTMProphetResult] = "ptmprophet_result";
@@ -521,6 +522,8 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
         msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().peptide_prophet_result.search_score_summary.parameter.push_back(c);
       } else if (activeEl[activeEl.size() - 3] == pxInterprophetResult) {
         msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().interprophet_result.search_score_summary.parameter.push_back(c);
+      } else if (activeEl[activeEl.size() - 3] == pxPepXMLQuantResult) {
+        msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().pepxmlquant_result.search_score_summary.parameter.push_back(c);
       } else {
         cout << "Unknown location for parameter" << endl;
       }
@@ -562,6 +565,13 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.type=getAttrValue("type",attr);
     c.version = getAttrValue("version", attr);
     msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.push_back(c);
+
+  } else if (isElement("pepxmlquant_result", el)){
+    activeEl.push_back(pxPepXMLQuantResult);
+    CnpxPepXMLQuantResult c(true);
+    c.area = atof(getAttrValue("area", attr));
+    c.retention_time_sec = atof(getAttrValue("retention_time_sec", attr));
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().pepxmlquant_result = c;
 
   } else if (isElement("point", el)){
     activeEl.push_back(pxPoint);
@@ -765,6 +775,9 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     case pxPeptideProphetResult:
       msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().peptide_prophet_result.search_score_summary = c;
       break;
+    case pxPepXMLQuantResult:
+      msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().pepxmlquant_result.search_score_summary = c;
+      break;
     default:
       cout << "Error: stray search_score_summary element" << endl;
       break;
@@ -917,9 +930,13 @@ bool NeoPepXMLParser::read(const char* fn){
     cerr << fn << "(" << XML_GetCurrentLineNumber(parser) << ") : error " << (int)error << ": ";
     switch (error) {
     case XML_ERROR_SYNTAX:
-    case XML_ERROR_INVALID_TOKEN:
-    case XML_ERROR_UNCLOSED_TOKEN:
       cerr << "Syntax error parsing XML.";
+      break;
+    case XML_ERROR_INVALID_TOKEN:
+      cerr << "XML invalid token.";
+      break;
+    case XML_ERROR_UNCLOSED_TOKEN:
+      cerr << "XML unclosed token.";
       break;
     case XML_ERROR_TAG_MISMATCH:
       cerr << "XML tag mismatch.";
@@ -929,6 +946,9 @@ bool NeoPepXMLParser::read(const char* fn){
       break;
     case XML_ERROR_JUNK_AFTER_DOC_ELEMENT:
       cerr << "XML junk after doc element.";
+      break;
+    case XML_ERROR_BAD_CHAR_REF:
+      cerr << "XML bad character reference.";
       break;
     default:
       cerr << "XML Parsing error.";
