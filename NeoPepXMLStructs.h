@@ -2,6 +2,8 @@
 #define NEOPEPXMLSTRUCTS_H
 
 #include <string>
+#include <stdio.h>
+#include <string.h>
 
 enum pepXMLElement:int{
   pxAlternativeProtein,
