@@ -9,7 +9,7 @@ class CnpxXLink {
 public:
   CnpxXLink();
 
-  void write(FILE* f);
+  void write(FILE* f, int tabs = -1);
 
   std::string identifier;
   double mass;

@@ -6,6 +6,7 @@
 #include "CnpxModificationInfo.h"
 #include "CnpxSearchScore.h"
 #include "CnpxXLink.h"
+#include "NeoPepXMLStructs.h"
 #include <string>
 #include <vector>
 
@@ -16,7 +17,7 @@ public:
   CnpxAlternativeProtein* addAlternativeProtein(std::string protein);
   CnpxSearchScore* addSearchScore(std::string name, std::string value);
   std::string getModifiedPeptide();
-  void write(FILE* f);
+  void write(FILE* f, int tabs=-1);
 
   int hit_rank;
   std::string peptide;

@@ -2,7 +2,7 @@
 #define _CNPXSAMPLEENZYME_H
 
 #include "CnpxSpecificity.h"
-
+#include "NeoPepXMLStructs.h"
 #include <string>
 #include <vector>
 
@@ -10,7 +10,7 @@ class CnpxSampleEnzyme {
 public:
   CnpxSampleEnzyme();
 
-  void write(FILE* f);
+  void write(FILE* f, int tabs=-1);
 
   std::string description;
   std::string fidelity;

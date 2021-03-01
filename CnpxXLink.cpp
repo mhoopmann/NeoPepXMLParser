@@ -7,7 +7,7 @@ CnpxXLink::CnpxXLink(){
   mass = 0;
 }
 
-void CnpxXLink::write(FILE* f){
+void CnpxXLink::write(FILE* f, int tabs){
   size_t i;
   fprintf(f, "<xlink identifier=\"%s\"", identifier.c_str());
   fprintf(f, " mass=\"%.6lf\">\n", mass);

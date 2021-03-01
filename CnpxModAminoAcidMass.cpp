@@ -1,5 +1,7 @@
 #include "CnpxModAminoAcidMass.h"
 
+using namespace std;
+
 CnpxModAminoAcidMass::CnpxModAminoAcidMass() {
   id.clear();
   mass=0;
@@ -9,8 +11,13 @@ CnpxModAminoAcidMass::CnpxModAminoAcidMass() {
   variable=0;
 }
 
-void CnpxModAminoAcidMass::write(FILE* f) {
+void CnpxModAminoAcidMass::write(FILE* f, int tabs) {
 
+  string el = "mod_aminoacid_mass";
+  if (position==0) NPXerrMsg(el, "position");
+  if (mass == 0) NPXerrMsg(el, "mass");
+
+  NPXprintTabs(f, tabs);
   fprintf(f, "<mod_aminoacid_mass position=\"%d\"", position);
   fprintf(f, " mass=\"%.6lf\"", mass);
   if (staticMass != 0) fprintf(f, " static=\"%.6lf\"", staticMass);

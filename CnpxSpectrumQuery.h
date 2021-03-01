@@ -2,6 +2,7 @@
 #define _CNPXSPECTRUMQUERY_H
 
 #include "CnpxSearchResult.h"
+#include "NeoPepXMLStructs.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,7 +12,7 @@ public:
   CnpxSpectrumQuery();
   
   CnpxSearchResult* addSearchResult();
-  void write(FILE* f);
+  void write(FILE* f, int tabs=-1);
 
   std::string spectrum;
   std::string spectrumNativeID;

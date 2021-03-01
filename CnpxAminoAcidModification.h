@@ -1,6 +1,7 @@
 #ifndef _CNPXAMINOACIDMODIFICATION_H
 #define _CNPXAMINOACIDMODIFICATION_H
 
+#include "NeoPepXMLStructs.h"
 #include <iostream>
 #include <string>
 
@@ -8,7 +9,7 @@ class CnpxAminoAcidModification {
 public:
   CnpxAminoAcidModification();
 
-  void write(FILE* f);
+  void write(FILE* f, int tabs=-1);
 
   std::string aminoacid;
   std::string binary;

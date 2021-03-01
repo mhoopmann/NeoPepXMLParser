@@ -1017,7 +1017,7 @@ size_t NeoPepXMLParser::size(){
   return sz;
 }
 
-bool NeoPepXMLParser::write(const char* fn){
+bool NeoPepXMLParser::write(const char* fn, bool tabs){
   FILE* f = fopen(fn, "wt");
   if (f == NULL) return false;
 
@@ -1025,7 +1025,8 @@ bool NeoPepXMLParser::write(const char* fn){
 
   fprintf(f, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
   for(i=0;i<msms_pipeline_analysis.size();i++){
-    msms_pipeline_analysis[i].write(f);
+    if (tabs) msms_pipeline_analysis[i].write(f,0);
+    else msms_pipeline_analysis[i].write(f);
   }
   fclose(f);
   return true;

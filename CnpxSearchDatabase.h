@@ -9,7 +9,7 @@ class CnpxSearchDatabase {
 public:
   CnpxSearchDatabase();
 
-  void write(FILE* f);
+  void write(FILE* f, int tabs=-1);
 
   std::string database_name;
   npxDateTime database_release_date;

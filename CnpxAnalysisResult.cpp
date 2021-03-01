@@ -7,7 +7,7 @@ CnpxAnalysisResult::CnpxAnalysisResult() {
   id = 0;
 }
 
-void CnpxAnalysisResult::write(FILE* f) {
+void CnpxAnalysisResult::write(FILE* f, int tabs) {
   fprintf(f, "<analysis_result analysis=\"%s\"", analysis.c_str());
   if (id > 0) fprintf(f, " id=\"%d\"", id);
   fprintf(f, ">\n");

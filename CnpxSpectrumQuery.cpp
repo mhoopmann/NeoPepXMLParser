@@ -24,8 +24,20 @@ CnpxSearchResult* CnpxSpectrumQuery::addSearchResult(){
   return &search_result.back();
 }
 
-void CnpxSpectrumQuery::write(FILE* f){
+void CnpxSpectrumQuery::write(FILE* f, int tabs){
   size_t i;
+
+  string el = "spectrum_query";
+  if (spectrum.empty()) NPXerrMsg(el, "spectrum");
+  if (start_scan == 0) NPXerrMsg(el, "start_scan");
+  if (end_scan == 0) NPXerrMsg(el, "end_scan");
+  if (precursor_neutral_mass == 0) NPXerrMsg(el, "precursor_neutral_mass");
+  if (assumed_charge == 0) NPXerrMsg(el, "assumed_charge");
+  if (index == 0) NPXerrMsg(el, "index");
+
+  int t = tabs;
+  if (t>-1) t++;
+  NPXprintTabs(f, tabs);
 
   fprintf(f, "<spectrum_query spectrum=\"%s\"", spectrum.c_str());
   if(spectrumNativeID.size()>0) fprintf(f, " spectrumNativeID=\"%s\"", spectrumNativeID.c_str());
@@ -38,12 +50,13 @@ void CnpxSpectrumQuery::write(FILE* f){
   if (collision_energy>0) fprintf(f, " collison_energy=\"%.1lf\"", collision_energy);
   if (compensation_voltage>0) fprintf(f, " compensation_voltage=\"%.2lf\"", compensation_voltage);
   if (precursor_intensity>0) fprintf(f, " precursor_intensity=\"%.2lf\"", precursor_intensity);
-  if (activation_method.size()>0) fprintf(f, " activation_method=\"%s\"", activation_method.c_str());
-  if (search_specification.size()>0) fprintf(f, " search_specification=\"%s\"", search_specification.c_str());
+  if (!activation_method.empty()) fprintf(f, " activation_method=\"%s\"", activation_method.c_str());
+  if (!search_specification.empty()) fprintf(f, " search_specification=\"%s\"", search_specification.c_str());
   fprintf(f,">\n");
 
-  for(i=0;i<search_result.size();i++) search_result[i].write(f);
+  for(i=0;i<search_result.size();i++) search_result[i].write(f,t);
   
+  NPXprintTabs(f, tabs);
   fprintf(f, "</spectrum_query>\n");
 
 }

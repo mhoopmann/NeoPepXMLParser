@@ -12,7 +12,7 @@ class CnpxMSMSPipelineAnalysis {
 public:
 
   CnpxMSMSRunSummary* addMSMSRunSummary(std::string baseName, std::string rawDataType, std::string rawData);
-  void write(FILE* f);
+  void write(FILE* f, int tabs=-1);
 
   std::vector<CnpxAnalysisSummary> analysis_summary;
   std::vector<CnpxMSMSRunSummary>  msms_run_summary;

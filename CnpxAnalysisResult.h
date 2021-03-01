@@ -14,7 +14,7 @@ public:
 
   CnpxAnalysisResult();
 
-  void write(FILE* f);
+  void write(FILE* f, int tabs = -1);
 
   std::string analysis;
   int id;

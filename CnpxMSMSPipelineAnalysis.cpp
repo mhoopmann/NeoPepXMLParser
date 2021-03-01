@@ -12,15 +12,23 @@ CnpxMSMSRunSummary* CnpxMSMSPipelineAnalysis::addMSMSRunSummary(std::string base
   return &msms_run_summary.back();
 }
 
-void CnpxMSMSPipelineAnalysis::write(FILE* f){
+void CnpxMSMSPipelineAnalysis::write(FILE* f, int tabs){
+  string el = "msms_pipeline_analysis";
+  if(date.date.year==0) NPXerrMsg(el, "date");
+  if (summary_xml.empty()) NPXerrMsg(el, "summary_xml");
+
   size_t i;
   fprintf(f, "<msms_pipeline_analysis date=\"%4d-%02d-%02dT%02d:%02d:%02d\"", date.date.year, date.date.month, date.date.day, date.time.hour, date.time.minute, date.time.second);
-  fprintf(f, " xmlns=\"http://regis-web.systemsbiology.net/pepXML\"");
-  fprintf(f, " xsi:schemaLocation=\"http://regis-web.systemsbiology.net/pepXML /tools/bin/TPP/tpp/schema/pepXML_v122.xsd\"");
+  fprintf(f, " xmlns=\"%s\"",npx_xmlns.c_str());
+  fprintf(f, " xmlns:xsi=\"%s\"", npx_xmlns_xsi.c_str());
+  fprintf(f, " xsi:schemaLocation=\"%s\"", npx_xsi_schemaLocation.c_str());
   fprintf(f, " summary_xml=\"%s\">\n", summary_xml.c_str());
 
-  for(i=0;i<analysis_summary.size();i++) analysis_summary[i].write(f);
-  for(i=0;i<msms_run_summary.size();i++) msms_run_summary[i].write(f);
+  int t = tabs;
+  if(t>-1) t++;
+
+  for(i=0;i<analysis_summary.size();i++) analysis_summary[i].write(f,t);
+  for(i=0;i<msms_run_summary.size();i++) msms_run_summary[i].write(f,t);
 
   fprintf(f, "</msms_pipeline_analysis>\n");
 }

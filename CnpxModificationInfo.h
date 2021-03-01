@@ -2,7 +2,7 @@
 #define _CNPXMODIFICATIONINFO_H
 
 #include "CnpxModAminoAcidMass.h"
-
+#include "NeoPepXMLStructs.h"
 #include <string>
 #include <vector>
 
@@ -11,7 +11,7 @@ public:
   CnpxModificationInfo();
 
   CnpxModAminoAcidMass* addModAminoAcidMass(int position, double mass);
-  void write(FILE* f);
+  void write(FILE* f, int tabs=-1);
 
   double mod_cterm_mass;
   double mod_nterm_mass;

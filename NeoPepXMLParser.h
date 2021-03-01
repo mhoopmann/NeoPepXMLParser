@@ -3,6 +3,7 @@
 
 #include "CnpxMSMSPipelineAnalysis.h"
 #include "expat.h"
+#include "NeoPepXMLStructs.h"
 
 #include "CnpxUIPipeline.h"
 #include "CnpxUIPSM.h"
@@ -42,7 +43,7 @@ public:
   bool setSpectra(const size_t pipeIndex, const size_t runIndex);
   size_t size();
   bool read(const char* fn);
-  bool write(const char* fn);
+  bool write(const char* fn, bool tabs=false);
 
   //Functions for XML Parsing
   void characters(const XML_Char *s, int len);

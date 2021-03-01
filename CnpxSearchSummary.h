@@ -20,7 +20,7 @@ public:
   CnpxEnzymaticSearchConstraint* addEnzymaticSearchConstraint(std::string enzyme, int maxInternalCleavages, int minTermini);
   CnpxParameter* addParameter(std::string name, std::string value);
   CnpxSearchDatabase* addSearchDatabase(std::string localPath, std::string type);
-  void write(FILE* f);
+  void write(FILE* f, int tabs=-1);
 
   std::string base_name;
   std::string fragment_mass_type;

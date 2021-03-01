@@ -1,9 +1,13 @@
 #ifndef NEOPEPXMLSTRUCTS_H
 #define NEOPEPXMLSTRUCTS_H
 
+#include <cstdlib>
+#include <iostream>
 #include <string>
-#include <stdio.h>
-#include <string.h>
+
+static std::string npx_xmlns = "http://regis-web.systemsbiology.net/pepXML";
+static std::string npx_xmlns_xsi = "http://www.w3.org/2001/XMLSchema-instance";
+static std::string npx_xsi_schemaLocation = "http://regis-web.systemsbiology.net/pepXML /tools/bin/TPP/tpp/schema/pepXML_v122.xsd";
 
 enum pepXMLElement:int{
   pxAlternativeProtein,
@@ -112,5 +116,14 @@ typedef struct npxDateTime{
     return s;
   }
 } npxDateTime;
+
+static void NPXerrMsg(std::string el, std::string attr){
+  std::cerr << el << "::" << attr << " required." << std::endl;
+  exit(69);
+}
+
+static void NPXprintTabs(FILE* f, int tabs){
+  for (int i = 0; i<tabs; i++) fprintf(f, " ");
+}
 
 #endif

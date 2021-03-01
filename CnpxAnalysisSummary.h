@@ -15,7 +15,7 @@
 
 class CnpxAnalysisSummary {
 public:
-  void write(FILE* f);
+  void write(FILE* f, int tabs=-1);
 
   std::string analysis;
   npxDateTime time;

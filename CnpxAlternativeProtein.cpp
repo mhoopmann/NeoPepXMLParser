@@ -1,11 +1,22 @@
 #include "CnpxAlternativeProtein.h"
 
+using namespace std;
+
 CnpxAlternativeProtein::CnpxAlternativeProtein() {
   num_tol_term=-1;
   protein_mw=0;
+  peptide_start_pos=0;
 }
 
-void CnpxAlternativeProtein::write(FILE* f) {
+void CnpxAlternativeProtein::write(FILE* f, int tabs) {
+  string el = "alternative_protein";
+  if (protein.empty()) NPXerrMsg(el, "protein");
+
+  int t = tabs;
+  if (t>-1) t++;
+
+  NPXprintTabs(f, tabs);
+
   fprintf(f, "<alternative_protein protein=\"%s\"", protein.c_str());
   if(protein_descr.size()>0) fprintf(f, " protein_descr=\"%s\"",protein_descr.c_str());
   if (num_tol_term>-1) fprintf(f, " num_tol_term=\"%d\"", num_tol_term);

@@ -1,5 +1,7 @@
 #include "CnpxModificationInfo.h"
 
+using namespace std;
+
 CnpxModificationInfo::CnpxModificationInfo() {
   modified_peptide.clear();
   mod_cterm_mass = 0;
@@ -15,16 +17,22 @@ CnpxModAminoAcidMass* CnpxModificationInfo::addModAminoAcidMass(int position, do
   return &mod_aminoacid_mass.back();
 }
 
-void CnpxModificationInfo::write(FILE* f) {
+void CnpxModificationInfo::write(FILE* f, int tabs) {
   size_t i;
 
-  fprintf(f, "<modification_info modified_peptide=\"%s\"", modified_peptide.c_str());
+  int t = tabs;
+  if (t>-1) t++;
+  NPXprintTabs(f, tabs);
+
+  fprintf(f, "<modification_info");
+  if(!modified_peptide.empty()) fprintf(f," modified_peptide=\"%s\"", modified_peptide.c_str());
   if (mod_cterm_mass != 0) fprintf(f, " mod_cterm_mass=\"%.6lf\"", mod_cterm_mass);
   if (mod_nterm_mass != 0) fprintf(f, " mod_nterm_mass=\"%.6lf\"", mod_nterm_mass);
   fprintf(f, ">\n");
 
-  for (i = 0; i<mod_aminoacid_mass.size(); i++) mod_aminoacid_mass[i].write(f);
+  for (i = 0; i<mod_aminoacid_mass.size(); i++) mod_aminoacid_mass[i].write(f,t);
 
+  NPXprintTabs(f, tabs);
   fprintf(f, "</modification_info>\n");
 
 }

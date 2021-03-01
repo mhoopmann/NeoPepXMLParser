@@ -1,13 +1,14 @@
 #ifndef _CNPXALTERNATIVEPROTEIN_H
 #define _CNPXALTERNATIVEPROTEIN_H
 
+#include "NeoPepXMLStructs.h"
 #include <string>
 
 class CnpxAlternativeProtein {
 public:
   CnpxAlternativeProtein();
 
-  void write(FILE* f);
+  void write(FILE* f, int tabs=-1);
 
   std::string protein;
   std::string protein_descr;
