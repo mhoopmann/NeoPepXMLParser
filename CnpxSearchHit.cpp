@@ -74,7 +74,7 @@ void CnpxSearchHit::write(FILE* f, int tabs){
   if (tot_num_ions>0) fprintf(f, " tot_num_ions=\"%d\"", tot_num_ions);
   fprintf(f, " calc_neutral_pep_mass=\"%.6lf\"", calc_neutral_pep_mass);
   if(massdiff!=0) fprintf(f, " massdiff=\"%.6lf\"", massdiff);
-  else fprintf(f, " massdiff=\"0\"", massdiff);
+  else fprintf(f, " massdiff=\"0\"");
   if (num_tol_term>-1) fprintf(f, " num_tol_term=\"%d\"", num_tol_term);
   if (num_missed_cleavages>-1) fprintf(f, " num_missed_cleavages=\"%d\"", num_missed_cleavages);
   if (num_matched_peptides>0) fprintf(f, " num_matched_peptides=\"%d\"", num_matched_peptides);
