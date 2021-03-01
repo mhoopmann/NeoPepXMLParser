@@ -99,11 +99,11 @@ typedef struct npxDateTime{
     time.second=0;
   }
   void parseDateTime(const char* dt){
-    if(strlen(dt)<2){
+    if(std::strlen(dt)<2){
       clear();
       return;
     }
-    int x = sscanf(dt, "%d-%d-%dT%d:%d:%d", &date.year, &date.month, &date.day, &time.hour, &time.minute, &time.second);
+    int x = std::sscanf(dt, "%d-%d-%dT%d:%d:%d", &date.year, &date.month, &date.day, &time.hour, &time.minute, &time.second);
   }
   void parseDateTime(std::string s){
     parseDateTime(s.c_str());
@@ -111,7 +111,7 @@ typedef struct npxDateTime{
   std::string write(){
     std::string s;
     char str[64];
-    sprintf(str, "%4d-%02d-%02dT%02d:%02d:%02d", date.year, date.month, date.day, time.hour, time.minute, time.second);
+    std::sprintf(str, "%4d-%02d-%02dT%02d:%02d:%02d", date.year, date.month, date.day, time.hour, time.minute, time.second);
     s=str;
     return s;
   }
@@ -122,8 +122,8 @@ static void NPXerrMsg(std::string el, std::string attr){
   exit(69);
 }
 
-static void NPXprintTabs(FILE* f, int tabs){
-  for (int i = 0; i<tabs; i++) fprintf(f, " ");
+static void NPXprintTabs(std::FILE* f, int tabs){
+  for (int i = 0; i<tabs; i++) std::fprintf(f, " ");
 }
 
 #endif
