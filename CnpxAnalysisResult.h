@@ -1,7 +1,9 @@
 #ifndef _CNPXANALYSISRESULT_H
 #define _CNPXANALYSISRESULT_H
 
+#include "NeoPepXMLStructs.h"
 #include "CnpxInterprophetResult.h"
+#include "CnpxLibraResult.h"
 #include "CnpxPeptideProphetResult.h"
 #include "CnpxPepXMLQuantResult.h"
 #include "CnpxPTMProphetResult.h"
@@ -20,11 +22,12 @@ public:
   int id;
 
   CnpxInterprophetResult interprophet_result;
+  CnpxLibraResult libra_result;
   CnpxPeptideProphetResult peptide_prophet_result;
   CnpxPepXMLQuantResult pepxmlquant_result;
   CnpxQuanticResult quantic_result;
   CnpxXpressLabelFreeResult expresslabelfree_result;
-  CnpxPTMProphetResult ptmprophet_result;
+  std::vector<CnpxPTMProphetResult> ptmprophet_result;
 
   std::vector<CnpxParameter> parameter;
 

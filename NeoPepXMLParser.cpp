@@ -138,11 +138,13 @@ void NeoPepXMLParser::init() {
   pProb=-1;
   iProb=-1;
 
+  elements[pxAffectedChannel] = "affected_channel";
   elements[pxAlternativeProtein] = "alternative_protein";
   elements[pxAminoAcidModification] = "aminoacid_modification";
   elements[pxAnalysisResult] = "analysis_result";
   elements[pxAnalysisSummary] = "analysis_summary";
   elements[pxAnalysisTimestamp] = "analysis_timestamp";
+  elements[pxContributingChannel] = "contributing_channel";
   elements[pxDatabaseRefreshTimestamp] = "database_refresh_timestamp";
   elements[pxDatasetDerivation] = "dataset_derivation";
   elements[pxDecoyAnalysis] = "decoy_analysis";
@@ -150,10 +152,15 @@ void NeoPepXMLParser::init() {
   elements[pxDistributionPoint] = "distribution_point";
   elements[pxEnzymaticSearchConstraint] = "enzymatic_search_constraint";
   elements[pxErrorPoint] = "error_point";
+  elements[pxFragmentMasses] = "fragment_masses";
   elements[pxInputfile] = "inputfile";
+  elements[pxIntensity] = "intensity";
   elements[pxInteractSummary] = "interact_summary";
   elements[pxInterprophetResult] = "interprophet_result";
   elements[pxInterprophetSummary] = "interprophet_summary";
+  elements[pxIsotopicContributions] = "isotopic_contributions";
+  elements[pxLibraResult] = "libra_result";
+  elements[pxLibraSummary] = "libra_summary";
   elements[pxLinkedPeptide] = "linked_peptide";
   elements[pxMixture_Model] = "mixture_model";
   elements[pxMixturemodel] = "mixturemodel";
@@ -197,7 +204,14 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
   //cout << el << endl; //for diagnostics
 
   //string s;
-  if (isElement("alternative_protein", el)){
+  if (isElement("affected_channel", el)){
+    activeEl.push_back(pxAffectedChannel);
+    CnpxAffectedChannel c;
+    c.channel = atoi(getAttrValue("channel", attr));
+    c.correction = atof(getAttrValue("correction", attr));
+    msms_pipeline_analysis.back().analysis_summary.back().libra_summary.back().isotopic_contributions.back().contributing_channel.back().affected_channel.push_back(c);
+
+  } else if (isElement("alternative_protein", el)){
     activeEl.push_back(pxAlternativeProtein);
     CnpxAlternativeProtein c;
     c.num_tol_term=atoi(getAttrValue("num_tol_term",attr));
@@ -255,6 +269,12 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.id = atoi(getAttrValue("id", attr));
     c.time.parseDateTime(getAttrValue("time", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().analysis_timestamp.push_back(c);
+
+  } else if (isElement("contributing_channel", el)){
+    activeEl.push_back(pxContributingChannel);
+    CnpxContributingChannel c;
+    c.channel = atoi(getAttrValue("channel", attr));
+    msms_pipeline_analysis.back().analysis_summary.back().libra_summary.back().isotopic_contributions.back().contributing_channel.push_back(c);
 
   } else if (isElement("database_refresh_timestamp",el)){
     activeEl.push_back(pxDatabaseRefreshTimestamp);
@@ -348,6 +368,14 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
       break;
     }
 
+  } else if (isElement("fragment_masses", el)){
+    activeEl.push_back(pxFragmentMasses);
+    CnpxFragmentMasses c;
+    c.channel = atoi(getAttrValue("channel", attr));
+    c.mz = atof(getAttrValue("mz", attr));
+    c.offset = atof(getAttrValue("offset", attr));
+    msms_pipeline_analysis.back().analysis_summary.back().libra_summary.back().fragment_masses.push_back(c);
+
   } else if (isElement("inputfile", el)){
     activeEl.push_back(pxInputfile);
     CnpxInputFile c;
@@ -374,6 +402,17 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
       break;
     }
 
+  } else if (isElement("intensity", el)) {
+    activeEl.push_back(pxIntensity);
+    CnpxIntensity c;
+    c.channel = atoi(getAttrValue("channel", attr));
+    c.absolute = atof(getAttrValue("absolute", attr));
+    c.target_mass = atof(getAttrValue("target_mass", attr));
+    c.normalized = atof(getAttrValue("normalized", attr));
+    string s = getAttrValue("reject", attr);
+    if(s.size()>0 && s[0]!='0') c.reject=true;
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().libra_result.intensity.push_back(c);
+
   } else if (isElement("interact_summary", el)){
     activeEl.push_back(pxInteractSummary);
     CnpxInteractSummary c;
@@ -396,6 +435,26 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.options=getAttrValue("options",attr);
     c.version=getAttrValue("version",attr);
     msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.push_back(c);
+
+  } else if (isElement("isotopic_contributions", el)) {
+    activeEl.push_back(pxIsotopicContributions);
+    CnpxIsotopicContributions c;
+    msms_pipeline_analysis.back().analysis_summary.back().libra_summary.back().isotopic_contributions.push_back(c);
+
+  } else if (isElement("libra_result", el)) {
+    activeEl.push_back(pxLibraResult);
+    CnpxLibraResult c(true);
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().libra_result = c;
+
+  } else if (isElement("libra_summary", el)){
+    activeEl.push_back(pxLibraSummary);
+    CnpxLibraSummary c;
+    c.mass_tolerance = atof(getAttrValue("mass_tolerance", attr));
+    c.centroiding_preference = atoi(getAttrValue("centroiding_preference", attr));
+    c.normalization = atoi(getAttrValue("normalization", attr));
+    c.output_type = atoi(getAttrValue("output_type", attr));
+    c.channel_code = getAttrValue("channel_code", attr);
+    msms_pipeline_analysis.back().analysis_summary.back().libra_summary.push_back(c);
 
   } else if (isElement("linked_peptide", el)){
     activeEl.push_back(pxLinkedPeptide);
@@ -471,7 +530,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.direct_mscore = atof(getAttrValue("direct_mscore", attr));
     c.cterm_score = atof(getAttrValue("cterm_score", attr));
     c.nterm_score = atof(getAttrValue("nterm_score", attr));
-    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.mod_amino_acid_probability.push_back(c);
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.back().mod_amino_acid_probability.push_back(c);
 
   } else if (isElement("modification_info", el)) {
     activeEl.push_back(pxModificationInfo);
@@ -538,7 +597,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
       msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.back().posmodel_distribution.back().parameter.push_back(c);
       break;
     case pxPTMProphetResult:
-      msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.parameter.push_back(c);
+      msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.back().parameter.push_back(c);
       break;
     default:
       cout << "Error: stray parameter element: " << elements[activeEl[activeEl.size() - 2]] << endl;
@@ -632,7 +691,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.ptm = getAttrValue("ptm", attr);
     c.prior = getAttrValue("prior", attr);
     c.ptm_peptide = getAttrValue("ptm_peptide", attr);
-    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result = c;
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.push_back(c);
 
   } else if (isElement("ptmprophet_summary", el)) {
     activeEl.push_back(pxPTMProphetSummary);

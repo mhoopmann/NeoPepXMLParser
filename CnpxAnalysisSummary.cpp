@@ -23,6 +23,7 @@ void CnpxAnalysisSummary::write(FILE* f, int tabs){
   for (i = 0; i<xpresslabelfree_summary.size(); i++) xpresslabelfree_summary[i].write(f);
   for (i = 0; i<interprophet_summary.size(); i++) interprophet_summary[i].write(f);
   for (i = 0; i<peptideprophet_summary.size(); i++) peptideprophet_summary[i].write(f);
+  for (i = 0; i<libra_summary.size(); i++) libra_summary[i].write(f,t);
   for (i = 0; i<interact_summary.size(); i++) interact_summary[i].write(f);
   for (i = 0; i<decoy_analysis_summary.size(); i++) decoy_analysis_summary[i].write(f);
   for (i = 0; i<decoy_analysis.size(); i++) decoy_analysis[i].write(f);

@@ -6,6 +6,7 @@
 #include "CnpxDecoyAnalysisSummary.h"
 #include "CnpxInteractSummary.h"
 #include "CnpxInterprophetSummary.h"
+#include "CnpxLibraSummary.h"
 #include "CnpxPeptideprophetSummary.h"
 #include "CnpxPTMProphetSummary.h"
 #include "CnpxQuanticSummary.h"
@@ -25,6 +26,7 @@ public:
   std::vector<CnpxDecoyAnalysisSummary> decoy_analysis_summary;
   std::vector<CnpxInteractSummary> interact_summary;
   std::vector<CnpxInterprophetSummary> interprophet_summary;
+  std::vector<CnpxLibraSummary> libra_summary;
   std::vector<CnpxPeptideprophetSummary> peptideprophet_summary;
   std::vector<CnpxPTMProphetSummary> ptmprophet_summary;
   std::vector<CnpxQuanticSummary> quantic_summary;
