@@ -971,14 +971,14 @@ bool NeoPepXMLParser::read(const char* fn){
     cerr << "Error parse(): No open file." << endl;
     return false;
   }
-  _fseeki64(fptr, 0, SEEK_END);
-  _int64 iEOF=_ftelli64(fptr);
+  npxfseek(fptr, 0, SEEK_END);
+  f_off iEOF=npxftell(fptr);
   fclose(fptr);
 
   fptr = fopen(fn, "rt");
 
   int iTmp;
-  _int64 prog=0;
+  f_off prog=0;
   int iPercent = 0;
   printf("%2d%%", iPercent);
   fflush(stdout);
