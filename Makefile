@@ -7,7 +7,7 @@
 
 C = gcc
 CC = g++
-CFLAGS = -O3 -static -I. -I./include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -std=c++11
+CFLAGS = -O3 -static -I. -I./include -DGCC -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -std=c++11
 
 SRC_DIR  := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 BUILD_DIR = $(SRC_DIR)/obj
