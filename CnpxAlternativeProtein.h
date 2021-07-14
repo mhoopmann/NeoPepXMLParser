@@ -17,6 +17,8 @@ public:
   std::string peptide_prev_aa;
   std::string peptide_next_aa;
   int peptide_start_pos;
+  int protein_link_pos_a;
+  int protein_link_pos_b;
 
 private:
 

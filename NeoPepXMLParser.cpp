@@ -220,13 +220,15 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.peptide_start_pos = atoi(getAttrValue("peptide_start_pos", attr));
     c.protein = getAttrValue("protein", attr);
     c.protein_descr = getAttrValue("protein_descr", attr);
+    c.protein_link_pos_a = atoi(getAttrValue("protein_link_pos_a", attr));
+    c.protein_link_pos_b = atoi(getAttrValue("protein_link_pos_b", attr));
     c.protein_mw = atof(getAttrValue("protein_mw", attr));
     switch (activeEl[activeEl.size() - 2]) {
     case pxSearchHit:
       msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().alternative_protein.push_back(c);
       break;
     case pxLinkedPeptide:
-      msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink.linked_peptide.back().alternative_protein.push_back(c);
+      msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink.back().linked_peptide.back().alternative_protein.push_back(c);
       break;
     default:
       cout << "Error: stray alternative_protein element" << endl;
@@ -466,9 +468,10 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.peptide_prev_aa = getAttrValue("peptide_prev_aa", attr);
     c.peptide_start_pos = atoi(getAttrValue("peptide_start_pos", attr));
     c.protein = getAttrValue("protein", attr);
+    c.protein_link_pos_a = atoi(getAttrValue("protein_link_pos_a", attr));
     c.designation = getAttrValue("designation", attr);
     c.complement_mass = atof(getAttrValue("complement_mass", attr));
-    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink.linked_peptide.push_back(c);
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink.back().linked_peptide.push_back(c);
 
   } else if(isElement("mixture_model",el)){
     activeEl.push_back(pxMixture_Model);
@@ -517,7 +520,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.source = getAttrValue("source", attr);
     c.staticMass = atof(getAttrValue("static", attr));
     c.variable = atof(getAttrValue("variable", attr));
-    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().modification_info.mod_aminoacid_mass.push_back(c);
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().modification_info.back().mod_aminoacid_mass.push_back(c);
 
   } else if (isElement("mod_aminoacid_probability", el)) {
     activeEl.push_back(pxModAminoAcidProbability);
@@ -538,7 +541,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.modified_peptide = getAttrValue("modified_peptide", attr);
     c.mod_cterm_mass = atof(getAttrValue("mod_cterm_mass", attr));
     c.mod_nterm_mass = atof(getAttrValue("mod_nterm_mass", attr));
-    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().modification_info=c;
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().modification_info.push_back(c);
 
   } else if (isElement("msms_pipeline_analysis", el)){
     activeEl.push_back(pxMSMSPipelineAnalysis);
@@ -806,6 +809,8 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.peptide_start_pos = atoi(getAttrValue("peptide_start_pos", attr));
     c.protein=getAttrValue("protein",attr);
     c.protein_descr=getAttrValue("protein_descr",attr);
+    c.protein_link_pos_a = atoi(getAttrValue("protein_link_pos_a", attr));
+    c.protein_link_pos_b = atoi(getAttrValue("protein_link_pos_b", attr));
     c.protein_mw=atof(getAttrValue("protein_mw",attr));
     c.tot_num_ions=atoi(getAttrValue("tot_num_ions",attr));
     c.xlink_type=getAttrValue("xlink_type",attr);
@@ -897,7 +902,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     CnpxXLink c;
     c.identifier = getAttrValue("identifier",attr);
     c.mass = atof(getAttrValue("mass", attr));
-    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink=c;
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink.push_back(c);
 
   } else if (isElement("xlink_score", el)) {
     activeEl.push_back(pxXLinkScore);
@@ -907,10 +912,10 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.type = getAttrValue("type",attr);
     switch (activeEl[activeEl.size() - 2]) {
     case pxLinkedPeptide:
-      msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink.linked_peptide.back().xlink_score.push_back(c);
+      msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink.back().linked_peptide.back().xlink_score.push_back(c);
       break;
     case pxXLink:
-      msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink.xlink_score.push_back(c);
+      msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink.back().xlink_score.push_back(c);
       break;
     default:
       cout << "Error: stray xlink_score element: " << (int)activeEl[activeEl.size() - 2] << endl;
@@ -961,12 +966,22 @@ bool NeoPepXMLParser::read(const char* fn){
   XML_SetCharacterDataHandler(parser, CMzIdentML_charactersCallback);
 
   // clear data
-
-  FILE* fptr = fopen(fn, "rt");
+  FILE* fptr = fopen(fn, "rb");
   if (fptr == NULL){
     cerr << "Error parse(): No open file." << endl;
     return false;
   }
+  _fseeki64(fptr, 0, SEEK_END);
+  _int64 iEOF=_ftelli64(fptr);
+  fclose(fptr);
+
+  fptr = fopen(fn, "rt");
+
+  int iTmp;
+  _int64 prog=0;
+  int iPercent = 0;
+  printf("%2d%%", iPercent);
+  fflush(stdout);
 
   char buffer[16384];
   int readBytes = 0;
@@ -980,8 +995,16 @@ bool NeoPepXMLParser::read(const char* fn){
       fclose(fptr);
       return false;
     }
+    prog += sizeof(buffer);
+    iTmp = (int)((double)prog / iEOF * 100);
+    if (iTmp>iPercent){
+      iPercent = iTmp;
+      printf("\b\b\b%2d%%", iPercent);
+      fflush(stdout);
+    }
   }
   success = success && (XML_Parse(parser, buffer, 0, true) != 0);
+  cout << endl;
 
   if (!success) {
     XML_Error error = XML_GetErrorCode(parser);

@@ -34,5 +34,4 @@ void CnpxModificationInfo::write(FILE* f, int tabs) {
 
   NPXprintTabs(f, tabs);
   fprintf(f, "</modification_info>\n");
-
 }

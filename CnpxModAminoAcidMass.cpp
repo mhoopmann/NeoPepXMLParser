@@ -12,7 +12,6 @@ CnpxModAminoAcidMass::CnpxModAminoAcidMass() {
 }
 
 void CnpxModAminoAcidMass::write(FILE* f, int tabs) {
-
   string el = "mod_aminoacid_mass";
   if (position==0) NPXerrMsg(el, "position");
   if (mass == 0) NPXerrMsg(el, "mass");
@@ -25,5 +24,4 @@ void CnpxModAminoAcidMass::write(FILE* f, int tabs) {
   if (source.size() > 0) fprintf(f, " source=\"%s\"", source.c_str());
   if (id.size() > 0) fprintf(f, " id=\"%s\"", id.c_str());
   fprintf(f, "/>\n");
-
 }

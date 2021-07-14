@@ -35,16 +35,16 @@ void CnpxUIPSM::setPSM(CnpxSpectrumQuery& s){
   modified=false;
   mod.modifiedPeptide.clear();
   mod.mods.clear();
-  if (sh->modification_info.modified_peptide.size()>0){
+  if (sh->modification_info.size()>0){
     modified=true;
-    mod.modifiedPeptide=sh->modification_info.modified_peptide;
+    mod.modifiedPeptide=sh->modification_info[0].modified_peptide;
     npxUIMod m;
-    for(i=0;i<sh->modification_info.mod_aminoacid_mass.size();i++){
-      m.mass = sh->modification_info.mod_aminoacid_mass[i].mass;
-      m.pos = sh->modification_info.mod_aminoacid_mass[i].position;
+    for(i=0;i<sh->modification_info[0].mod_aminoacid_mass.size();i++){
+      m.mass = sh->modification_info[0].mod_aminoacid_mass[i].mass;
+      m.pos = sh->modification_info[0].mod_aminoacid_mass[i].position;
       m.diffMass=0;
-      if (sh->modification_info.mod_aminoacid_mass[i].variable>0) m.diffMass = sh->modification_info.mod_aminoacid_mass[i].variable;
-      if (sh->modification_info.mod_aminoacid_mass[i].staticMass>0) m.diffMass = sh->modification_info.mod_aminoacid_mass[i].staticMass;
+      if (sh->modification_info[0].mod_aminoacid_mass[i].variable>0) m.diffMass = sh->modification_info[0].mod_aminoacid_mass[i].variable;
+      if (sh->modification_info[0].mod_aminoacid_mass[i].staticMass>0) m.diffMass = sh->modification_info[0].mod_aminoacid_mass[i].staticMass;
       mod.mods.push_back(m);
     }
   }

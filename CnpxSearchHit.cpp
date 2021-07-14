@@ -15,6 +15,8 @@ CnpxSearchHit::CnpxSearchHit(){
   is_rejected = 0;
   calc_pI = 0;
   protein_mw = 0;
+  protein_link_pos_a=0;
+  protein_link_pos_b=0;
   peptide_start_pos=0;
 }
 
@@ -34,15 +36,15 @@ CnpxSearchScore* CnpxSearchHit::addSearchScore(std::string name, std::string val
 }
 
 string CnpxSearchHit::getModifiedPeptide(){
-  if(modification_info.modified_peptide.size()==0) return peptide;
+  if(modification_info.size()==0) return peptide;
   size_t i,j;
   char str[32];
   string pep;
   for(i=0;i<peptide.size();i++){
     pep+=peptide[i];
-    for(j=0;j<modification_info.mod_aminoacid_mass.size();j++){
-      if(modification_info.mod_aminoacid_mass[j].position==(i+1)){
-        sprintf(str,"[%.2lf]",modification_info.mod_aminoacid_mass[j].mass);
+    for(j=0;j<modification_info[0].mod_aminoacid_mass.size();j++){
+      if(modification_info[0].mod_aminoacid_mass[j].position==(i+1)){
+        sprintf(str,"[%.2lf]",modification_info[0].mod_aminoacid_mass[j].mass);
         pep+=str;
         break;
       }
@@ -68,6 +70,8 @@ void CnpxSearchHit::write(FILE* f, int tabs){
   if (!peptide_prev_aa.empty()) fprintf(f, " peptide_prev_aa=\"%s\"", peptide_prev_aa.c_str());
   if (!peptide_next_aa.empty()) fprintf(f, " peptide_next_aa=\"%s\"", peptide_next_aa.c_str());
   if (peptide_start_pos>0) fprintf(f, " peptide_start_pos=\"%d\"", peptide_start_pos);
+  if (protein_link_pos_a>0) fprintf(f, " protein_link_pos_a=\"%d\"", protein_link_pos_a);
+  if (protein_link_pos_b>0) fprintf(f, " protein_link_pos_b=\"%d\"", protein_link_pos_b);
   fprintf(f, " protein=\"%s\"", protein.c_str());
   fprintf(f, " num_tot_proteins=\"%d\"", num_tot_proteins);
   if(num_matched_ions>0) fprintf(f, " num_matched_ions=\"%d\"", num_matched_ions);
@@ -86,8 +90,8 @@ void CnpxSearchHit::write(FILE* f, int tabs){
   fprintf(f, ">\n");
 
   for (i = 0; i < alternative_protein.size(); i++) alternative_protein[i].write(f,t);
-  if(!modification_info.modified_peptide.empty()) modification_info.write(f,t);
-  if(!xlink.identifier.empty()) xlink.write(f,t);
+  for (i = 0; i < modification_info.size(); i++) modification_info[i].write(f, t);
+  for (i = 0; i < xlink.size(); i++) xlink[i].write(f, t);
   for (i = 0; i < search_score.size(); i++) search_score[i].write(f,t);
   for (i = 0; i < analysis_result.size(); i++) analysis_result[i].write(f,t);
 

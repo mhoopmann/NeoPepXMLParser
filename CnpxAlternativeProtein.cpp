@@ -6,6 +6,8 @@ CnpxAlternativeProtein::CnpxAlternativeProtein() {
   num_tol_term=-1;
   protein_mw=0;
   peptide_start_pos=0;
+  protein_link_pos_a=0;
+  protein_link_pos_b=0;
 }
 
 void CnpxAlternativeProtein::write(FILE* f, int tabs) {
@@ -24,5 +26,7 @@ void CnpxAlternativeProtein::write(FILE* f, int tabs) {
   if (peptide_prev_aa.size()>0) fprintf(f, " peptide_prev_aa=\"%s\"", peptide_prev_aa.c_str());
   if (peptide_next_aa.size()>0) fprintf(f, " peptide_next_aa=\"%s\"", peptide_next_aa.c_str());
   if (peptide_start_pos>0) fprintf(f, " peptide_start_pos=\"%d\"", peptide_start_pos);
+  if (protein_link_pos_a>0) fprintf(f, " protein_link_pos_a=\"%d\"", protein_link_pos_a);
+  if (protein_link_pos_b>0) fprintf(f, " protein_link_pos_b=\"%d\"", protein_link_pos_b);
   fprintf(f, "/>\n");
 }

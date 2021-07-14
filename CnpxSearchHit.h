@@ -25,6 +25,8 @@ public:
   std::string peptide_next_aa;
   int peptide_start_pos;
   std::string protein;
+  int protein_link_pos_a;
+  int protein_link_pos_b;
   int num_tot_proteins;
   int num_matched_ions;
   int tot_num_ions;
@@ -39,8 +41,8 @@ public:
   double calc_pI;
   double protein_mw;
 
-  CnpxModificationInfo modification_info;
-  CnpxXLink xlink;
+  std::vector<CnpxModificationInfo> modification_info;  //0 or 1 object
+  std::vector<CnpxXLink> xlink;                         //0 or 1 object
 
   std::vector<CnpxAlternativeProtein> alternative_protein;
   std::vector<CnpxAnalysisResult> analysis_result;

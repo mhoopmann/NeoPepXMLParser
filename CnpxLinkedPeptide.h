@@ -10,7 +10,7 @@ class CnpxLinkedPeptide {
 public:
   CnpxLinkedPeptide();
 
-  void write(FILE* f);
+  void write(FILE* f, int tabs=-1);
 
   double calc_neutral_pep_mass;
   double complement_mass;
@@ -21,6 +21,7 @@ public:
   std::string peptide_next_aa;
   int peptide_start_pos;
   std::string protein;
+  int protein_link_pos_a;
 
   std::vector<CnpxAlternativeProtein> alternative_protein;
   std::vector<CnpxModificationInfo> modification_info;
