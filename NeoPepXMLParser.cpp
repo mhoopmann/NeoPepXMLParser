@@ -966,6 +966,7 @@ bool NeoPepXMLParser::read(const char* fn){
   XML_SetCharacterDataHandler(parser, CMzIdentML_charactersCallback);
 
   // clear data
+  msms_pipeline_analysis.clear();
   FILE* fptr = fopen(fn, "rb");
   if (fptr == NULL){
     cerr << "Error parse(): No open file." << endl;
