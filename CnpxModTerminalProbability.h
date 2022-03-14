@@ -1,17 +1,17 @@
-#ifndef _CNPXMODAMINOACIDPROBABILITY_H
-#define _CNPXMODAMINOACIDPROBABILITY_H
+#ifndef _CNPXMODTERMINALPROBABILITY_H
+#define _CNPXMODTERMINALPROBABILITY_H
 
 #include <string>
 
-class CnpxModAminoAcidProbability {
+class CnpxModTerminalProbability {
 public:
 
-  CnpxModAminoAcidProbability();
+  CnpxModTerminalProbability();
 
   void write(FILE* f);
 
-  int position;
   double probability;
+  char terminus;
   double oscore;
   double mscore;
   double direct_oscore;

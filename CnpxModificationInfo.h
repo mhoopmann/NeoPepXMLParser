@@ -1,6 +1,7 @@
 #ifndef _CNPXMODIFICATIONINFO_H
 #define _CNPXMODIFICATIONINFO_H
 
+#include "CnpxAminoAcidSubstitution.h"
 #include "CnpxModAminoAcidMass.h"
 #include "NeoPepXMLStructs.h"
 #include <string>
@@ -17,7 +18,7 @@ public:
   double mod_nterm_mass;
   std::string modified_peptide;
 
-  //std::vector<CnpxAminoAcidSubstitution> aminoacid_substitution;
+  std::vector<CnpxAminoAcidSubstitution> aminoacid_substitution;
   std::vector<CnpxModAminoAcidMass> mod_aminoacid_mass;
 
 private:

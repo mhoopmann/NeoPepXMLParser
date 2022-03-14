@@ -31,6 +31,7 @@ void CnpxModificationInfo::write(FILE* f, int tabs) {
   fprintf(f, ">\n");
 
   for (i = 0; i<mod_aminoacid_mass.size(); i++) mod_aminoacid_mass[i].write(f,t);
+  for (i = 0; i<aminoacid_substitution.size(); i++) aminoacid_substitution[i].write(f, t);
 
   NPXprintTabs(f, tabs);
   fprintf(f, "</modification_info>\n");

@@ -19,6 +19,9 @@
 #define XML_STATIC	// to statically link the expat libraries
 #endif
 
+#define NPX_VERSION "1.0.1"
+#define NPX_DATE "2022 MARCH 8"
+
 
 class NeoPepXMLParser {
 public:
@@ -43,6 +46,7 @@ public:
   bool setSpectra(const size_t pipeIndex, const size_t runIndex);
   size_t size();
   bool read(const char* fn);
+  std::string versionNeo(); //returns version information
   bool write(const char* fn, bool tabs=false);
 
   //Functions for XML Parsing

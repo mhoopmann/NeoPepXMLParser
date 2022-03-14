@@ -141,6 +141,7 @@ void NeoPepXMLParser::init() {
   elements[pxAffectedChannel] = "affected_channel";
   elements[pxAlternativeProtein] = "alternative_protein";
   elements[pxAminoAcidModification] = "aminoacid_modification";
+  elements[pxAminoAcidSubstitution] = "aminoacid_substitution";
   elements[pxAnalysisResult] = "analysis_result";
   elements[pxAnalysisSummary] = "analysis_summary";
   elements[pxAnalysisTimestamp] = "analysis_timestamp";
@@ -168,6 +169,7 @@ void NeoPepXMLParser::init() {
   elements[pxModAminoAcidMass] = "mod_aminoacid_mass";
   elements[pxModAminoAcidProbability] = "mod_aminoacid_probability";
   elements[pxModificationInfo] = "modification_info";
+  elements[pxModTerminalProbability] = "mod_terminal_probability";
   elements[pxMSMSPipelineAnalysis] = "msms_pipeline_analysis";
   elements[pxMSMSRunSummary] = "msms_run_summary";
   elements[pxNegmodelDistribution] = "negmodel_distribution";
@@ -248,6 +250,17 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.symbol=getAttrValue("symbol",attr);
     c.variable=getAttrValue("variable",attr);
     msms_pipeline_analysis.back().msms_run_summary.back().search_summary.back().aminoacid_modification.push_back(c);
+
+  } else if (isElement("aminoacid_substitution", el)) {
+    activeEl.push_back(pxAminoAcidSubstitution);
+    CnpxAminoAcidSubstitution c;
+    c.position = atoi(getAttrValue("position", attr));
+    c.orig_aa = getAttrValue("orig_aa", attr);
+    c.num_tol_term = atoi(getAttrValue("num_tol_term", attr));
+    c.peptide_prev_aa = getAttrValue("peptide_prev_aa", attr);
+    c.peptide_next_aa = getAttrValue("peptide_next_aa", attr);
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().modification_info.back().aminoacid_substitution.push_back(c);
+
 
   } else if (isElement("analysis_result", el)) {
     activeEl.push_back(pxAnalysisResult);
@@ -533,6 +546,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.direct_mscore = atof(getAttrValue("direct_mscore", attr));
     c.cterm_score = atof(getAttrValue("cterm_score", attr));
     c.nterm_score = atof(getAttrValue("nterm_score", attr));
+    c.shift = getAttrValue("shift",attr)[0];
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.back().mod_amino_acid_probability.push_back(c);
 
   } else if (isElement("modification_info", el)) {
@@ -542,6 +556,20 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.mod_cterm_mass = atof(getAttrValue("mod_cterm_mass", attr));
     c.mod_nterm_mass = atof(getAttrValue("mod_nterm_mass", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().modification_info.push_back(c);
+
+  } else if (isElement("mod_terminal_probability", el)) {
+    activeEl.push_back(pxModTerminalProbability);
+    CnpxModTerminalProbability c;
+    c.terminus = getAttrValue("position", attr)[0];
+    c.probability = atof(getAttrValue("probability", attr));
+    c.oscore = atof(getAttrValue("oscore", attr));
+    c.mscore = atof(getAttrValue("mscore", attr));
+    c.direct_oscore = atof(getAttrValue("direct_oscore", attr));
+    c.direct_mscore = atof(getAttrValue("direct_mscore", attr));
+    c.cterm_score = atof(getAttrValue("cterm_score", attr));
+    c.nterm_score = atof(getAttrValue("nterm_score", attr));
+    c.shift = getAttrValue("shift", attr)[0];
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.back().mod_terminal_probability.push_back(c);
 
   } else if (isElement("msms_pipeline_analysis", el)){
     activeEl.push_back(pxMSMSPipelineAnalysis);
@@ -1098,6 +1126,14 @@ bool NeoPepXMLParser::setSpectra(const size_t pipeIndex, const size_t runIndex){
 //returns the number of top ranked PSMs
 size_t NeoPepXMLParser::size(){
   return sz;
+}
+
+string NeoPepXMLParser::versionNeo(){
+  string s;
+  s=NPX_VERSION;
+  s+="\t";
+  s+=NPX_DATE;
+  return s;
 }
 
 bool NeoPepXMLParser::write(const char* fn, bool tabs){

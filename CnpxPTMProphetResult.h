@@ -2,6 +2,7 @@
 #define _CNPXPTMPROPHETRESULT_H
 
 #include "CnpxModAminoAcidProbability.h"
+#include "CnpxModTerminalProbability.h"
 #include "CnpxParameter.h"
 #include <string>
 #include <vector>
@@ -21,6 +22,7 @@ public:
 
   std::vector<CnpxParameter> parameter;
   std::vector<CnpxModAminoAcidProbability> mod_amino_acid_probability;
+  std::vector<CnpxModTerminalProbability> mod_terminal_probability;
 
 private:
   bool active;
