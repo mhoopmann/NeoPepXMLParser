@@ -901,7 +901,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.activation_method=getAttrValue("activation_method",attr);
     c.assumed_charge=atoi(getAttrValue("assumed_charge",attr));
     c.collision_energy=atof(getAttrValue("collison_energy",attr));
-    c.compensation_voltage=atof(getAttrValue("compensation_voltae",attr));
+    c.compensation_voltage=atof(getAttrValue("compensation_voltage",attr));
     c.end_scan=atoi(getAttrValue("end_scan",attr));
     c.index=atoi(getAttrValue("index",attr));
     c.precursor_intensity=atof(getAttrValue("precursor_intensity",attr));

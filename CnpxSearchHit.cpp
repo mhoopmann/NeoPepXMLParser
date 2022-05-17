@@ -40,6 +40,10 @@ string CnpxSearchHit::getModifiedPeptide(){
   size_t i,j;
   char str[32];
   string pep;
+  if(modification_info[0].mod_nterm_mass!=0){
+    sprintf(str, "n[%.2lf]", modification_info[0].mod_nterm_mass);
+    pep+=str;
+  }
   for(i=0;i<peptide.size();i++){
     pep+=peptide[i];
     for(j=0;j<modification_info[0].mod_aminoacid_mass.size();j++){
