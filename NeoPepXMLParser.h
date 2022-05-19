@@ -19,8 +19,8 @@
 #define XML_STATIC	// to statically link the expat libraries
 #endif
 
-#define NPX_VERSION "1.0.1"
-#define NPX_DATE "2022 MARCH 8"
+#define NPX_VERSION "1.0.2"
+#define NPX_DATE "2022 MAY 17"
 
 
 class NeoPepXMLParser {

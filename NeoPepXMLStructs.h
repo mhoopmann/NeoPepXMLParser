@@ -58,7 +58,7 @@ typedef off_t f_off;
 
 static std::string npx_xmlns = "http://regis-web.systemsbiology.net/pepXML";
 static std::string npx_xmlns_xsi = "http://www.w3.org/2001/XMLSchema-instance";
-static std::string npx_xsi_schemaLocation = "http://regis-web.systemsbiology.net/pepXML /tools/bin/TPP/tpp/schema/pepXML_v122.xsd";
+static std::string npx_xsi_schemaLocation = "http://regis-web.systemsbiology.net/pepXML /tools/bin/TPP/tpp/schema/pepXML_v123.xsd";
 
 enum pepXMLElement:int{
   pxAffectedChannel,
