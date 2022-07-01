@@ -145,6 +145,7 @@ void NeoPepXMLParser::init() {
   elements[pxAnalysisResult] = "analysis_result";
   elements[pxAnalysisSummary] = "analysis_summary";
   elements[pxAnalysisTimestamp] = "analysis_timestamp";
+  elements[pxBin] = "bin";
   elements[pxContributingChannel] = "contributing_channel";
   elements[pxDatabaseRefreshTimestamp] = "database_refresh_timestamp";
   elements[pxDatasetDerivation] = "dataset_derivation";
@@ -160,6 +161,7 @@ void NeoPepXMLParser::init() {
   elements[pxInterprophetResult] = "interprophet_result";
   elements[pxInterprophetSummary] = "interprophet_summary";
   elements[pxIsotopicContributions] = "isotopic_contributions";
+  elements[pxLability] = "lability";
   elements[pxLibraResult] = "libra_result";
   elements[pxLibraSummary] = "libra_summary";
   elements[pxLinkedPeptide] = "linked_peptide";
@@ -284,6 +286,15 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.id = atoi(getAttrValue("id", attr));
     c.time.parseDateTime(getAttrValue("time", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().analysis_timestamp.push_back(c);
+
+  } else if (isElement("bin", el)) {
+    activeEl.push_back(pxBin);
+    npxBin c;
+    c.pos_prob = atof(getAttrValue("pos_prob", attr));
+    c.pos_prob = atof(getAttrValue("neg_prob", attr));
+    if(strcmp(getAttrValue("value",attr),"true")==0) c.value=true;
+    else c.value=false;
+    msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.back().mixturemodel.back().bin.push_back(c);
 
   } else if (isElement("contributing_channel", el)){
     activeEl.push_back(pxContributingChannel);
@@ -456,6 +467,19 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     CnpxIsotopicContributions c;
     msms_pipeline_analysis.back().analysis_summary.back().libra_summary.back().isotopic_contributions.push_back(c);
 
+  } else if (isElement("lability", el)) {
+    activeEl.push_back(pxLability);
+    CnpxLability c;
+    c.numlosses = atoi(getAttrValue("numlosses", attr));
+    c.pval = atof(getAttrValue("pval", attr));
+    c.probability = atof(getAttrValue("probability", attr));
+    c.oscore = atof(getAttrValue("oscore", attr));
+    c.mscore = atof(getAttrValue("mscore", attr));
+    c.cterm_score = atof(getAttrValue("cterm_score", attr));
+    c.nterm_score = atof(getAttrValue("nterm_score", attr));
+    msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.back().lability.push_back(c);
+
+
   } else if (isElement("libra_result", el)) {
     activeEl.push_back(pxLibraResult);
     CnpxLibraResult c(true);
@@ -522,7 +546,17 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxMixturemodelDistribution);
     CnpxMixtureModelDistribution c;
     c.name=getAttrValue("name",attr);
-    msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.push_back(c);
+    switch (activeEl[activeEl.size() - 2]) {
+    case pxInterprophetSummary:
+      msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.back().mixturemodel_distribution.push_back(c);
+      break;
+    case pxPeptideprophetSummary:
+      msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.push_back(c);
+      break;
+    default:
+      cout << "Error: stray mixturemodel_distribution element" << endl;
+      break;
+    }
 
   } else if (isElement("mod_aminoacid_mass", el)) {
     activeEl.push_back(pxModAminoAcidMass);
@@ -595,7 +629,17 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxNegmodelDistribution);
     CnpxNegModelDistribution c;
     c.type = getAttrValue("type", attr);
-    msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.back().negmodel_distribution.push_back(c);
+    switch (activeEl[activeEl.size() - 3]) {
+    case pxInterprophetSummary:
+      msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.back().mixturemodel_distribution.back().negmodel_distribution.push_back(c);
+      break;
+    case pxPeptideprophetSummary:
+      msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.back().negmodel_distribution.push_back(c);
+      break;
+    default:
+      cout << "Error: stray negmodel_distribution element" << endl;
+      break;
+    }
 
   } else if (isElement("parameter", el)) {
     activeEl.push_back(pxParameter);
@@ -622,10 +666,22 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
       msms_pipeline_analysis.back().msms_run_summary.back().search_summary.back().parameter.push_back(c);
       break;
     case pxNegmodelDistribution:
-      msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.back().negmodel_distribution.back().parameter.push_back(c);
+      if (activeEl[activeEl.size() - 4] == pxPeptideprophetSummary) {
+        msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.back().negmodel_distribution.back().parameter.push_back(c);
+      } else if (activeEl[activeEl.size() - 4] == pxInterprophetSummary) {
+        msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.back().mixturemodel_distribution.back().negmodel_distribution.back().parameter.push_back(c);
+      } else {
+        cout << "Unknown location for parameter" << endl;
+      }
       break;
     case pxPosmodelDistribution:
-      msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.back().posmodel_distribution.back().parameter.push_back(c);
+      if (activeEl[activeEl.size() - 4] == pxPeptideprophetSummary) {
+        msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.back().posmodel_distribution.back().parameter.push_back(c);
+      } else if (activeEl[activeEl.size() - 4] == pxInterprophetSummary) {
+        msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.back().mixturemodel_distribution.back().posmodel_distribution.back().parameter.push_back(c);
+      } else {
+        cout << "Unknown location for parameter" << endl;
+      }
       break;
     case pxPTMProphetResult:
       msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.back().parameter.push_back(c);
@@ -714,7 +770,17 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxPosmodelDistribution);
     CnpxPosModelDistribution c;
     c.type = getAttrValue("type",attr);
-    msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.back().posmodel_distribution.push_back(c);
+    switch (activeEl[activeEl.size() - 3]) {
+    case pxInterprophetSummary:
+      msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.back().mixturemodel_distribution.back().posmodel_distribution.push_back(c);
+      break;
+    case pxPeptideprophetSummary:
+      msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.back().posmodel_distribution.push_back(c);
+      break;
+    default:
+      cout << "Error: stray posmodel_distribution element" << endl;
+      break;
+    }
 
   } else if (isElement("ptmprophet_result", el)) {
     activeEl.push_back(pxPTMProphetResult);

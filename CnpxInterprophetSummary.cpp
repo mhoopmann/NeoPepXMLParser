@@ -21,6 +21,7 @@ void CnpxInterprophetSummary::write(FILE* f){
   for (i = 0; i<inputfile.size(); i++) inputfile[i].write(f);
   for (i=0; i<roc_error_data.size();i++) roc_error_data[i].write(f);
   for (i = 0; i<mixturemodel.size(); i++) mixturemodel[i].write(f);
+  for (i = 0; i < mixturemodel_distribution.size(); i++) mixturemodel_distribution[i].write(f);
 
   fprintf(f, "</interprophet_summary>\n");
 }

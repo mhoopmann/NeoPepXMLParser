@@ -3,6 +3,7 @@
 
 #include "CnpxInputFile.h"
 #include "CnpxMixtureModel.h"
+#include "CnpxMixtureModelDistribution.h"
 #include "CnpxROCErrorData.h"
 #include <string>
 #include <vector>
@@ -21,6 +22,7 @@ public:
   std::vector<CnpxInputFile> inputfile;
   std::vector<CnpxMixtureModel> mixturemodel;
   std::vector<CnpxROCErrorData> roc_error_data;
+  std::vector<CnpxMixtureModelDistribution> mixturemodel_distribution;
 
 private:
 

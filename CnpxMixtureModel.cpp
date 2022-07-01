@@ -18,6 +18,7 @@ void CnpxMixtureModel::write(FILE* f){
   fprintf(f, ">\n");
 
   for (i = 0; i<point.size(); i++) point[i].write(f);
+  for (i = 0; i < bin.size(); i++) bin[i].write(f);
 
   fprintf(f, "</mixturemodel>\n");
 }

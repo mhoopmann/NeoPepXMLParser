@@ -28,6 +28,24 @@ typedef struct npxPointM {
   }
 } npxPointM;
 
+typedef struct npxBin{
+  bool value;
+  double pos_prob;
+  double neg_prob;
+  npxBin(){
+    value=false;
+    pos_prob=0;
+    neg_prob=0;
+  }
+  void write(FILE* f){
+    if(value) fprintf(f,"<bin value=\"true\"");
+    else fprintf(f, "<bin value=\"false\"");
+    fprintf(f, " pos_prob=\"%.6lf\"", pos_prob);
+    fprintf(f, " neg_prob=\"%.6lf\"", neg_prob);
+    fprintf(f, "/>\n");
+  }
+} npxBin;
+
 
 class CnpxMixtureModel {
 public:
@@ -40,6 +58,7 @@ public:
   float pos_bandwidth;
 
   std::vector<npxPointM> point;
+  std::vector<npxBin> bin;
 
 private:
 

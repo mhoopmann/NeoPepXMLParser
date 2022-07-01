@@ -22,6 +22,7 @@ void CnpxPTMProphetResult::write(FILE* f) {
 
   size_t i;
   for(i=0;i<parameter.size();i++) parameter[i].write(f);
+  for (i = 0; i<lability.size(); i++) lability[i].write(f);
   for (i = 0; i<mod_terminal_probability.size(); i++) mod_terminal_probability[i].write(f);
   for (i = 0; i<mod_amino_acid_probability.size(); i++) mod_amino_acid_probability[i].write(f);
 
