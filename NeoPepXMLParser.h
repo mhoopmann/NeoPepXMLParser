@@ -1,6 +1,11 @@
 #ifndef _NEOPEPXMLPARSER_H
 #define _NEOPEPXMLPARSER_H
 
+#define XMLCLASS		
+#ifndef XML_STATIC
+#define XML_STATIC	// to statically link the expat libraries
+#endif
+
 #include "CnpxMSMSPipelineAnalysis.h"
 #include "expat.h"
 #include "NeoPepXMLStructs.h"
@@ -14,13 +19,8 @@
 #include <vector>
 #include <stdio.h>
 
-#define XMLCLASS		
-#ifndef XML_STATIC
-#define XML_STATIC	// to statically link the expat libraries
-#endif
-
-#define NPX_VERSION "1.0.4"
-#define NPX_DATE "2022 JUL 1"
+#define NPX_VERSION "1.0.5"
+#define NPX_DATE "2025 JAN 2"
 
 
 class NeoPepXMLParser {
