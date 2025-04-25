@@ -19,8 +19,8 @@
 #include <vector>
 #include <stdio.h>
 
-#define NPX_VERSION "1.0.4"
-#define NPX_DATE "2022 JUL 1"
+#define NPX_VERSION "1.0.5"
+#define NPX_DATE "2025 JAN 2"
 
 
 class NeoPepXMLParser {
