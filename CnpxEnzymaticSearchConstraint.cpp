@@ -8,7 +8,11 @@ CnpxEnzymaticSearchConstraint::CnpxEnzymaticSearchConstraint(){
   min_number_termini=0;
 }
 
-void CnpxEnzymaticSearchConstraint::write(FILE* f){
+void CnpxEnzymaticSearchConstraint::write(FILE* f, int tabs){
+
+  int t = tabs;
+  if (t > -1) t++;
+  NPXprintTabs(f, tabs);
 
   fprintf(f, "<enzymatic_search_constraint enzyme=\"%s\"", enzyme.c_str());
   fprintf(f, " max_num_internal_cleavages=\"%d\"", max_num_internal_cleavages);

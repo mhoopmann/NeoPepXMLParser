@@ -64,7 +64,7 @@ void CnpxSearchSummary::write(FILE* f, int tabs){
   fprintf(f, ">\n");
 
   for (i = 0; i<search_database.size(); i++) search_database[i].write(f,t);
-  for(i=0;i<enzymatic_search_constraint.size();i++) enzymatic_search_constraint[i].write(f);
+  for(i=0;i<enzymatic_search_constraint.size();i++) enzymatic_search_constraint[i].write(f,t);
   for(i=0;i<aminoacid_modification.size();i++) aminoacid_modification[i].write(f,t);
   for (i = 0; i<terminal_modification.size(); i++) terminal_modification[i].write(f);
   for (i = 0; i < parameter.size(); i++) parameter[i].write(f,t);
