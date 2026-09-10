@@ -1,0 +1,77 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "kit-base",
+      "hidden": true,
+      "description": "Common settings for self-contained dev-kit builds: expat is built from source and bundled, and README, LICENSE, and VERSION land at the top of the archive.",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "NEOPEPXML_FETCH_EXPAT": "ON",
+        "NEOPEPXML_INSTALL_DOCDIR": "."
+      }
+    },
+    {
+      "name": "windows-x64",
+      "inherits": "kit-base",
+      "displayName": "Windows x64 dev kit (Visual Studio 2022)",
+      "generator": "Visual Studio 17 2022",
+      "architecture": { "value": "x64", "strategy": "set" },
+      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows" }
+    },
+    {
+      "name": "linux-x64",
+      "inherits": "kit-base",
+      "displayName": "Linux x86_64 dev kit",
+      "generator": "Unix Makefiles",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" },
+      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux" }
+    },
+    {
+      "name": "macos-universal",
+      "inherits": "kit-base",
+      "displayName": "macOS universal (arm64 + x86_64) dev kit",
+      "generator": "Unix Makefiles",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_OSX_ARCHITECTURES": "arm64;x86_64",
+        "CMAKE_OSX_DEPLOYMENT_TARGET": "11.0"
+      },
+      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Darwin" }
+    },
+    {
+      "name": "windows-x64-mstoolkit",
+      "displayName": "Windows x64 static library against a sibling MSToolkit's expat headers",
+      "description": "For working alongside MSToolkit-based applications: nothing is downloaded, only the static library is built, and expat headers come from ../MSToolkit/include/extern.",
+      "generator": "Visual Studio 17 2022",
+      "architecture": { "value": "x64", "strategy": "set" },
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "NEOPEPXML_EXPAT_INCLUDE_DIR": "${sourceDir}/../MSToolkit/include/extern",
+        "NEOPEPXML_BUILD_SHARED": "OFF"
+      },
+      "condition": { "type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows" }
+    }
+  ],
+  "buildPresets": [
+    { "name": "windows-x64-release", "configurePreset": "windows-x64", "configuration": "Release" },
+    { "name": "windows-x64-debug", "configurePreset": "windows-x64", "configuration": "Debug" },
+    { "name": "linux-x64", "configurePreset": "linux-x64" },
+    { "name": "macos-universal", "configurePreset": "macos-universal" },
+    { "name": "windows-x64-mstoolkit-release", "configurePreset": "windows-x64-mstoolkit", "configuration": "Release" },
+    { "name": "windows-x64-mstoolkit-debug", "configurePreset": "windows-x64-mstoolkit", "configuration": "Debug" }
+  ],
+  "testPresets": [
+    {
+      "name": "test-base",
+      "hidden": true,
+      "output": { "outputOnFailure": true },
+      "execution": { "noTestsAction": "ignore" }
+    },
+    { "name": "windows-x64-release", "inherits": "test-base", "configurePreset": "windows-x64", "configuration": "Release" },
+    { "name": "windows-x64-debug", "inherits": "test-base", "configurePreset": "windows-x64", "configuration": "Debug" },
+    { "name": "linux-x64", "inherits": "test-base", "configurePreset": "linux-x64" },
+    { "name": "macos-universal", "inherits": "test-base", "configurePreset": "macos-universal" }
+  ]
+}

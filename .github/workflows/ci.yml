@@ -1,0 +1,21 @@
+name: CI
+
+# Build and test only, no publishing. Runs on pull requests targeting main or dev and on direct
+# pushes to main, so problems surface before a merge or before a release is cut. Pushes to dev
+# are covered by dev-build.yml, which builds and tests before it packages; running this there
+# as well would only duplicate that work.
+
+on:
+  pull_request:
+    branches: [main, dev]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      artifact_retention_days: 3

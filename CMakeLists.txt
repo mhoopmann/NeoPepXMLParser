@@ -20,6 +20,8 @@ option(NEOPEPXML_BUILD_SHARED "Build the shared library" ON)
 option(NEOPEPXML_INSTALL "Generate install rules and the CMake package" ${PROJECT_IS_TOP_LEVEL})
 option(NeoPepXMLParser_SHARED_LIBS
   "Make NeoPepXMLParser::NeoPepXMLParser refer to the shared library instead of the static one" OFF)
+option(NEOPEPXML_BUILD_TESTS "Build the test suite" ${PROJECT_IS_TOP_LEVEL})
+option(NEOPEPXML_BUILD_EXAMPLES "Build the example program" ${PROJECT_IS_TOP_LEVEL})
 set(NEOPEPXML_VERSION_SUFFIX "" CACHE STRING
   "Pre-release identifier appended to the version as -<suffix>, e.g. dev.14; empty for releases")
 set(NEOPEPXML_VERSION_METADATA "" CACHE STRING
@@ -331,6 +333,24 @@ generate_export_header(${neopepxml_export_source}
   STATIC_DEFINE NEOPEPXML_STATIC_DEFINE
   EXPORT_FILE_NAME "${NEOPEPXML_GENERATED_INCLUDE_DIR}/NeoPepXMLParser/NeoPepXMLExport.h"
   CUSTOM_CONTENT_FROM_VARIABLE NEOPEPXML_EXPORT_HEADER_EXTRA)
+
+# ---------------------------------------------------------------------------
+# Tests
+# ---------------------------------------------------------------------------
+# CTest is wired up ahead of the test suite so CI runs the same commands before and after it
+# lands. Until tests/ exists this registers no tests.
+if(NEOPEPXML_BUILD_TESTS)
+  enable_testing()
+endif()
+if(NEOPEPXML_BUILD_EXAMPLES)
+  # The example links expat through the static library, which the headers-only expat mode
+  # cannot satisfy; skip it there rather than fail the build.
+  if(NEOPEPXML_EXPAT_HAS_LIBRARY)
+    add_subdirectory(examples)
+  else()
+    message(STATUS "NeoPepXMLParser: example skipped, no expat library to link in this expat mode")
+  endif()
+endif()
 
 # ---------------------------------------------------------------------------
 # Install, package config, and dev-kit archives

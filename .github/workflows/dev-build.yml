@@ -1,0 +1,99 @@
+name: Dev build
+
+# Builds, tests, and packages the dev kits from every push to dev and publishes them as GitHub
+# Release assets, so anyone who wants to run ahead of a stable release can do so without
+# building the source. Two releases are touched on every run:
+#   - a dated pre-release tagged dev-<version>-<run number>, kept forever, so a specific build
+#     can be pinned to or re-downloaded later;
+#   - the rolling dev-latest pre-release, whose tag and assets are replaced every run. Its
+#     assets carry fixed names (NeoPepXMLParser-dev-latest-<os>-<arch>.*) so a README can link
+#     to them permanently; the VERSION file inside each kit says which build it is.
+# Nothing here ever touches main or a v* tag. Official releases come from release.yml only.
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch: {}
+
+# A newer push supersedes a run that is still in progress.
+concurrency:
+  group: dev-build
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      version_suffix: dev.${{ github.run_number }}
+      commit_metadata: true
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: dev-${{ needs.build.outputs.version }}-${{ github.run_number }}
+      PACKAGE_VERSION: ${{ needs.build.outputs.package_version }}
+      SHORT_SHA: ${{ needs.build.outputs.short_sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Download the kits built by every platform
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: kit-*
+          merge-multiple: true
+          path: kits
+
+      - name: Show what will be published
+        run: ls -la kits
+
+      - name: Publish the dated dev pre-release
+        uses: softprops/action-gh-release@e598afbe1493e6b1bafb1f389cabb956eab91231 # v3.0.3
+        with:
+          tag_name: ${{ env.TAG }}
+          name: Dev build ${{ env.PACKAGE_VERSION }}
+          body: |
+            Automated development build from `dev` @ ${{ env.SHORT_SHA }}.
+            Not a stable release: the API may change without notice.
+
+            Each archive is a self-contained dev kit: headers, static and shared libraries, a
+            CMake package, and the bundled expat. README.md inside explains how to use it.
+          prerelease: true
+          make_latest: "false"
+          fail_on_unmatched_files: true
+          files: kits/*
+
+      # The release action re-uploads assets for a tag it already knows, but it never moves the
+      # tag itself, so dev-latest would keep pointing at the very first build forever. Move it.
+      - name: Move the dev-latest tag to this commit
+        run: |
+          git tag -f dev-latest
+          git push origin dev-latest --force
+
+      # Fixed asset names give the README a permanent link; the version stays visible in the
+      # release notes and in the VERSION file inside each kit.
+      - name: Give the kits fixed dev-latest names
+        run: |
+          mkdir -p latest
+          for f in kits/*; do
+            cp "$f" "latest/$(basename "$f" | sed -E 's/^NeoPepXMLParser-[^-]+-dev\.[0-9]+-/NeoPepXMLParser-dev-latest-/')"
+          done
+          ls -la latest
+
+      - name: Publish the rolling dev-latest pre-release
+        uses: softprops/action-gh-release@e598afbe1493e6b1bafb1f389cabb956eab91231 # v3.0.3
+        with:
+          tag_name: dev-latest
+          name: Latest dev build
+          body: |
+            Always the most recent successful build from `dev` (currently
+            ${{ env.PACKAGE_VERSION }} @ ${{ env.SHORT_SHA }}). Assets are replaced on every
+            push; pin a dated dev build from the Releases page if you need a fixed one.
+          prerelease: true
+          make_latest: "false"
+          fail_on_unmatched_files: true
+          files: latest/*
