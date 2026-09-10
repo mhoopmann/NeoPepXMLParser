@@ -5,6 +5,13 @@ All notable changes to NeoPepXMLParser are recorded here. Versions follow
 
 ## 1.1.1 (unreleased)
 
+### Added
+
+- A Catch2 test suite under `tests/`, run by CTest and in CI: round trip against a committed
+  expected output, hand-verified values, filters, the UI layer, locale independence, error
+  paths, and non-ASCII file names. The first fixture is a trimmed real Comet + PeptideProphet +
+  iProphet result; see `tests/data/README.md`.
+
 ### Fixed
 
 - Writing a `parameter` element whose `value` attribute is empty terminated the process. Comet
@@ -13,6 +20,16 @@ All notable changes to NeoPepXMLParser are recorded here. Versions follow
 - Dated dev releases (`dev-<version>-<run>`) now tag the commit that was built. Previously the
   tag was created on the default branch, so the source links of `dev-1.1.0-1` and
   `dev-1.1.0-2` pointed at the pre-restructure tree even though their kits were correct.
+
+### Known limitations
+
+Found by the new tests and covered by test cases tagged `[!mayfail]`, to be addressed with the
+error-handling work:
+
+- Writing is locale-sensitive: under a comma-decimal locale the numeric attributes are written
+  with commas.
+- `setFilterRunSummary()` also removes every `search_hit`.
+- `CnpxUIPSM` never fills `peptideProphet.parameters` or `iProphet.parameters`.
 
 ## 1.1.0 (2026-09-10)
 

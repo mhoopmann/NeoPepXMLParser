@@ -341,6 +341,13 @@ generate_export_header(${neopepxml_export_source}
 # lands. Until tests/ exists this registers no tests.
 if(NEOPEPXML_BUILD_TESTS)
   enable_testing()
+  # The tests link the library and therefore expat, which the headers-only expat mode cannot
+  # provide; the example below is skipped there for the same reason.
+  if(NEOPEPXML_EXPAT_HAS_LIBRARY)
+    add_subdirectory(tests)
+  else()
+    message(STATUS "NeoPepXMLParser: tests skipped, no expat library to link in this expat mode")
+  endif()
 endif()
 if(NEOPEPXML_BUILD_EXAMPLES)
   # The example links expat through the static library, which the headers-only expat mode

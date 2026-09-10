@@ -37,6 +37,9 @@ Source: `Human_DDA_A_01.ipro.pep.xml`, 133 MB, 71,733 spectrum queries, one run 
    queries so each combination of features appears at least once.
 3. Redact paths only. Keep everything else verbatim, including quirks such as empty attributes
    or single-quoted values; those are the cases worth testing.
+   Keep the source's line endings as well (this fixture is LF, as TPP writes it). On Git Bash for
+   Windows, awk and sed strip carriage returns while perl keeps them, so check
+   `tr -cd "" < file | wc -c` before and after processing a CRLF source.
 4. Round-trip the result through the library before committing it.
 5. Name the file after what it exercises, aim for under 100 KB, and add a row to the table above
    with the source, selection, and coverage.
