@@ -1,10 +1,7 @@
 // The read-time filters and the CnpxUI* convenience layer.
 //
-// Two tests are tagged [!mayfail]: they describe behavior the code does not have yet, so they
-// report without failing the run. Remove the tag when the underlying issue is fixed:
-//   - setFilterRunSummary() also strips every search_hit, because the search_hit branch of
-//     endElement() is guarded by the run-summary filter and compares against the (empty)
-//     search-hit filter with `compare(...) != std::string::npos`.
+// One test is tagged [!mayfail]: it describes behavior the code does not have yet, so it reports
+// without failing the run. Remove the tag when the underlying issue is fixed:
 //   - CnpxUIPSM::setPSM() fills a parameter entry for each Prophet score but never pushes it,
 //     so peptideProphet.parameters and iProphet.parameters stay empty.
 #include "NeoPepXMLParser/NeoPepXMLParser.h"
@@ -66,7 +63,7 @@ TEST_CASE("run-summary filter keeps run summaries whose base name contains the s
   }
 }
 
-TEST_CASE("run-summary filter leaves search hits alone", "[filters][!mayfail]") {
+TEST_CASE("run-summary filter leaves search hits alone", "[filters]") {
   NeoPepXMLParser xml;
   xml.setFilterRunSummary("20260415_Human");
   REQUIRE(xml.read(dataPath(fixtureName()).c_str()));
@@ -138,4 +135,22 @@ TEST_CASE("UI PSM carries the Prophet score parameters", "[ui][!mayfail]") {
   CnpxUIPSM& p = xml[0];
   CHECK(p.peptideProphet.parameters.size() == 7);
   CHECK(p.iProphet.parameters.size() == 4);
+}
+
+TEST_CASE("search-hit filter drops a query that has no hits instead of indexing one", "[filters]") {
+  // Remove the first query's only search_hit from a copy of the fixture. Its peptide was the one
+  // the filter asks for, so with the hit gone nothing may match, and nothing may crash.
+  std::string text = readBytes(dataPath(fixtureName()));
+  const size_t begin = text.find("<search_hit ");
+  const size_t end = text.find("</search_hit>", begin);
+  REQUIRE(begin != std::string::npos);
+  REQUIRE(end != std::string::npos);
+  text.erase(begin, end + std::string("</search_hit>").size() - begin);
+  const std::string path = outputPath("filters_hitless_query.pep.xml");
+  REQUIRE(writeBytes(path, text));
+
+  NeoPepXMLParser xml;
+  xml.setFilterSearchHit("AKAGLLPVL");
+  REQUIRE(xml.read(path.c_str()));
+  CHECK(xml.size() == 0);
 }

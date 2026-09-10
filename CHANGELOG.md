@@ -14,6 +14,10 @@ All notable changes to NeoPepXMLParser are recorded here. Versions follow
 
 ### Fixed
 
+- `setFilterRunSummary()` removed every `search_hit` from the document, leaving queries without
+  hits and crashing any later access to them: a stub in the `search_hit` handler, present since
+  2020, was guarded by the wrong filter and compared an `int` against `std::string::npos`. The
+  search-hit filter now also tolerates queries that have no hits.
 - Writing a `parameter` element whose `value` attribute is empty terminated the process. Comet
   emits `value=""` for unset parameters such as `mass_offsets`, so every Comet result file
   failed to write back.
@@ -28,7 +32,6 @@ error-handling work:
 
 - Writing is locale-sensitive: under a comma-decimal locale the numeric attributes are written
   with commas.
-- `setFilterRunSummary()` also removes every `search_hit`.
 - `CnpxUIPSM` never fills `peptideProphet.parameters` or `iProphet.parameters`.
 
 ## 1.1.0 (2026-09-10)

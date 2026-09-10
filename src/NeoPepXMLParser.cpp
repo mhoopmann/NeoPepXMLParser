@@ -117,10 +117,6 @@ void NeoPepXMLParser::endElement(const char *el) {
     }
   } else if (isElement("peptideprophet_result", el)) {
     pProb= msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().peptide_prophet_result.probability;
-  } else if (isElement("search_hit", el)) {
-    if (rsFilter.size() > 0) {
-      if (msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().peptide.compare(shFilter) != string::npos) msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.pop_back();
-    }
   } else if (isElement("spectrum_query", el)) {
     bool bPop=false;
     if(probFilter>-0.1){
@@ -137,7 +133,12 @@ void NeoPepXMLParser::endElement(const char *el) {
       }
     }
     if (shFilter.size() > 0 && !bPop) {
-      if (msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result[0].search_hit[0].peptide.compare(shFilter) != 0){
+      // Keep the query only when its top-ranked hit is the requested peptide. A query without any
+      // hit cannot match, and must not be indexed.
+      CnpxSpectrumQuery& q = msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back();
+      bool match = !q.search_result.empty() && !q.search_result[0].search_hit.empty() &&
+                   q.search_result[0].search_hit[0].peptide == shFilter;
+      if (!match) {
         msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.pop_back();
         bPop=true;
       }
