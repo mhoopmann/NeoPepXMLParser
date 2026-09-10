@@ -1,0 +1,91 @@
+name: Release
+
+# Manual only, main only. Builds the kits at the real project version (no dev suffix) and
+# publishes them under v<version> as a pre-release, so the artifacts can be inspected before
+# the release is promoted by hand in the GitHub UI. Nothing here ever marks a release as final;
+# that promotion is always a separate, deliberate click. GitHub attaches the source archives
+# to the release automatically.
+
+on:
+  workflow_dispatch: {}
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  # workflow_dispatch lets any branch be picked in the Actions UI. Only main produces official
+  # releases, so refuse anything else outright instead of relying on the right choice being made.
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "::error::Release can only be run from main (attempted ${{ github.ref }}). Merge to main first, then run it from there."
+          exit 1
+      - name: Confirm
+        run: echo "Running from main at ${{ github.sha }}."
+
+  build:
+    needs: guard
+    uses: ./.github/workflows/build.yml
+    with:
+      artifact_retention_days: 30
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: v${{ needs.build.outputs.version }}
+      VERSION: ${{ needs.build.outputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # Refuses to clobber a release that has already been promoted out of pre-release.
+      # Re-running against a tag that is still a pre-release is fine; that is how a second pass
+      # after a fix works. After a promotion, bump the version in CMakeLists.txt to release again.
+      - name: Refuse to overwrite a promoted release
+        run: |
+          if state=$(gh release view "$TAG" --json isPrerelease --jq .isPrerelease 2>/dev/null); then
+            if [ "$state" = "false" ]; then
+              echo "::error::$TAG is already a published release. Bump the version in CMakeLists.txt before releasing again."
+              exit 1
+            fi
+            echo "$TAG exists as a pre-release; its assets will be replaced."
+          else
+            echo "$TAG does not exist yet; it will be created."
+          fi
+
+      - name: Download the kits built by every platform
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: kit-*
+          merge-multiple: true
+          path: kits
+
+      - name: Show what will be published
+        run: ls -la kits
+
+      - name: Publish the release candidate (pre-release, pending manual promotion)
+        uses: softprops/action-gh-release@e598afbe1493e6b1bafb1f389cabb956eab91231 # v3.0.3
+        with:
+          tag_name: ${{ env.TAG }}
+          name: NeoPepXMLParser ${{ env.VERSION }}
+          body: |
+            Release candidate for `${{ env.TAG }}`, built from `main` @ ${{ github.sha }}.
+
+            Marked pre-release pending review. Once confirmed, promote it to a full release from
+            the GitHub UI.
+
+            Each archive is a self-contained dev kit: headers, static and shared libraries, a
+            CMake package, and the bundled expat. README.md inside explains how to use it. The
+            source archives below are attached by GitHub.
+          prerelease: true
+          make_latest: "false"
+          fail_on_unmatched_files: true
+          files: kits/*

@@ -1,0 +1,16 @@
+# Out-of-source CMake build trees
+/build/
+/build-*/
+/out/
+CMakeUserPresets.json
+
+# IDE and editor state
+.vs/
+.vscode/
+.idea/
+.cache/
+*.user
+
+# Output of the retired GNU Makefile
+/obj/
+libneopepxmlparser.a

@@ -1,0 +1,137 @@
+name: Build kits
+
+# Reusable workflow: builds, tests, and packages the dev kits on every platform and uploads each
+# archive as a workflow artifact. ci.yml, dev-build.yml, and release.yml all call it, so the
+# build steps live in exactly one place. Nothing here publishes anything.
+#
+# Third-party actions are pinned to commit SHAs (the comment carries the version) so a moved tag
+# cannot change what runs here. Bump them deliberately.
+
+on:
+  workflow_call:
+    inputs:
+      version_suffix:
+        description: Pre-release identifier such as dev.14; empty for an official release.
+        type: string
+        default: ""
+      commit_metadata:
+        description: Append the short commit hash to the reported version as build metadata.
+        type: boolean
+        default: false
+      artifact_retention_days:
+        type: number
+        default: 7
+    outputs:
+      version:
+        description: Base version from CMakeLists.txt, e.g. 1.1.0
+        value: ${{ jobs.version.outputs.version }}
+      package_version:
+        description: Version as it appears in archive names, e.g. 1.1.0-dev.14
+        value: ${{ jobs.version.outputs.package_version }}
+      short_sha:
+        description: Short hash of the built commit
+        value: ${{ jobs.version.outputs.short_sha }}
+
+jobs:
+  # The version lives in one place, the project() call in CMakeLists.txt. Bumping it there is
+  # the only edit a release needs; no workflow file changes.
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.read.outputs.version }}
+      package_version: ${{ steps.read.outputs.package_version }}
+      short_sha: ${{ steps.read.outputs.short_sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Read the version from CMakeLists.txt
+        id: read
+        shell: bash
+        run: |
+          version=$(sed -nE 's/^[[:space:]]*VERSION[[:space:]]+([0-9]+\.[0-9]+\.[0-9]+)[[:space:]]*$/\1/p' CMakeLists.txt | head -n 1)
+          if [ -z "$version" ]; then
+            echo "::error::Could not read the VERSION line of project() in CMakeLists.txt"
+            exit 1
+          fi
+          package_version="$version"
+          if [ -n "${{ inputs.version_suffix }}" ]; then
+            package_version="$version-${{ inputs.version_suffix }}"
+          fi
+          {
+            echo "version=$version"
+            echo "package_version=$package_version"
+            echo "short_sha=$(git rev-parse --short HEAD)"
+          } >> "$GITHUB_OUTPUT"
+          echo "Building $package_version"
+
+  build:
+    needs: version
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Windows ships Debug and Release side by side; MSVC will not link a Release static
+          # library into a Debug application.
+          - os: windows-2022
+            preset: windows-x64
+            build_presets: windows-x64-release windows-x64-debug
+            test_presets: windows-x64-release windows-x64-debug
+            cpack_configs: "Release;Debug"
+          # Pinned to the oldest supported LTS on purpose: the shared library's glibc and
+          # libstdc++ requirements are only as new as the machine that built it.
+          - os: ubuntu-22.04
+            preset: linux-x64
+            build_presets: linux-x64
+            test_presets: linux-x64
+            cpack_configs: Release
+          # The preset builds a universal (arm64 + x86_64) binary regardless of the host arch.
+          - os: macos-14
+            preset: macos-universal
+            build_presets: macos-universal
+            test_presets: macos-universal
+            cpack_configs: Release
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # The presets turn on the bundled expat build and the dev-kit doc layout; only the
+      # version stamp varies per run.
+      - name: Configure
+        shell: bash
+        run: |
+          metadata=""
+          if [ "${{ inputs.commit_metadata }}" = "true" ]; then
+            metadata="${{ needs.version.outputs.short_sha }}"
+          fi
+          cmake --preset ${{ matrix.preset }} \
+            -DNEOPEPXML_VERSION_SUFFIX="${{ inputs.version_suffix }}" \
+            -DNEOPEPXML_VERSION_METADATA="$metadata"
+
+      - name: Build
+        shell: bash
+        run: |
+          for preset in ${{ matrix.build_presets }}; do
+            cmake --build --preset "$preset" --parallel
+          done
+
+      - name: Test
+        shell: bash
+        run: |
+          for preset in ${{ matrix.test_presets }}; do
+            ctest --preset "$preset"
+          done
+
+      - name: Package
+        shell: bash
+        working-directory: build/${{ matrix.preset }}
+        run: cpack -C "${{ matrix.cpack_configs }}"
+
+      - name: Upload kit
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: kit-${{ matrix.preset }}
+          path: |
+            build/${{ matrix.preset }}/NeoPepXMLParser-*.zip
+            build/${{ matrix.preset }}/NeoPepXMLParser-*.tar.gz
+          if-no-files-found: error
+          retention-days: ${{ inputs.artifact_retention_days }}

@@ -1,0 +1,29 @@
+#ifndef _CNPXMODAMINOACIDPROBABILITY_H
+#define _CNPXMODAMINOACIDPROBABILITY_H
+
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
+#include <string>
+
+class NEOPEPXML_EXPORT CnpxModAminoAcidProbability {
+public:
+
+  CnpxModAminoAcidProbability();
+
+  void write(FILE* f);
+
+  int position;
+  double probability;
+  double oscore;
+  double mscore;
+  double direct_oscore;
+  double direct_mscore;
+  double cterm_score;
+  double nterm_score;
+  char shift;
+
+private:
+
+};
+
+#endif

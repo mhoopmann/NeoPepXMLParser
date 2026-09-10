@@ -1,0 +1,41 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+# How expat was supplied when this package was built; see cmake/NeoPepXMLExpat.cmake.
+set(NeoPepXMLParser_EXPAT_MODE "@NEOPEPXML_EXPAT_MODE@")
+
+if(NeoPepXMLParser_EXPAT_MODE STREQUAL "FETCH")
+  # expat was built alongside NeoPepXMLParser and installed into this same prefix.
+  find_dependency(expat CONFIG PATHS "${PACKAGE_PREFIX_DIR}" NO_DEFAULT_PATH)
+elseif(NeoPepXMLParser_EXPAT_MODE STREQUAL "FIND")
+  find_dependency(EXPAT)
+endif()
+# In EXTERNAL mode the expat library path, if one was given, is recorded in the exported
+# NeoPepXMLParser::expat target itself; otherwise the consuming application links expat.
+
+include("${CMAKE_CURRENT_LIST_DIR}/NeoPepXMLParserTargets.cmake")
+
+# NeoPepXMLParser::NeoPepXMLParser is the conventional target to link. It refers to the static
+# library unless NeoPepXMLParser_SHARED_LIBS is ON before find_package(), or unless only the
+# shared library was installed. Either library can also be named directly as
+# NeoPepXMLParser::static or NeoPepXMLParser::shared.
+if(NOT TARGET NeoPepXMLParser::NeoPepXMLParser)
+  if(NeoPepXMLParser_SHARED_LIBS AND TARGET NeoPepXMLParser::shared)
+    set(_neopepxml_default NeoPepXMLParser::shared)
+  elseif(TARGET NeoPepXMLParser::static)
+    set(_neopepxml_default NeoPepXMLParser::static)
+  elseif(TARGET NeoPepXMLParser::shared)
+    set(_neopepxml_default NeoPepXMLParser::shared)
+  else()
+    set(NeoPepXMLParser_FOUND FALSE)
+    set(NeoPepXMLParser_NOT_FOUND_MESSAGE "NeoPepXMLParser was installed without any library target.")
+    return()
+  endif()
+  add_library(NeoPepXMLParser::NeoPepXMLParser INTERFACE IMPORTED)
+  set_target_properties(NeoPepXMLParser::NeoPepXMLParser PROPERTIES
+    INTERFACE_LINK_LIBRARIES "${_neopepxml_default}")
+  unset(_neopepxml_default)
+endif()
+
+check_required_components(NeoPepXMLParser)
