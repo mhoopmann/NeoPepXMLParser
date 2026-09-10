@@ -56,6 +56,8 @@ jobs:
         with:
           tag_name: ${{ env.TAG }}
           name: Dev build ${{ env.PACKAGE_VERSION }}
+          # Without this the tag is created on the default branch, which is not what was built.
+          target_commitish: ${{ github.sha }}
           body: |
             Automated development build from `dev` @ ${{ env.SHORT_SHA }}.
             Not a stable release: the API may change without notice.
@@ -89,6 +91,7 @@ jobs:
         with:
           tag_name: dev-latest
           name: Latest dev build
+          target_commitish: ${{ github.sha }}
           body: |
             Always the most recent successful build from `dev` (currently
             ${{ env.PACKAGE_VERSION }} @ ${{ env.SHORT_SHA }}). Assets are replaced on every

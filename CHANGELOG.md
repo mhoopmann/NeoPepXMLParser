@@ -3,7 +3,15 @@
 All notable changes to NeoPepXMLParser are recorded here. Versions follow
 [Semantic Versioning](https://semver.org/); the version is set once in `CMakeLists.txt`.
 
-## 1.1.0 (unreleased)
+## 1.1.1 (unreleased)
+
+### Fixed
+
+- Dated dev releases (`dev-<version>-<run>`) now tag the commit that was built. Previously the
+  tag was created on the default branch, so the source links of `dev-1.1.0-1` and
+  `dev-1.1.0-2` pointed at the pre-restructure tree even though their kits were correct.
+
+## 1.1.0 (2026-09-10)
 
 The repository was restructured into a conventional CMake library and now ships prebuilt dev
 kits. Consumers of 1.0.x need to adjust three things: the include path, how the library is

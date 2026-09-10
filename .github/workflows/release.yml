@@ -76,6 +76,7 @@ jobs:
         with:
           tag_name: ${{ env.TAG }}
           name: NeoPepXMLParser ${{ env.VERSION }}
+          target_commitish: ${{ github.sha }}
           body: |
             Release candidate for `${{ env.TAG }}`, built from `main` @ ${{ github.sha }}.
 

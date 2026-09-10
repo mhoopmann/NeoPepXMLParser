@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 
 project(NeoPepXMLParser
-  VERSION 1.1.0
+  VERSION 1.1.1
   DESCRIPTION "Library for reading, editing, and writing pepXML files"
   HOMEPAGE_URL "https://github.com/mhoopmann/NeoPepXMLParser"
   LANGUAGES CXX)
