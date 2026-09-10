@@ -100,11 +100,24 @@ program.
 Requirements: CMake 3.21 or newer and a C++17 compiler (MSVC 2022, GCC, Clang, Apple Clang).
 
 ```sh
-cmake --preset windows-x64          # or linux-x64, macos-universal
-cmake --build --preset windows-x64-release
+cmake --preset windows-x64                   # or linux-x64, macos-universal
+cmake --build --preset windows-x64-release   # and windows-x64-debug for the Debug variant
 ctest --preset windows-x64-release
-cpack -C "Release;Debug"            # from build/windows-x64; produces the kit archive
 ```
+
+The build directory (`build/<preset>/`) is scratch. The usable result is produced from it in one
+of two ways: install a tree, or package that same tree as an archive.
+
+```sh
+# A kit-layout tree at <dir>, ready for find_package(); the second call adds Debug beside Release.
+cmake --install build/windows-x64 --config Release --prefix <dir>
+cmake --install build/windows-x64 --config Debug   --prefix <dir>
+
+# The same tree as NeoPepXMLParser-<version>-<os>-<arch>.zip (or .tar.gz); run inside build/<preset>.
+cpack -C "Release;Debug"
+```
+
+Linux and macOS builds are single-configuration: omit `--config` and use `cpack -C Release`.
 
 The kit presets download and build a pinned libexpat (`NEOPEPXML_EXPAT_GIT_TAG`) and bundle
 it. expat can also come from elsewhere:
