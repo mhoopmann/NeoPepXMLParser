@@ -4,3 +4,7 @@
 
 # Shell scripts must stay LF on every platform; a CRLF shebang line breaks on Linux/macOS.
 *.sh text eol=lf
+
+# Test fixtures and their expected outputs are compared byte for byte, so they must never be
+# converted on checkout or commit.
+tests/data/** -text

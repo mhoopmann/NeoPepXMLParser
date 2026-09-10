@@ -1,0 +1,1416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<msms_pipeline_analysis date="2026-04-15T15:36:33" xmlns="http://regis-web.systemsbiology.net/pepXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://regis-web.systemsbiology.net/pepXML /tools/bin/TPP/tpp/schema/pepXML_v123.xsd" summary_xml="data/Human_DDA_A_01.ipro.pep.xml">
+<analysis_summary analysis="interprophet" time="2026-04-15T15:36:33">
+<interprophet_summary version="TPP v7.2.0 Bombogenesis, Build 202411260847-9415 (Windows_NT-x86_64)" options="THREADS=16"  est_tot_num_correct_psm="36510.9"  est_tot_num_correct_pep="30669.3">
+<inputfile name="Human_DDA_A_01.pep.xml"/>
+<roc_error_data charge="all">
+<roc_data_point min_prob="0.9999" sensitivity="0.6853" error="0.0000" num_corr="25020" num_incorr="0"/>
+<roc_data_point min_prob="0.9990" sensitivity="0.8021" error="0.0001" num_corr="29284" num_incorr="2"/>
+<roc_data_point min_prob="0.9900" sensitivity="0.9117" error="0.0005" num_corr="33286" num_incorr="17"/>
+<roc_data_point min_prob="0.9800" sensitivity="0.9329" error="0.0008" num_corr="34060" num_incorr="28"/>
+<roc_data_point min_prob="0.9500" sensitivity="0.9576" error="0.0017" num_corr="34962" num_incorr="58"/>
+<roc_data_point min_prob="0.9000" sensitivity="0.9727" error="0.0028" num_corr="35513" num_incorr="101"/>
+<roc_data_point min_prob="0.8500" sensitivity="0.9794" error="0.0038" num_corr="35758" num_incorr="135"/>
+<roc_data_point min_prob="0.8000" sensitivity="0.9833" error="0.0046" num_corr="35902" num_incorr="165"/>
+<roc_data_point min_prob="0.7500" sensitivity="0.9861" error="0.0054" num_corr="36002" num_incorr="194"/>
+<roc_data_point min_prob="0.7000" sensitivity="0.9880" error="0.0061" num_corr="36072" num_incorr="220"/>
+<roc_data_point min_prob="0.6500" sensitivity="0.9897" error="0.0069" num_corr="36135" num_incorr="250"/>
+<roc_data_point min_prob="0.6000" sensitivity="0.9907" error="0.0075" num_corr="36171" num_incorr="272"/>
+<roc_data_point min_prob="0.5500" sensitivity="0.9918" error="0.0083" num_corr="36211" num_incorr="302"/>
+<roc_data_point min_prob="0.5000" sensitivity="0.9927" error="0.0091" num_corr="36246" num_incorr="333"/>
+<roc_data_point min_prob="0.4500" sensitivity="0.9937" error="0.0101" num_corr="36280" num_incorr="371"/>
+<roc_data_point min_prob="0.4000" sensitivity="0.9946" error="0.0113" num_corr="36313" num_incorr="415"/>
+<roc_data_point min_prob="0.3500" sensitivity="0.9954" error="0.0126" num_corr="36342" num_incorr="464"/>
+<roc_data_point min_prob="0.3000" sensitivity="0.9961" error="0.0140" num_corr="36368" num_incorr="517"/>
+<roc_data_point min_prob="0.2500" sensitivity="0.9969" error="0.0161" num_corr="36398" num_incorr="596"/>
+<roc_data_point min_prob="0.2000" sensitivity="0.9975" error="0.0182" num_corr="36420" num_incorr="676"/>
+<roc_data_point min_prob="0.1500" sensitivity="0.9982" error="0.0216" num_corr="36447" num_incorr="803"/>
+<roc_data_point min_prob="0.1000" sensitivity="0.9989" error="0.0260" num_corr="36471" num_incorr="974"/>
+<roc_data_point min_prob="0.0500" sensitivity="0.9995" error="0.0329" num_corr="36493" num_incorr="1241"/>
+<roc_data_point min_prob="0.0000" sensitivity="1.0000" error="0.4910" num_corr="36511" num_incorr="35222"/>
+<error_point error="0.0000" min_prob="1.0000" num_corr="2" num_incorr="0"/>
+<error_point error="0.0001" min_prob="0.9987" num_corr="29822" num_incorr="3"/>
+<error_point error="0.0002" min_prob="0.9970" num_corr="31431" num_incorr="6"/>
+<error_point error="0.0003" min_prob="0.9949" num_corr="32298" num_incorr="10"/>
+<error_point error="0.0004" min_prob="0.9927" num_corr="32864" num_incorr="13"/>
+<error_point error="0.0005" min_prob="0.9901" num_corr="33267" num_incorr="17"/>
+<error_point error="0.0006" min_prob="0.9872" num_corr="33577" num_incorr="20"/>
+<error_point error="0.0007" min_prob="0.9841" num_corr="33819" num_incorr="24"/>
+<error_point error="0.0008" min_prob="0.9809" num_corr="34019" num_incorr="27"/>
+<error_point error="0.0009" min_prob="0.9775" num_corr="34186" num_incorr="31"/>
+<error_point error="0.0010" min_prob="0.9746" num_corr="34332" num_incorr="34"/>
+<error_point error="0.0015" min_prob="0.9565" num_corr="34845" num_incorr="52"/>
+<error_point error="0.0020" min_prob="0.9365" num_corr="35166" num_incorr="71"/>
+<error_point error="0.0025" min_prob="0.9153" num_corr="35396" num_incorr="89"/>
+<error_point error="0.0030" min_prob="0.8914" num_corr="35569" num_incorr="107"/>
+<error_point error="0.0040" min_prob="0.8361" num_corr="35809" num_incorr="144"/>
+<error_point error="0.0050" min_prob="0.7741" num_corr="35962" num_incorr="181"/>
+<error_point error="0.0060" min_prob="0.7034" num_corr="36067" num_incorr="218"/>
+<error_point error="0.0070" min_prob="0.6417" num_corr="36144" num_incorr="255"/>
+<error_point error="0.0080" min_prob="0.5661" num_corr="36200" num_incorr="292"/>
+<error_point error="0.0090" min_prob="0.5058" num_corr="36242" num_incorr="330"/>
+<error_point error="0.0100" min_prob="0.4561" num_corr="36277" num_incorr="367"/>
+<error_point error="0.0150" min_prob="0.2734" num_corr="36383" num_incorr="555"/>
+<error_point error="0.0200" min_prob="0.1690" num_corr="36436" num_incorr="745"/>
+<error_point error="0.0250" min_prob="0.1135" num_corr="36467" num_incorr="936"/>
+<error_point error="0.0300" min_prob="0.0690" num_corr="36486" num_incorr="1129"/>
+<error_point error="0.0400" min_prob="0.0224" num_corr="36503" num_incorr="1522"/>
+<error_point error="0.0500" min_prob="0.0075" num_corr="36508" num_incorr="1923"/>
+<error_point error="0.0750" min_prob="0.0004" num_corr="36511" num_incorr="2962"/>
+<error_point error="0.1000" min_prob="0.0000" num_corr="36511" num_incorr="4058"/>
+</roc_error_data>
+
+<mixturemodel name="NRS" pos_bandwidth="0.702" neg_bandwidth="0.702">
+<point value="-2.01" pos_dens="0.00891182" neg_dens="0.0105141" neg_obs_dens="0.0104891" pos_obs_dens="0.00890955"/>
+<point value="-1.6583" pos_dens="0.0325164" neg_dens="0.036938" neg_obs_dens="0.0368932" pos_obs_dens="0.0325187"/>
+<point value="-1.30659" pos_dens="0.0930687" neg_dens="0.103387" neg_obs_dens="0.10332" pos_obs_dens="0.0930917"/>
+<point value="-0.95489" pos_dens="0.208724" neg_dens="0.227784" neg_obs_dens="0.227712" pos_obs_dens="0.208794"/>
+<point value="-0.603186" pos_dens="0.366763" neg_dens="0.393082" neg_obs_dens="0.393035" pos_obs_dens="0.366896"/>
+<point value="-0.251483" pos_dens="0.505427" neg_dens="0.53008" neg_obs_dens="0.530087" pos_obs_dens="0.505596"/>
+<point value="0.10022" pos_dens="0.547394" neg_dens="0.55799" neg_obs_dens="0.558042" pos_obs_dens="0.54753"/>
+<point value="0.451924" pos_dens="0.4676" neg_dens="0.458313" neg_obs_dens="0.458379" pos_obs_dens="0.467642"/>
+<point value="0.803627" pos_dens="0.316909" neg_dens="0.293779" neg_obs_dens="0.293833" pos_obs_dens="0.316851"/>
+<point value="1.15533" pos_dens="0.172086" neg_dens="0.147089" neg_obs_dens="0.147126" pos_obs_dens="0.171971"/>
+<point value="1.50703" pos_dens="0.0761994" neg_dens="0.0576509" neg_obs_dens="0.0576735" pos_obs_dens="0.0760772"/>
+<point value="1.85874" pos_dens="0.0284841" neg_dens="0.0177876" neg_obs_dens="0.0178019" pos_obs_dens="0.0283845"/>
+<point value="2.21044" pos_dens="0.00964155" neg_dens="0.00439191" neg_obs_dens="0.00440064" pos_obs_dens="0.00957414"/>
+<point value="2.56214" pos_dens="0.00332125" neg_dens="0.000918803" neg_obs_dens="0.000923894" pos_obs_dens="0.00328351"/>
+<point value="2.91385" pos_dens="0.00129001" neg_dens="0.000198429" neg_obs_dens="0.000201366" pos_obs_dens="0.00127336"/>
+<point value="3.26555" pos_dens="0.000571397" neg_dens="6.57318e-05" neg_obs_dens="6.75215e-05" pos_obs_dens="0.000566016"/>
+<point value="3.61725" pos_dens="0.000312519" neg_dens="3.73231e-05" neg_obs_dens="3.85407e-05" pos_obs_dens="0.000311011"/>
+<point value="3.96896" pos_dens="0.000267166" neg_dens="2.96969e-05" neg_obs_dens="3.06811e-05" pos_obs_dens="0.00026517"/>
+<point value="4.32066" pos_dens="0.000311827" neg_dens="3.00869e-05" neg_obs_dens="3.10647e-05" pos_obs_dens="0.000307017"/>
+<point value="4.67236" pos_dens="0.000351801" neg_dens="3.33958e-05" neg_obs_dens="3.44633e-05" pos_obs_dens="0.00034361"/>
+</mixturemodel>
+<mixturemodel name="NSI" pos_bandwidth="0.404" neg_bandwidth="0.404">
+<point value="-0.01" pos_dens="0.791892" neg_dens="0.97753" neg_obs_dens="0.97692" pos_obs_dens="0.79154"/>
+<point value="0.0912023" pos_dens="0.779874" neg_dens="0.953699" neg_obs_dens="0.953111" pos_obs_dens="0.779524"/>
+<point value="0.192405" pos_dens="0.727149" neg_dens="0.874168" neg_obs_dens="0.873647" pos_obs_dens="0.726827"/>
+<point value="0.293607" pos_dens="0.645928" neg_dens="0.753018" neg_obs_dens="0.752608" pos_obs_dens="0.645658"/>
+<point value="0.394809" pos_dens="0.552359" neg_dens="0.609915" neg_obs_dens="0.609652" pos_obs_dens="0.552163"/>
+<point value="0.496012" pos_dens="0.461958" neg_dens="0.464945" neg_obs_dens="0.464853" pos_obs_dens="0.461854"/>
+<point value="0.597214" pos_dens="0.385741" neg_dens="0.33416" neg_obs_dens="0.334249" pos_obs_dens="0.385741"/>
+<point value="0.698416" pos_dens="0.328281" neg_dens="0.227132" neg_obs_dens="0.227393" pos_obs_dens="0.328386"/>
+<point value="0.799618" pos_dens="0.288044" neg_dens="0.146804" neg_obs_dens="0.147214" pos_obs_dens="0.288247"/>
+<point value="0.900821" pos_dens="0.259494" neg_dens="0.091057" neg_obs_dens="0.0915789" pos_obs_dens="0.259778"/>
+<point value="1.00202" pos_dens="0.235915" neg_dens="0.0549831" neg_obs_dens="0.0555681" pos_obs_dens="0.236254"/>
+<point value="1.10323" pos_dens="0.211874" neg_dens="0.0329622" neg_obs_dens="0.0335598" pos_obs_dens="0.212236"/>
+<point value="1.20443" pos_dens="0.184608" neg_dens="0.0200452" neg_obs_dens="0.0206098" pos_obs_dens="0.184963"/>
+<point value="1.30563" pos_dens="0.154158" neg_dens="0.0125556" neg_obs_dens="0.0130532" pos_obs_dens="0.154481"/>
+<point value="1.40683" pos_dens="0.122536" neg_dens="0.00810987" neg_obs_dens="0.00852155" pos_obs_dens="0.12281"/>
+<point value="1.50803" pos_dens="0.0924845" neg_dens="0.00533391" neg_obs_dens="0.00565584" pos_obs_dens="0.0927032"/>
+<point value="1.60924" pos_dens="0.0663704" neg_dens="0.00350891" neg_obs_dens="0.00374901" pos_obs_dens="0.0665363"/>
+<point value="1.71044" pos_dens="0.045538" neg_dens="0.00227718" neg_obs_dens="0.00245022" pos_obs_dens="0.0456587"/>
+<point value="1.81164" pos_dens="0.0301922" neg_dens="0.00145107" neg_obs_dens="0.00157381" pos_obs_dens="0.0302781"/>
+<point value="1.91284" pos_dens="0.0196679" neg_dens="0.000913193" neg_obs_dens="0.00100074" pos_obs_dens="0.0197287"/>
+</mixturemodel>
+<mixturemodel name="NSM" pos_bandwidth="0.20723" neg_bandwidth="0.20723">
+<point value="-0.01" pos_dens="1.90378" neg_dens="1.91932" neg_obs_dens="1.91797" pos_obs_dens="1.90665"/>
+<point value="0.0938225" pos_dens="1.72091" neg_dens="1.73443" neg_obs_dens="1.73321" pos_obs_dens="1.72352"/>
+<point value="0.197645" pos_dens="1.21064" neg_dens="1.21947" neg_obs_dens="1.21861" pos_obs_dens="1.21249"/>
+<point value="0.301468" pos_dens="0.663163" neg_dens="0.667135" neg_obs_dens="0.666674" pos_obs_dens="0.664177"/>
+<point value="0.40529" pos_dens="0.28352" neg_dens="0.284068" neg_obs_dens="0.283892" pos_obs_dens="0.283923"/>
+<point value="0.509113" pos_dens="0.0959881" neg_dens="0.0943593" neg_obs_dens="0.0943668" pos_obs_dens="0.0959814"/>
+<point value="0.612935" pos_dens="0.0286434" neg_dens="0.0249546" neg_obs_dens="0.0251383" pos_obs_dens="0.0282187"/>
+<point value="0.716758" pos_dens="0.0127992" neg_dens="0.00627041" neg_obs_dens="0.00670917" pos_obs_dens="0.0117604"/>
+<point value="0.82058" pos_dens="0.0130095" neg_dens="0.00305888" neg_obs_dens="0.00382622" pos_obs_dens="0.0111849"/>
+<point value="0.924403" pos_dens="0.0156414" neg_dens="0.00311505" neg_obs_dens="0.00415912" pos_obs_dens="0.0131632"/>
+<point value="1.02823" pos_dens="0.0158124" neg_dens="0.00315522" neg_obs_dens="0.00426489" pos_obs_dens="0.01319"/>
+<point value="1.13205" pos_dens="0.0126982" neg_dens="0.00257395" neg_obs_dens="0.00349545" pos_obs_dens="0.0105345"/>
+<point value="1.23587" pos_dens="0.00801578" neg_dens="0.00164739" neg_obs_dens="0.00224573" pos_obs_dens="0.00662339"/>
+<point value="1.33969" pos_dens="0.00396788" neg_dens="0.000824891" neg_obs_dens="0.0011298" pos_obs_dens="0.00326791"/>
+<point value="1.44352" pos_dens="0.00155764" neg_dens="0.000326434" neg_obs_dens="0.000452476" pos_obs_dens="0.00127824"/>
+<point value="1.54734" pos_dens="0.000553452" neg_dens="0.00011408" neg_obs_dens="0.000169915" pos_obs_dens="0.000449742"/>
+<point value="1.65116" pos_dens="0.000355396" neg_dens="6.54801e-05" neg_obs_dens="0.000123594" pos_obs_dens="0.000281632"/>
+<point value="1.75498" pos_dens="0.000540557" neg_dens="9.07218e-05" neg_obs_dens="0.000195064" pos_obs_dens="0.000424587"/>
+<point value="1.85881" pos_dens="0.000861193" neg_dens="0.00013847" neg_obs_dens="0.000306561" pos_obs_dens="0.000678092"/>
+<point value="1.96263" pos_dens="0.00110513" neg_dens="0.000171231" neg_obs_dens="0.000385475" pos_obs_dens="0.000873555"/>
+</mixturemodel>
+<mixturemodel name="NSP" pos_bandwidth="2.002" neg_bandwidth="2.002">
+<point value="-0.01" pos_dens="0.0207374" neg_dens="0.16637" neg_obs_dens="0.165991" pos_obs_dens="0.0218392"/>
+<point value="0.993006" pos_dens="0.0280813" neg_dens="0.154359" neg_obs_dens="0.153853" pos_obs_dens="0.0292659"/>
+<point value="1.99601" pos_dens="0.0340969" neg_dens="0.114616" neg_obs_dens="0.11407" pos_obs_dens="0.0351627"/>
+<point value="2.99902" pos_dens="0.0382686" neg_dens="0.0701173" neg_obs_dens="0.0696431" pos_obs_dens="0.0390867"/>
+<point value="4.00202" pos_dens="0.0407299" neg_dens="0.0377398" neg_obs_dens="0.037415" pos_obs_dens="0.0412672"/>
+<point value="5.00503" pos_dens="0.0418943" neg_dens="0.0202972" neg_obs_dens="0.0201378" pos_obs_dens="0.0421783"/>
+<point value="6.00804" pos_dens="0.0421744" neg_dens="0.0126753" neg_obs_dens="0.0126495" pos_obs_dens="0.0422522"/>
+<point value="7.01104" pos_dens="0.0418377" neg_dens="0.00956258" neg_obs_dens="0.00962102" pos_obs_dens="0.0417592"/>
+<point value="8.01405" pos_dens="0.0409756" neg_dens="0.00808275" neg_obs_dens="0.00818165" pos_obs_dens="0.0407931"/>
+<point value="9.01705" pos_dens="0.0395948" neg_dens="0.00713862" neg_obs_dens="0.00724831" pos_obs_dens="0.0393623"/>
+<point value="10.0201" pos_dens="0.0377323" neg_dens="0.00638891" neg_obs_dens="0.00649429" pos_obs_dens="0.0374962"/>
+<point value="11.0231" pos_dens="0.0354897" neg_dens="0.00574216" neg_obs_dens="0.00583965" pos_obs_dens="0.0352784"/>
+<point value="12.0261" pos_dens="0.0330566" neg_dens="0.00518403" neg_obs_dens="0.00527683" pos_obs_dens="0.0328761"/>
+<point value="13.0291" pos_dens="0.0307763" neg_dens="0.00472426" neg_obs_dens="0.00481771" pos_obs_dens="0.0306134"/>
+<point value="14.0321" pos_dens="0.0292234" neg_dens="0.00439791" neg_obs_dens="0.00449731" pos_obs_dens="0.0290498"/>
+<point value="15.0351" pos_dens="0.0294664" neg_dens="0.00430628" neg_obs_dens="0.00441923" pos_obs_dens="0.0292413"/>
+<point value="16.0381" pos_dens="0.0334289" neg_dens="0.00465801" neg_obs_dens="0.00479968" pos_obs_dens="0.0330976"/>
+<point value="17.0411" pos_dens="0.0430984" neg_dens="0.00567527" neg_obs_dens="0.00587012" pos_obs_dens="0.0425939"/>
+<point value="18.0441" pos_dens="0.0575123" neg_dens="0.00724706" neg_obs_dens="0.00751662" pos_obs_dens="0.0567873"/>
+<point value="19.0471" pos_dens="0.0701585" neg_dens="0.00861838" neg_obs_dens="0.0089548" pos_obs_dens="0.0692492"/>
+</mixturemodel>
+</interprophet_summary>
+</analysis_summary>
+<analysis_summary analysis="peptideprophet" time="2026-04-15T15:35:03"/>
+<analysis_summary analysis="database_refresh" time="2026-04-15T15:34:57"/>
+<analysis_summary analysis="interact" time="2026-04-15T15:34:50">
+<interact_summary filename="data/Human_DDA_A_01.pep.xml" directory="data">
+<inputfile name="20260415_Human_DDA_A_01.pep.xml" directory="data"/>
+</interact_summary>
+</analysis_summary>
+<analysis_summary analysis='decoy' time='2026-04-15T15:37:16'>
+<decoy_analysis_summary decoy_string='DECOY' uniq_iproph_peps='Y' />
+<decoy_analysis>
+<point fdr_ip='0' fdr_ip_decoy='0' fdr_pp='0' fdr_pp_decoy='0' ip_decoy_uncert='0' ip_uncert='0' num_corr_ip='0' num_corr_ip_decoy='0' num_corr_pp='16308.0000000003' num_corr_pp_decoy='16308' pp_decoy_uncert='0' pp_uncert='0' prob_cutoff='1'/>
+<point fdr_ip='0.00175943914677012' fdr_ip_decoy='0.00128590006869308' fdr_pp='0.0023337912559571' fdr_pp_decoy='0.00672172002166747' ip_decoy_uncert='0.000303479797526193' ip_uncert='0.000244662424875105' num_corr_ip='29289.3762959946' num_corr_ip_decoy='29303.2704060845' num_corr_pp='29049.0470000003' num_corr_pp_decoy='28921.2836781291' pp_decoy_uncert='0.000701726707255047' pp_uncert='0.000282781062758168' prob_cutoff='0.95'/>
+<point fdr_ip='0.00299465757157435' fdr_ip_decoy='0.00280704215187977' fdr_pp='0.00366618261454636' fdr_pp_decoy='0.00992677631724954' ip_decoy_uncert='0.000445081697487897' ip_uncert='0.000316163685928595' num_corr_ip='29779.5525729946' num_corr_ip_decoy='29785.1564579655' num_corr_pp='29571.1877000003' num_corr_pp_decoy='29385.373278904' pp_decoy_uncert='0.000847377450432901' pp_uncert='0.000350814498922748' prob_cutoff='0.9'/>
+<point fdr_ip='0.00394534354053036' fdr_ip_decoy='0.00327579177663542' fdr_pp='0.00497168660645129' fdr_pp_decoy='0.013535641010317' ip_decoy_uncert='0.000478818681344918' ip_uncert='0.000361267272263284' num_corr_ip='29991.2057059946' num_corr_ip_decoy='30011.4838381095' num_corr_pp='29857.8146000002' num_corr_pp_decoy='29600.8360202034' pp_decoy_uncert='0.000987685718892561' pp_uncert='0.00040603016781426' prob_cutoff='0.85'/>
+<point fdr_ip='0.00482829820290077' fdr_ip_decoy='0.00415505857842425' fdr_pp='0.00648635973313309' fdr_pp_decoy='0.0164032126529041' ip_decoy_uncert='0.00053865389437641' ip_uncert='0.000398431979308566' num_corr_ip='30121.8570699946' num_corr_ip_decoy='30142.2346869483' num_corr_pp='30081.6060000002' num_corr_pp_decoy='29781.3435272954' pp_decoy_uncert='0.00108556494863523' pp_uncert='0.000461342898843452' prob_cutoff='0.8'/>
+<point fdr_ip='0.00563258859756458' fdr_ip_decoy='0.00517484582490146' fdr_pp='0.00798643072683611' fdr_pp_decoy='0.0187061516983279' ip_decoy_uncert='0.000600647986730703' ip_uncert='0.000429378920907068' num_corr_ip='30207.8875909946' num_corr_ip_decoy='30221.7933586853' num_corr_pp='30244.5097000002' num_corr_pp_decoy='29917.6868470214' pp_decoy_uncert='0.00115797912459035' pp_uncert='0.000509765808821977' prob_cutoff='0.75'/>
+<point fdr_ip='0.00637493684159132' fdr_ip_decoy='0.00591746103056718' fdr_pp='0.0095014089100455' fdr_pp_decoy='0.0212767510132946' ip_decoy_uncert='0.000641894619646827' ip_uncert='0.000455997935866952' num_corr_ip='30268.8002989946' num_corr_ip_decoy='30282.7363846258' num_corr_pp='30370.6678000002' num_corr_pp_decoy='30009.6122604304' pp_decoy_uncert='0.00123470884592147' pp_uncert='0.000554013944423249' prob_cutoff='0.7'/>
+<point fdr_ip='0.00724074540055674' fdr_ip_decoy='0.00651896851738132' fdr_pp='0.011230277966975' fdr_pp_decoy='0.024095236368515' ip_decoy_uncert='0.000673220762632639' ip_uncert='0.000485105766287182' num_corr_ip='30324.8241909946' num_corr_ip_decoy='30346.8715876681' num_corr_pp='30484.7593000002' num_corr_pp_decoy='30088.1197675223' pp_decoy_uncert='0.00131412416171685' pp_uncert='0.000600135098360022' prob_cutoff='0.65'/>
+<point fdr_ip='0.00785068212587558' fdr_ip_decoy='0.00726167226824253' fdr_pp='0.0128939850837766' fdr_pp_decoy='0.0267705347311277' ip_decoy_uncert='0.000710475199172683' ip_uncert='0.000504548352462231' num_corr_ip='30356.7926789946' num_corr_ip_decoy='30374.8146136086' num_corr_pp='30573.6346000002' num_corr_pp_decoy='30143.8362277728' pp_decoy_uncert='0.00138577807589429' pp_uncert='0.000641038103099205' prob_cutoff='0.6'/>
+<point fdr_ip='0.0086979268405827' fdr_ip_decoy='0.00806740105684352' fdr_pp='0.0149432632999174' fdr_pp_decoy='0.0297471631609174' ip_decoy_uncert='0.000748704564528769' ip_uncert='0.0005303125314126' num_corr_ip='30392.3302609946' num_corr_ip_decoy='30411.6615509982' num_corr_pp='30662.8461000002' num_corr_pp_decoy='30202.1795474988' pp_decoy_uncert='0.00146161939100949' pp_uncert='0.000687666294503805' prob_cutoff='0.55'/>
+<point fdr_ip='0.00960908486622023' fdr_ip_decoy='0.00934809503786424' fdr_pp='0.0165826114792351' fdr_pp_decoy='0.0315277390150847' ip_decoy_uncert='0.000806198074284088' ip_uncert='0.00055659692348595' num_corr_ip='30423.8185219946' num_corr_ip_decoy='30431.8358685318' num_corr_pp='30720.9758000002' num_corr_pp_decoy='30254.1049609078' pp_decoy_uncert='0.00150481362267928' pp_uncert='0.000722514958345455' prob_cutoff='0.5'/>
+<point fdr_ip='0.0107149203834795' fdr_ip_decoy='0.0105536373358348' fdr_pp='0.0185016168638526' fdr_pp_decoy='0.0338251808510214' ip_decoy_uncert='0.000856730169338831' ip_uncert='0.000586793946325606' num_corr_ip='30455.1411759946' num_corr_ip_decoy='30460.1062746163' num_corr_pp='30776.8448000002' num_corr_pp_decoy='30296.3438040545' pp_decoy_uncert='0.00155944170471465' pp_uncert='0.000760996015530403' prob_cutoff='0.45'/>
+<point fdr_ip='0.0119422388825821' fdr_ip_decoy='0.0117536405840529' fdr_pp='0.0203034298610846' fdr_pp_decoy='0.0357223844789467' ip_decoy_uncert='0.000904240868137462' ip_uncert='0.00061843261112108' num_corr_ip='30483.5580459946' num_corr_ip_decoy='30489.3766807008' num_corr_pp='30820.2744000001' num_corr_pp_decoy='30335.2095066768' pp_decoy_uncert='0.00160312625457086' pp_uncert='0.000795166439066533' prob_cutoff='0.399999999999999'/>
+<point fdr_ip='0.0133665993404938' fdr_ip_decoy='0.0134886050194548' fdr_pp='0.0218968581573739' fdr_pp_decoy='0.038163737344967' ip_decoy_uncert='0.00096925576620037' ip_uncert='0.000653041137117489' num_corr_ip='30510.6512819946' num_corr_ip_decoy='30508.4549096836' num_corr_pp='30851.3293000001' num_corr_pp_decoy='30341.4334048294' pp_decoy_uncert='0.00165902044172481' pp_uncert='0.000824021637690085' prob_cutoff='0.349999999999999'/>
+<point fdr_ip='0.0148785711568134' fdr_ip_decoy='0.0153512534617122' fdr_pp='0.0237369447693683' fdr_pp_decoy='0.040717639862958' ip_decoy_uncert='0.00103478370542179' ip_uncert='0.000687669362667723' num_corr_ip='30533.8386869946' num_corr_ip_decoy='30519.6683417085' num_corr_pp='30880.1767000001' num_corr_pp_decoy='30343.0603334948' pp_decoy_uncert='0.00171577536231634' pp_uncert='0.000855932221884899' prob_cutoff='0.299999999999999'/>
+<point fdr_ip='0.0172350339894983' fdr_ip_decoy='0.0179291129503313' fdr_pp='0.0261651869821344' fdr_pp_decoy='0.0436927023638291' ip_decoy_uncert='0.00111937382696912' ip_uncert='0.00073801412778905' num_corr_ip='30562.0249129946' num_corr_ip_decoy='30540.4404454706' num_corr_pp='30910.4908000001' num_corr_pp_decoy='30356.2991766415' pp_decoy_uncert='0.00177978986414211' pp_uncert='0.000895971647102303' prob_cutoff='0.249999999999999'/>
+<point fdr_ip='0.0194751654378134' fdr_ip_decoy='0.0203627711096926' fdr_pp='0.0288243548690875' fdr_pp_decoy='0.0467088887277777' ip_decoy_uncert='0.00119412635663779' ip_uncert='0.000782460079401568' num_corr_ip='30582.5695899946' num_corr_ip_decoy='30554.9421431482' num_corr_pp='30935.8290000001' num_corr_pp_decoy='30366.3290666298' pp_decoy_uncert='0.00184274093922647' pp_uncert='0.000937446952275245' prob_cutoff='0.199999999999999'/>
+<point fdr_ip='0.0232695530205635' fdr_ip_decoy='0.0245481219697644' fdr_pp='0.0324985250460895' fdr_pp_decoy='0.0499139940519355' ip_decoy_uncert='0.00131364915596168' ip_uncert='0.000851633378659589' num_corr_ip='30607.8020169946' num_corr_ip_decoy='30567.7355018335' num_corr_pp='30961.0147000001' num_corr_pp_decoy='30403.702276344' pp_decoy_uncert='0.00190694652075782' pp_uncert='0.000991233265503943' prob_cutoff='0.149999999999999'/>
+<point fdr_ip='0.0282912260573361' fdr_ip_decoy='0.0299887680880294' fdr_pp='0.0367551503280141' fdr_pp_decoy='0.0549625447432079' ip_decoy_uncert='0.00145577276995253' ip_uncert='0.00093385656353554' num_corr_ip='30631.1756809946' num_corr_ip_decoy='30582.8528453076' num_corr_pp='30980.8441000001' num_corr_pp_decoy='30410.4187365945' pp_decoy_uncert='0.00200668020987565' pp_uncert='0.00104917799690255' prob_cutoff='0.0999999999999992'/>
+<point fdr_ip='0.0360861695023551' fdr_ip_decoy='0.0380999145381452' fdr_pp='0.0454544889162537' fdr_pp_decoy='0.0641450681485324' ip_decoy_uncert='0.00164751781333217' ip_uncert='0.00104588218822803' num_corr_ip='30651.4958959946' num_corr_ip_decoy='30596.1087871791' num_corr_pp='31003.6382000001' num_corr_pp_decoy='30411.0606102539' pp_decoy_uncert='0.00217839755153924' pp_uncert='0.00115578937840848' prob_cutoff='0.0499999999999993'/>
+</decoy_analysis>
+</analysis_summary>
+<msms_run_summary base_name="data/20260415_Human_DDA_A_01" msManufacturer="UNKNOWN" msModel="UNKNOWN" raw_data_type="raw" raw_data=".mzML">
+<sample_enzyme name="trypsin">
+<specificity cut="KR" no_cut="P" sense="C"/>
+</sample_enzyme>
+<search_summary base_name="data/20260415_Human_DDA_A_01" search_engine="Comet" search_engine_version="2025.03 rev. 0 (0207ce7)" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" search_id="1">
+<search_database local_path="data/UP000005640_human_DECOY.fasta" type="AA"/>
+<enzymatic_search_constraint enzyme="Trypsin" max_num_internal_cleavages="2" min_number_termini="1"/>
+<aminoacid_modification aminoacid="M" massdiff="15.994900" mass="147.035385" variable="Y"/>
+<aminoacid_modification aminoacid="C" massdiff="57.021464" mass="160.030649" variable="N"/>
+<parameter name="# comet_version" value="2025.03 rev. 0"/>
+<parameter name="activation_method" value="ALL"/>
+<parameter name="add_A_alanine" value="0.000000"/>
+<parameter name="add_B_user_amino_acid" value="0.000000"/>
+<parameter name="add_C_cysteine" value="57.021464"/>
+<parameter name="add_Cterm_peptide" value="0.000000"/>
+<parameter name="add_Cterm_protein" value="0.000000"/>
+<parameter name="add_D_aspartic_acid" value="0.000000"/>
+<parameter name="add_E_glutamic_acid" value="0.000000"/>
+<parameter name="add_F_phenylalanine" value="0.000000"/>
+<parameter name="add_G_glycine" value="0.000000"/>
+<parameter name="add_H_histidine" value="0.000000"/>
+<parameter name="add_I_isoleucine" value="0.000000"/>
+<parameter name="add_J_user_amino_acid" value="0.000000"/>
+<parameter name="add_K_lysine" value="0.000000"/>
+<parameter name="add_L_leucine" value="0.000000"/>
+<parameter name="add_M_methionine" value="0.000000"/>
+<parameter name="add_N_asparagine" value="0.000000"/>
+<parameter name="add_Nterm_peptide" value="0.000000"/>
+<parameter name="add_Nterm_protein" value="0.000000"/>
+<parameter name="add_O_pyrrolysine" value="0.000000"/>
+<parameter name="add_P_proline" value="0.000000"/>
+<parameter name="add_Q_glutamine" value="0.000000"/>
+<parameter name="add_R_arginine" value="0.000000"/>
+<parameter name="add_S_serine" value="0.000000"/>
+<parameter name="add_T_threonine" value="0.000000"/>
+<parameter name="add_U_selenocysteine" value="0.000000"/>
+<parameter name="add_V_valine" value="0.000000"/>
+<parameter name="add_W_tryptophan" value="0.000000"/>
+<parameter name="add_X_user_amino_acid" value="0.000000"/>
+<parameter name="add_Y_tyrosine" value="0.000000"/>
+<parameter name="add_Z_user_amino_acid" value="0.000000"/>
+<parameter name="allowed_missed_cleavage" value="2"/>
+<parameter name="clear_mz_range" value="0.000000 0.000000"/>
+<parameter name="clip_nterm_methionine" value="0"/>
+<parameter name="database_name" value="data/UP000005640_human_DECOY.fasta"/>
+<parameter name="decoy_prefix" value="DECOY_"/>
+<parameter name="decoy_search" value="0"/>
+<parameter name="digest_mass_range" value="600.000000 5000.000000"/>
+<parameter name="equal_I_and_L" value="1"/>
+<parameter name="fragment_bin_offset" value="0.000000"/>
+<parameter name="fragment_bin_tol" value="0.020000"/>
+<parameter name="isotope_error" value="1"/>
+<parameter name="mass_offsets" value=""/>
+<parameter name="max_duplicate_proteins" value="10"/>
+<parameter name="max_fragment_charge" value="3"/>
+<parameter name="max_precursor_charge" value="6"/>
+<parameter name="max_variable_mods_in_peptide" value="5"/>
+<parameter name="min_precursor_charge" value="1"/>
+<parameter name="minimum_intensity" value="0.000000"/>
+<parameter name="minimum_peaks" value="25"/>
+<parameter name="ms_level" value="2"/>
+<parameter name="num_enzyme_termini" value="1"/>
+<parameter name="num_output_lines" value="1"/>
+<parameter name="num_threads" value="20"/>
+<parameter name="output_mzidentmlfile" value="0"/>
+<parameter name="output_pepxmlfile" value="1"/>
+<parameter name="output_percolatorfile" value="0"/>
+<parameter name="output_sqtfile" value="0"/>
+<parameter name="output_txtfile" value="0"/>
+<parameter name="override_charge" value="0"/>
+<parameter name="peptide_length_range" value="5 50"/>
+<parameter name="peptide_mass_tolerance_lower" value="-10.000000"/>
+<parameter name="peptide_mass_tolerance_upper" value="10.000000"/>
+<parameter name="peptide_mass_units" value="2"/>
+<parameter name="percentage_base_peak" value="0.000000"/>
+<parameter name="precursor_charge" value="0 0"/>
+<parameter name="precursor_tolerance_type" value="1"/>
+<parameter name="remove_precursor_peak" value="0"/>
+<parameter name="remove_precursor_tolerance" value="1.500000"/>
+<parameter name="require_variable_mod" value="0"/>
+<parameter name="sample_enzyme_number" value="1"/>
+<parameter name="scan_range" value="0 0"/>
+<parameter name="search_enzyme2_number" value="0"/>
+<parameter name="search_enzyme_number" value="1"/>
+<parameter name="spectrum_batch_size" value="150000"/>
+<parameter name="theoretical_fragment_ions" value="0"/>
+<parameter name="use_A_ions" value="0"/>
+<parameter name="use_B_ions" value="1"/>
+<parameter name="use_C_ions" value="0"/>
+<parameter name="use_NL_ions" value="0"/>
+<parameter name="use_X_ions" value="0"/>
+<parameter name="use_Y_ions" value="1"/>
+<parameter name="use_Z1_ions" value="0"/>
+<parameter name="use_Z_ions" value="0"/>
+<parameter name="variable_mod01" value=" 15.9949 M 0 3 -1 0 0 0."/>
+<parameter name="variable_mod02" value=" 0.0 X 0 3 -1 0 0 0."/>
+<parameter name="variable_mod03" value=" 0.0 X 0 3 -1 0 0 0."/>
+<parameter name="variable_mod04" value=" 0.0 X 0 3 -1 0 0 0."/>
+<parameter name="variable_mod05" value=" 0.0 X 0 3 -1 0 0 0."/>
+<parameter name="residuemass_A" value="71.037114"/>
+<parameter name="residuemass_B" value="999999.000000"/>
+<parameter name="residuemass_C" value="160.030649"/>
+<parameter name="residuemass_D" value="115.026943"/>
+<parameter name="residuemass_E" value="129.042593"/>
+<parameter name="residuemass_F" value="147.068414"/>
+<parameter name="residuemass_G" value="57.021464"/>
+<parameter name="residuemass_H" value="137.058912"/>
+<parameter name="residuemass_I" value="113.084064"/>
+<parameter name="residuemass_J" value="999999.000000"/>
+<parameter name="residuemass_K" value="128.094963"/>
+<parameter name="residuemass_L" value="113.084064"/>
+<parameter name="residuemass_M" value="131.040485"/>
+<parameter name="residuemass_N" value="114.042927"/>
+<parameter name="residuemass_O" value="237.147727"/>
+<parameter name="residuemass_P" value="97.052764"/>
+<parameter name="residuemass_Q" value="128.058578"/>
+<parameter name="residuemass_R" value="156.101111"/>
+<parameter name="residuemass_S" value="87.032028"/>
+<parameter name="residuemass_T" value="101.047679"/>
+<parameter name="residuemass_U" value="150.953633"/>
+<parameter name="residuemass_V" value="99.068414"/>
+<parameter name="residuemass_W" value="186.079313"/>
+<parameter name="residuemass_X" value="999999.000000"/>
+<parameter name="residuemass_Y" value="163.063329"/>
+<parameter name="residuemass_Z" value="999999.000000"/>
+</search_summary>
+<analysis_timestamp analysis="interprophet" time="2026-04-15T15:36:33" id="1"/>
+<analysis_timestamp analysis="peptideprophet" time="2026-04-15T15:35:03" id="1"/>
+<analysis_timestamp analysis="database_refresh" time="2026-04-15T15:34:57" id="1">
+<database_refresh_timestamp database="data/UP000005640_human_DECOY.fasta" min_num_enz_term="1"/>
+</analysis_timestamp>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.00008.00008.2" spectrumNativeID="controllerType=0 controllerNumber=1 scan=8" start_scan="8" end_scan="8" precursor_neutral_mass="880.583145" assumed_charge="2" index="1" retention_time_sec="2.1">
+<search_result>
+<search_hit hit_rank="1" peptide="AKAGLLPVL" peptide_prev_aa="R" peptide_next_aa="A" protein="DECOY0_sp_19303" num_tot_proteins="1" num_matched_ions="1" tot_num_ions="16" calc_neutral_pep_mass="880.574589" massdiff="0.008556" num_tol_term="1" num_missed_cleavages="1" num_matched_peptides="450" protein_descr="Randomized Protein Sequence">
+<search_score name="xcorr" value="0.3640"/>
+<search_score name="deltacn" value="0.0165"/>
+<search_score name="spscore" value="6.0"/>
+<search_score name="sprank" value="2"/>
+<search_score name="expect" value="4.83E+01"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.0000" all_ntt_prob="(0.0000,0.0000,0.0000)">
+<search_score_summary>
+<parameter name="fval" value="-3.8980"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="1"/>
+<parameter name="AccMass" value="9.716"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0" all_ntt_prob="(0,0,0)">
+<search_score_summary>
+<parameter name="nrs" value="-1.5"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.00089.00089.3" spectrumNativeID="controllerType=0 controllerNumber=1 scan=89" start_scan="89" end_scan="89" precursor_neutral_mass="1337.560130" assumed_charge="3" index="2" retention_time_sec="20.8">
+<search_result>
+<search_hit hit_rank="1" peptide="AMGAGHFSVPADY" peptide_prev_aa="R" peptide_next_aa="P" protein="sp|Q5D1E8|ZC12A_HUMAN" num_tot_proteins="1" num_matched_ions="1" tot_num_ions="48" calc_neutral_pep_mass="1337.571022" massdiff="-0.010892" num_tol_term="1" num_missed_cleavages="0" num_matched_peptides="3729" protein_descr="Endoribonuclease ZC3H12A OS=Homo sapiens OX=9606 GN=ZC3H12A PE=1 SV=1">
+<modification_info modified_peptide="AM[147]GAGHFSVPADY">
+<mod_aminoacid_mass position="2" mass="147.035385" variable="15.994900" source="param"/>
+</modification_info>
+<search_score name="xcorr" value="0.3020"/>
+<search_score name="deltacn" value="0.0000"/>
+<search_score name="spscore" value="0.0"/>
+<search_score name="sprank" value="2"/>
+<search_score name="expect" value="9.99E+02"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.0000" all_ntt_prob="(0.0000,0.0000,0.0000)">
+<search_score_summary>
+<parameter name="fval" value="-4.8487"/>
+<parameter name="diffvmc" value="1"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="-8.143"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="1"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0" all_ntt_prob="(0,0,0)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.00146.00146.3" spectrumNativeID="controllerType=0 controllerNumber=1 scan=146" start_scan="146" end_scan="146" precursor_neutral_mass="1193.509386" assumed_charge="3" index="3" retention_time_sec="34.2">
+<search_result>
+<search_hit hit_rank="1" peptide="NRNETSQMSQ" peptide_prev_aa="R" peptide_next_aa="P" protein="sp|O60673|REV3L_HUMAN" num_tot_proteins="1" num_matched_ions="2" tot_num_ions="36" calc_neutral_pep_mass="1193.509499" massdiff="-0.000113" num_tol_term="1" num_missed_cleavages="1" num_matched_peptides="4687" protein_descr="DNA polymerase zeta catalytic subunit OS=Homo sapiens OX=9606 GN=REV3L PE=1 SV=2">
+<search_score name="xcorr" value="0.4950"/>
+<search_score name="deltacn" value="0.2424"/>
+<search_score name="spscore" value="5.0"/>
+<search_score name="sprank" value="2"/>
+<search_score name="expect" value="8.30E+00"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.0000" all_ntt_prob="(0.0000,0.0000,0.0000)">
+<search_score_summary>
+<parameter name="fval" value="-0.9505"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="1"/>
+<parameter name="AccMass" value="-0.095"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0" all_ntt_prob="(0,0,0)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.01653.01653.2" spectrumNativeID="controllerType=0 controllerNumber=1 scan=1653" start_scan="1653" end_scan="1653" precursor_neutral_mass="783.461516" assumed_charge="2" index="8" retention_time_sec="415.4">
+<search_result>
+<search_hit hit_rank="1" peptide="KPAAAAGAK" peptide_prev_aa="K" peptide_next_aa="K" protein="sp|P10412|H14_HUMAN" num_tot_proteins="1" num_matched_ions="12" tot_num_ions="16" calc_neutral_pep_mass="783.460287" massdiff="0.001229" num_tol_term="2" num_missed_cleavages="0" num_matched_peptides="5122" protein_descr="Histone H1.4 OS=Homo sapiens OX=9606 GN=H1-4 PE=1 SV=2">
+<search_score name="xcorr" value="1.8120"/>
+<search_score name="deltacn" value="0.2737"/>
+<search_score name="spscore" value="418.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="1.66E-01"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.9998" all_ntt_prob="(0.0000,0.9936,0.9998)">
+<search_score_summary>
+<parameter name="fval" value="2.7819"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="2"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="1.569"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.999952" all_ntt_prob="(0,0.998457,0.999952)">
+<search_score_summary>
+<parameter name="nrs" value="-0.5"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="8.9616"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.01691.01691.4" spectrumNativeID="controllerType=0 controllerNumber=1 scan=1691" start_scan="1691" end_scan="1691" precursor_neutral_mass="1518.815342" assumed_charge="4" index="13" retention_time_sec="418.1">
+<search_result>
+<search_hit hit_rank="1" peptide="KGELQMGLLNMLR" peptide_prev_aa="F" peptide_next_aa="E" protein="DECOY0_sp_14772" num_tot_proteins="1" num_matched_ions="9" tot_num_ions="72" calc_neutral_pep_mass="1517.805790" massdiff="1.009552" num_tol_term="1" num_missed_cleavages="0" num_matched_peptides="11698" protein_descr="Randomized Protein Sequence">
+<modification_info modified_peptide="KGELQM[147]GLLNMLR">
+<mod_aminoacid_mass position="6" mass="147.035385" variable="15.994900" source="param"/>
+</modification_info>
+<search_score name="xcorr" value="1.4360"/>
+<search_score name="deltacn" value="0.1407"/>
+<search_score name="spscore" value="27.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="5.28E-01"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.0000" all_ntt_prob="(0.0000,0.0000,0.0000)">
+<search_score_summary>
+<parameter name="fval" value="0.3052"/>
+<parameter name="diffvmc" value="1"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="4.078"/>
+<parameter name="isomassd" value="1"/>
+<parameter name="vmcM15pt995" value="1"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0" all_ntt_prob="(0,0,0)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.01692.01692.2" spectrumNativeID="controllerType=0 controllerNumber=1 scan=1692" start_scan="1692" end_scan="1692" precursor_neutral_mass="827.413821" assumed_charge="2" index="14" retention_time_sec="418.1">
+<search_result>
+<search_hit hit_rank="1" peptide="HAVSEGTK" peptide_prev_aa="K" peptide_next_aa="A" protein="sp|P57053|H2BFS_HUMAN" num_tot_proteins="16" num_matched_ions="14" tot_num_ions="14" calc_neutral_pep_mass="827.413731" massdiff="0.000090" num_tol_term="2" num_missed_cleavages="0" num_matched_peptides="7663" protein_descr="Histone H2B type F-S OS=Homo sapiens OX=9606 GN=H2BC12L PE=1 SV=2">
+<alternative_protein protein="sp|Q99879|H2B1M_HUMAN" protein_descr="Histone H2B type 1-M OS=Homo sapiens OX=9606 GN=H2BC14 PE=1 SV=3" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|Q16778|H2B2E_HUMAN" protein_descr="Histone H2B type 2-E OS=Homo sapiens OX=9606 GN=H2BC21 PE=1 SV=3" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|Q5QNW6|H2B2F_HUMAN" protein_descr="Histone H2B type 2-F OS=Homo sapiens OX=9606 GN=H2BC18 PE=1 SV=3" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|O60814|H2B1K_HUMAN" protein_descr="Histone H2B type 1-K OS=Homo sapiens OX=9606 GN=H2BC12 PE=1 SV=3" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|P62807|H2B1C_HUMAN" protein_descr="Histone H2B type 1-C\E\F\G\I OS=Homo sapiens OX=9606 GN=H2BC4 PE=1 SV=4" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|P23527|H2B1O_HUMAN" protein_descr="Histone H2B type 1-O OS=Homo sapiens OX=9606 GN=H2BC17 PE=1 SV=3" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|P06899|H2B1J_HUMAN" protein_descr="Histone H2B type 1-J OS=Homo sapiens OX=9606 GN=H2BC11 PE=1 SV=3" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|Q99877|H2B1N_HUMAN" protein_descr="Histone H2B type 1-N OS=Homo sapiens OX=9606 GN=H2BC15 PE=1 SV=3" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|Q99880|H2B1L_HUMAN" protein_descr="Histone H2B type 1-L OS=Homo sapiens OX=9606 GN=H2BC13 PE=1 SV=3" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|P33778|H2B1B_HUMAN" protein_descr="Histone H2B type 1-B OS=Homo sapiens OX=9606 GN=H2BC3 PE=1 SV=2" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|Q93079|H2B1H_HUMAN" protein_descr="Histone H2B type 1-H OS=Homo sapiens OX=9606 GN=H2BC9 PE=1 SV=3" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|Q8N257|H2B3B_HUMAN" protein_descr="Histone H2B type 3-B OS=Homo sapiens OX=9606 GN=H2BC26 PE=1 SV=3" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|Q96A08|H2B1A_HUMAN" protein_descr="Histone H2B type 1-A OS=Homo sapiens OX=9606 GN=H2BC1 PE=1 SV=3" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|P58876|H2B1D_HUMAN" protein_descr="Histone H2B type 1-D OS=Homo sapiens OX=9606 GN=H2BC5 PE=1 SV=2" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<alternative_protein protein="sp|A0A2R8Y619|H2BK1_HUMAN" protein_descr="Histone H2B type 2-K1 OS=Homo sapiens OX=9606 GN=H2BK1 PE=1 SV=1" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<search_score name="xcorr" value="2.5520"/>
+<search_score name="deltacn" value="0.4498"/>
+<search_score name="spscore" value="946.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="1.01E-03"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="1.0000" all_ntt_prob="(0.0000,1.0000,1.0000)">
+<search_score_summary>
+<parameter name="fval" value="5.1888"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="2"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="0.109"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.999999" all_ntt_prob="(0,1,1)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="16.3057"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.01710.01710.3" spectrumNativeID="controllerType=0 controllerNumber=1 scan=1710" start_scan="1710" end_scan="1710" precursor_neutral_mass="1162.499869" assumed_charge="3" index="18" retention_time_sec="418.8">
+<search_result>
+<search_hit hit_rank="1" peptide="KEGDCAPEEK" peptide_prev_aa="A" peptide_next_aa="L" protein="sp|P43365|MAGAC_HUMAN" num_tot_proteins="2" num_matched_ions="3" tot_num_ions="36" calc_neutral_pep_mass="1161.497203" massdiff="1.002665" num_tol_term="1" num_missed_cleavages="0" num_matched_peptides="4982" protein_descr="Melanoma-associated antigen 12 OS=Homo sapiens OX=9606 GN=MAGEA12 PE=1 SV=2">
+<alternative_protein protein="sp|P43360|MAGA6_HUMAN" protein_descr="Melanoma-associated antigen 6 OS=Homo sapiens OX=9606 GN=MAGEA6 PE=1 SV=1" num_tol_term="1" peptide_prev_aa="A" peptide_next_aa="L"/>
+<modification_info modified_peptide="KEGDCAPEEK">
+<mod_aminoacid_mass position="5" mass="160.030649" static="57.021464"/>
+</modification_info>
+<search_score name="xcorr" value="0.7320"/>
+<search_score name="deltacn" value="0.0833"/>
+<search_score name="spscore" value="10.0"/>
+<search_score name="sprank" value="3"/>
+<search_score name="expect" value="1.67E+00"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.0000" all_ntt_prob="(0.0000,0.0000,0.0000)">
+<search_score_summary>
+<parameter name="fval" value="-1.9410"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="-0.593"/>
+<parameter name="isomassd" value="1"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0" all_ntt_prob="(0,0,0)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.01721.01721.5" spectrumNativeID="controllerType=0 controllerNumber=1 scan=1721" start_scan="1721" end_scan="1721" precursor_neutral_mass="2160.105983" assumed_charge="5" index="22" retention_time_sec="419.5">
+<search_result>
+<search_hit hit_rank="1" peptide="QELSSVSTQQAELLGRLEAT" peptide_prev_aa="K" peptide_next_aa="A" protein="DECOY0_sp_15600" num_tot_proteins="1" num_matched_ions="3" tot_num_ions="114" calc_neutral_pep_mass="2159.106991" massdiff="0.998991" num_tol_term="1" num_missed_cleavages="1" num_matched_peptides="14143" protein_descr="Randomized Protein Sequence">
+<search_score name="xcorr" value="0.5830"/>
+<search_score name="deltacn" value="0.0978"/>
+<search_score name="spscore" value="4.0"/>
+<search_score name="sprank" value="3"/>
+<search_score name="expect" value="8.23E+00"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.0000" all_ntt_prob="(0.0000,0.0000,0.0000)">
+<search_score_summary>
+<parameter name="fval" value="-1.5786"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="1"/>
+<parameter name="AccMass" value="-2.019"/>
+<parameter name="isomassd" value="1"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0" all_ntt_prob="(0,0,0)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.01740.01740.3" spectrumNativeID="controllerType=0 controllerNumber=1 scan=1740" start_scan="1740" end_scan="1740" precursor_neutral_mass="1420.750008" assumed_charge="3" index="28" retention_time_sec="420.2">
+<search_result>
+<search_hit hit_rank="1" peptide="RRPENPKPQDGK" peptide_prev_aa="R" peptide_next_aa="E" protein="sp|P67809|YBOX1_HUMAN" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="44" calc_neutral_pep_mass="1420.753509" massdiff="-0.003502" num_tol_term="2" num_missed_cleavages="0" num_matched_peptides="12396" protein_descr="Y-box-binding protein 1 OS=Homo sapiens OX=9606 GN=YBX1 PE=1 SV=3">
+<search_score name="xcorr" value="1.8260"/>
+<search_score name="deltacn" value="0.2924"/>
+<search_score name="spscore" value="70.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="1.53E-01"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.9988" all_ntt_prob="(0.0000,0.9413,0.9988)">
+<search_score_summary>
+<parameter name="fval" value="3.4680"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="2"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="-2.465"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.999775" all_ntt_prob="(0,0.988461,0.999775)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="14.9975"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.01776.01776.4" spectrumNativeID="controllerType=0 controllerNumber=1 scan=1776" start_scan="1776" end_scan="1776" precursor_neutral_mass="1706.885791" assumed_charge="4" index="32" retention_time_sec="422.2">
+<search_result>
+<search_hit hit_rank="1" peptide="RAVSREDSARPGAHAK" peptide_prev_aa="K" peptide_next_aa="V" protein="sp|Q13151|ROA0_HUMAN" num_tot_proteins="1" num_matched_ions="18" tot_num_ions="90" calc_neutral_pep_mass="1706.892463" massdiff="-0.006671" num_tol_term="2" num_missed_cleavages="1" num_matched_peptides="13300" protein_descr="Heterogeneous nuclear ribonucleoprotein A0 OS=Homo sapiens OX=9606 GN=HNRNPA0 PE=1 SV=1">
+<search_score name="xcorr" value="2.6280"/>
+<search_score name="deltacn" value="0.4677"/>
+<search_score name="spscore" value="220.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="4.33E-04"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.9963" all_ntt_prob="(0.0000,0.8050,0.9963)">
+<search_score_summary>
+<parameter name="fval" value="3.6354"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="2"/>
+<parameter name="nmc" value="1"/>
+<parameter name="AccMass" value="-3.908"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.999247" all_ntt_prob="(0,0.953161,0.999247)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="11.617"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.01883.01883.5" spectrumNativeID="controllerType=0 controllerNumber=1 scan=1883" start_scan="1883" end_scan="1883" precursor_neutral_mass="2226.939384" assumed_charge="5" index="76" retention_time_sec="427.0">
+<search_result>
+<search_hit hit_rank="1" peptide="CTGHSAEHTQCGKPQESTGR" peptide_prev_aa="R" peptide_next_aa="G" protein="sp|Q96RL1|UIMC1_HUMAN" num_tot_proteins="1" num_matched_ions="8" tot_num_ions="114" calc_neutral_pep_mass="2226.949462" massdiff="-0.010078" num_tol_term="2" num_missed_cleavages="0" num_matched_peptides="3453" protein_descr="BRCA1-A complex subunit RAP80 OS=Homo sapiens OX=9606 GN=UIMC1 PE=1 SV=2">
+<modification_info modified_peptide="CTGHSAEHTQCGKPQESTGR">
+<mod_aminoacid_mass position="1" mass="160.030649" static="57.021464"/>
+<mod_aminoacid_mass position="11" mass="160.030649" static="57.021464"/>
+</modification_info>
+<search_score name="xcorr" value="0.8940"/>
+<search_score name="deltacn" value="0.4832"/>
+<search_score name="spscore" value="9.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="7.44E-02"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="1.0000" all_ntt_prob="(0.0000,1.0000,1.0000)">
+<search_score_summary>
+<parameter name="fval" value="2.8158"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="2"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="-4.526"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.999999" all_ntt_prob="(0,0.999999,0.999999)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0.9993"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0.999999"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.01888.01888.2" spectrumNativeID="controllerType=0 controllerNumber=1 scan=1888" start_scan="1888" end_scan="1888" precursor_neutral_mass="903.524981" assumed_charge="2" index="80" retention_time_sec="427.2">
+<search_result>
+<search_hit hit_rank="1" peptide="KKVPSMAK" peptide_prev_aa="K" peptide_next_aa="L" protein="DECOY0_sp_17787" num_tot_proteins="1" num_matched_ions="2" tot_num_ions="14" calc_neutral_pep_mass="903.521159" massdiff="0.003823" num_tol_term="2" num_missed_cleavages="1" num_matched_peptides="7384" protein_descr="Randomized Protein Sequence">
+<modification_info modified_peptide="KKVPSM[147]AK">
+<mod_aminoacid_mass position="6" mass="147.035385" variable="15.994900" source="param"/>
+</modification_info>
+<search_score name="xcorr" value="0.5110"/>
+<search_score name="deltacn" value="0.0000"/>
+<search_score name="spscore" value="13.0"/>
+<search_score name="sprank" value="6"/>
+<search_score name="expect" value="1.10E+01"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.0000" all_ntt_prob="(0.0000,0.0000,0.0000)">
+<search_score_summary>
+<parameter name="fval" value="-3.3327"/>
+<parameter name="diffvmc" value="1"/>
+<parameter name="ntt" value="2"/>
+<parameter name="nmc" value="1"/>
+<parameter name="AccMass" value="4.231"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="1"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0" all_ntt_prob="(0,0,0)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="4.44089e-16"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.01910.01910.4" spectrumNativeID="controllerType=0 controllerNumber=1 scan=1910" start_scan="1910" end_scan="1910" precursor_neutral_mass="1582.794210" assumed_charge="4" index="87" retention_time_sec="428.3">
+<search_result>
+<search_hit hit_rank="1" peptide="QMLVGVWAQGGGQPR" peptide_prev_aa="E" peptide_next_aa="L" protein="DECOY0_sp_13953" num_tot_proteins="1" num_matched_ions="18" tot_num_ions="84" calc_neutral_pep_mass="1582.803831" massdiff="-0.009621" num_tol_term="1" num_missed_cleavages="0" num_matched_peptides="12913" protein_descr="Randomized Protein Sequence">
+<search_score name="xcorr" value="2.8790"/>
+<search_score name="deltacn" value="0.3227"/>
+<search_score name="spscore" value="316.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="3.70E-02"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.5774" all_ntt_prob="(0.0000,0.5774,0.9888)">
+<search_score_summary>
+<parameter name="fval" value="2.4105"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="-6.079"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.117841" all_ntt_prob="(0,0.117841,0.896176)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0.0001"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.01926.01926.3" spectrumNativeID="controllerType=0 controllerNumber=1 scan=1926" start_scan="1926" end_scan="1926" precursor_neutral_mass="1582.793970" assumed_charge="3" index="90" retention_time_sec="428.9">
+<search_result>
+<search_hit hit_rank="1" peptide="VTVAQLDWDVAMVH" peptide_prev_aa="R" peptide_next_aa="Q" protein="sp|Q8N7N1|F86B1_HUMAN" num_tot_proteins="2" num_matched_ions="2" tot_num_ions="52" calc_neutral_pep_mass="1582.781364" massdiff="0.012606" num_tol_term="1" num_missed_cleavages="0" num_matched_peptides="12902" protein_descr="Putative protein N-methyltransferase FAM86B1 OS=Homo sapiens OX=9606 GN=FAM86B1 PE=2 SV=3">
+<alternative_protein protein="sp|P0C5J1|F86B2_HUMAN" protein_descr="Putative protein N-methyltransferase FAM86B2 OS=Homo sapiens OX=9606 GN=FAM86B2 PE=1 SV=1" num_tol_term="1" peptide_prev_aa="R" peptide_next_aa="Q"/>
+<search_score name="xcorr" value="0.5440"/>
+<search_score name="deltacn" value="0.0478"/>
+<search_score name="spscore" value="1.0"/>
+<search_score name="sprank" value="4"/>
+<search_score name="expect" value="1.08E+01"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.0000" all_ntt_prob="(0.0000,0.0000,0.0000)">
+<search_score_summary>
+<parameter name="fval" value="-2.8271"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="7.964"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0" all_ntt_prob="(0,0,0)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.01946.01946.2" spectrumNativeID="controllerType=0 controllerNumber=1 scan=1946" start_scan="1946" end_scan="1946" precursor_neutral_mass="846.442936" assumed_charge="2" index="97" retention_time_sec="429.9">
+<search_result>
+<search_hit hit_rank="1" peptide="TVHTHPR" peptide_prev_aa="F" peptide_next_aa="T" protein="DECOY0_sp_19626" num_tot_proteins="2" num_matched_ions="2" tot_num_ions="12" calc_neutral_pep_mass="846.446034" massdiff="-0.003098" num_tol_term="1" num_missed_cleavages="0" num_matched_peptides="14790" protein_descr="Randomized Protein Sequence">
+<alternative_protein protein="DECOY0_sp_20123" protein_descr="Randomized Protein Sequence" num_tol_term="1" peptide_prev_aa="F" peptide_next_aa="C"/>
+<search_score name="xcorr" value="0.4790"/>
+<search_score name="deltacn" value="0.0939"/>
+<search_score name="spscore" value="23.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="1.47E+01"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.0000" all_ntt_prob="(0.0000,0.0000,0.0000)">
+<search_score_summary>
+<parameter name="fval" value="-2.5987"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="-3.660"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0" all_ntt_prob="(0,0,0)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0.8973"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.02099.02099.2" spectrumNativeID="controllerType=0 controllerNumber=1 scan=2099" start_scan="2099" end_scan="2099" precursor_neutral_mass="956.562793" assumed_charge="2" index="122" retention_time_sec="437.2">
+<search_result>
+<search_hit hit_rank="1" peptide="KSLQAPSVK" peptide_prev_aa="M" peptide_next_aa="D" protein="sp|O14777|NDC80_HUMAN" num_tot_proteins="1" num_matched_ions="9" tot_num_ions="16" calc_neutral_pep_mass="956.565481" massdiff="-0.002688" num_tol_term="1" num_missed_cleavages="0" num_matched_peptides="7815" protein_descr="Kinetochore protein NDC80 homolog OS=Homo sapiens OX=9606 GN=NDC80 PE=1 SV=1">
+<search_score name="xcorr" value="1.5580"/>
+<search_score name="deltacn" value="0.1123"/>
+<search_score name="spscore" value="211.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="6.77E-01"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.4448" all_ntt_prob="(0.0000,0.4448,0.9569)">
+<search_score_summary>
+<parameter name="fval" value="1.1524"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="-2.810"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.0726364" all_ntt_prob="(0,0.0726364,0.684601)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.02223.02223.3" spectrumNativeID="controllerType=0 controllerNumber=1 scan=2223" start_scan="2223" end_scan="2223" precursor_neutral_mass="1545.760190" assumed_charge="3" index="141" retention_time_sec="443.0">
+<search_result>
+<search_hit hit_rank="1" peptide="KLTQTSGETTHTDK" peptide_prev_aa="K" peptide_next_aa="V" protein="sp|P46013|KI67_HUMAN" num_tot_proteins="2" num_matched_ions="21" tot_num_ions="52" calc_neutral_pep_mass="1545.763465" massdiff="-0.003275" num_tol_term="2" num_missed_cleavages="0" num_matched_peptides="14168" protein_descr="Proliferation marker protein Ki-67 OS=Homo sapiens OX=9606 GN=MKI67 PE=1 SV=2">
+<alternative_protein protein="sp|P46013|KI67_HUMAN" protein_descr="Proliferation marker protein Ki-67 OS=Homo sapiens OX=9606 GN=MKI67 PE=1 SV=2" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="V"/>
+<search_score name="xcorr" value="3.6160"/>
+<search_score name="deltacn" value="0.6200"/>
+<search_score name="spscore" value="762.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="2.73E-06"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="1.0000" all_ntt_prob="(0.0000,1.0000,1.0000)">
+<search_score_summary>
+<parameter name="fval" value="8.8674"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="2"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="-2.119"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.999999" all_ntt_prob="(0,1,1)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="20"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.02337.02337.3" spectrumNativeID="controllerType=0 controllerNumber=1 scan=2337" start_scan="2337" end_scan="2337" precursor_neutral_mass="1166.650063" assumed_charge="3" index="167" retention_time_sec="448.7">
+<search_result>
+<search_hit hit_rank="1" peptide="KEAEKAVHQK" peptide_prev_aa="Q" peptide_next_aa="K" protein="sp|Q99575|POP1_HUMAN" num_tot_proteins="1" num_matched_ions="10" tot_num_ions="36" calc_neutral_pep_mass="1166.640771" massdiff="0.009292" num_tol_term="1" num_missed_cleavages="1" num_matched_peptides="7473" protein_descr="Ribonucleases P\MRP protein subunit POP1 OS=Homo sapiens OX=9606 GN=POP1 PE=1 SV=2">
+<search_score name="xcorr" value="1.8120"/>
+<search_score name="deltacn" value="0.2086"/>
+<search_score name="spscore" value="132.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="6.77E-02"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.0547" all_ntt_prob="(0.0000,0.0547,0.7462)">
+<search_score_summary>
+<parameter name="fval" value="2.5991"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="1"/>
+<parameter name="AccMass" value="7.965"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.199991" all_ntt_prob="(0,0.199991,0.927016)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="8.9672"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.02441.02441.6" spectrumNativeID="controllerType=0 controllerNumber=1 scan=2441" start_scan="2441" end_scan="2441" precursor_neutral_mass="2391.187779" assumed_charge="6" index="194" retention_time_sec="453.8">
+<search_result>
+<search_hit hit_rank="1" peptide="EVCLLGLLDHLDEGNVEGPRR" peptide_prev_aa="L" peptide_next_aa="L" protein="DECOY0_sp_2949" num_tot_proteins="1" num_matched_ions="3" tot_num_ions="120" calc_neutral_pep_mass="2390.201243" massdiff="0.986536" num_tol_term="1" num_missed_cleavages="0" num_matched_peptides="14894" protein_descr="Randomized Protein Sequence">
+<modification_info modified_peptide="EVCLLGLLDHLDEGNVEGPRR">
+<mod_aminoacid_mass position="3" mass="160.030649" static="57.021464"/>
+</modification_info>
+<search_score name="xcorr" value="0.9240"/>
+<search_score name="deltacn" value="0.2381"/>
+<search_score name="spscore" value="4.0"/>
+<search_score name="sprank" value="4"/>
+<search_score name="expect" value="1.86E-01"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.0000" all_ntt_prob="(0.0000,0.0000,0.0000)">
+<search_score_summary>
+<parameter name="fval" value="-0.2817"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="-7.031"/>
+<parameter name="isomassd" value="1"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0" all_ntt_prob="(0,0,0)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.02472.02472.3" spectrumNativeID="controllerType=0 controllerNumber=1 scan=2472" start_scan="2472" end_scan="2472" precursor_neutral_mass="1341.616027" assumed_charge="3" index="206" retention_time_sec="455.2">
+<search_result>
+<search_hit hit_rank="1" peptide="HVPESQAGQTCK" peptide_prev_aa="Y" peptide_next_aa="W" protein="DECOY0_sp_16294" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="44" calc_neutral_pep_mass="1340.614299" massdiff="1.001728" num_tol_term="1" num_missed_cleavages="0" num_matched_peptides="9023" protein_descr="Randomized Protein Sequence">
+<modification_info modified_peptide="HVPESQAGQTCK">
+<mod_aminoacid_mass position="11" mass="160.030649" static="57.021464"/>
+</modification_info>
+<search_score name="xcorr" value="1.3530"/>
+<search_score name="deltacn" value="0.3400"/>
+<search_score name="spscore" value="28.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="8.38E-02"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.5129" all_ntt_prob="(0.0000,0.5129,0.9817)">
+<search_score_summary>
+<parameter name="fval" value="2.8912"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="-1.212"/>
+<parameter name="isomassd" value="1"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.0933361" all_ntt_prob="(0,0.0933361,0.839863)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.02722.02722.3" spectrumNativeID="controllerType=0 controllerNumber=1 scan=2722" start_scan="2722" end_scan="2722" precursor_neutral_mass="1747.764589" assumed_charge="3" index="273" retention_time_sec="468.1">
+<search_result>
+<search_hit hit_rank="1" peptide="PGHLARDCDHADEQK" peptide_prev_aa="K" peptide_next_aa="C" protein="sp|P62633|CNBP_HUMAN" num_tot_proteins="1" num_matched_ions="7" tot_num_ions="56" calc_neutral_pep_mass="1747.769630" massdiff="-0.005041" num_tol_term="1" num_missed_cleavages="1" num_matched_peptides="6006" protein_descr="CCHC-type zinc finger nucleic acid binding protein OS=Homo sapiens OX=9606 GN=CNBP PE=1 SV=1">
+<modification_info modified_peptide="PGHLARDCDHADEQK">
+<mod_aminoacid_mass position="8" mass="160.030649" static="57.021464"/>
+</modification_info>
+<search_score name="xcorr" value="1.5370"/>
+<search_score name="deltacn" value="0.5576"/>
+<search_score name="spscore" value="34.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="1.67E-04"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="1.0000" all_ntt_prob="(0.0000,1.0000,1.0000)">
+<search_score_summary>
+<parameter name="fval" value="5.8769"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="1"/>
+<parameter name="AccMass" value="-2.884"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.999999" all_ntt_prob="(0,1,1)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0.999"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="9.98689"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.03100.03100.2" spectrumNativeID="controllerType=0 controllerNumber=1 scan=3100" start_scan="3100" end_scan="3100" precursor_neutral_mass="791.455231" assumed_charge="2" index="472" retention_time_sec="485.7">
+<search_result>
+<search_hit hit_rank="1" peptide="KPPEPPK" peptide_prev_aa="A" peptide_next_aa="L" protein="DECOY0_sp_3963" num_tot_proteins="2" num_matched_ions="4" tot_num_ions="12" calc_neutral_pep_mass="791.454139" massdiff="0.001092" num_tol_term="1" num_missed_cleavages="0" num_matched_peptides="7644" protein_descr="Randomized Protein Sequence">
+<alternative_protein protein="sp|Q9UJW8|ZN180_HUMAN" protein_descr="Zinc finger protein 180 OS=Homo sapiens OX=9606 GN=ZNF180 PE=1 SV=3" num_tol_term="1" peptide_prev_aa="E" peptide_next_aa="V"/>
+<search_score name="xcorr" value="0.9230"/>
+<search_score name="deltacn" value="0.2156"/>
+<search_score name="spscore" value="55.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="1.31E+00"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.5822" all_ntt_prob="(0.0000,0.5822,0.9747)">
+<search_score_summary>
+<parameter name="fval" value="0.3792"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="1.380"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.125725" all_ntt_prob="(0,0.125725,0.799025)">
+<search_score_summary>
+<parameter name="nrs" value="0.4952"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.03155.03155.2" spectrumNativeID="controllerType=0 controllerNumber=1 scan=3155" start_scan="3155" end_scan="3155" precursor_neutral_mass="987.466352" assumed_charge="2" index="492" retention_time_sec="488.3">
+<search_result>
+<search_hit hit_rank="1" peptide="ASRPGQCGR" peptide_prev_aa="L" peptide_next_aa="A" protein="sp|P62241|RS8_HUMAN" num_tot_proteins="2" num_matched_ions="4" tot_num_ions="16" calc_neutral_pep_mass="987.466846" massdiff="-0.000495" num_tol_term="1" num_missed_cleavages="0" num_matched_peptides="8280" protein_descr="Small ribosomal subunit protein eS8 OS=Homo sapiens OX=9606 GN=RPS8 PE=1 SV=2">
+<alternative_protein protein="tr|A0AAG2TTP8|A0AAG2TTP8_HUMAN" protein_descr="40S ribosomal protein S8 OS=Homo sapiens OX=9606 PE=1 SV=1" num_tol_term="1" peptide_prev_aa="L" peptide_next_aa="A"/>
+<modification_info modified_peptide="ASRPGQCGR">
+<mod_aminoacid_mass position="7" mass="160.030649" static="57.021464"/>
+</modification_info>
+<search_score name="xcorr" value="1.0210"/>
+<search_score name="deltacn" value="0.1156"/>
+<search_score name="spscore" value="28.0"/>
+<search_score name="sprank" value="2"/>
+<search_score name="expect" value="1.65E-01"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.0000" all_ntt_prob="(0.0000,0.0000,0.0000)">
+<search_score_summary>
+<parameter name="fval" value="-0.1797"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="-0.501"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0" all_ntt_prob="(0,0,0)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="10.6515"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.03398.03398.2" spectrumNativeID="controllerType=0 controllerNumber=1 scan=3398" start_scan="3398" end_scan="3398" precursor_neutral_mass="1121.528985" assumed_charge="2" index="604" retention_time_sec="499.3">
+<search_result>
+<search_hit hit_rank="1" peptide="EHCPAGQPVK" peptide_prev_aa="R" peptide_next_aa="V" protein="sp|Q6P2Q9|PRP8_HUMAN" num_tot_proteins="1" num_matched_ions="6" tot_num_ions="18" calc_neutral_pep_mass="1121.528778" massdiff="0.000207" num_tol_term="2" num_missed_cleavages="0" num_matched_peptides="11376" protein_descr="Pre-mRNA-processing-splicing factor 8 OS=Homo sapiens OX=9606 GN=PRPF8 PE=1 SV=2">
+<modification_info modified_peptide="EHCPAGQPVK">
+<mod_aminoacid_mass position="3" mass="160.030649" static="57.021464"/>
+</modification_info>
+<search_score name="xcorr" value="1.4880"/>
+<search_score name="deltacn" value="0.5121"/>
+<search_score name="spscore" value="123.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="1.36E-04"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="1.0000" all_ntt_prob="(0.0000,0.9993,1.0000)">
+<search_score_summary>
+<parameter name="fval" value="3.9327"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="2"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="0.185"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.999999" all_ntt_prob="(0,0.999891,1)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="20"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.03418.03418.2" spectrumNativeID="controllerType=0 controllerNumber=1 scan=3418" start_scan="3418" end_scan="3418" precursor_neutral_mass="1023.529383" assumed_charge="2" index="612" retention_time_sec="500.3">
+<search_result>
+<search_hit hit_rank="1" peptide="RVDHCPIK" peptide_prev_aa="K" peptide_next_aa="S" protein="sp|P26885|FKBP2_HUMAN" num_tot_proteins="1" num_matched_ions="5" tot_num_ions="14" calc_neutral_pep_mass="1023.528384" massdiff="0.000999" num_tol_term="2" num_missed_cleavages="0" num_matched_peptides="10400" protein_descr="Peptidyl-prolyl cis-trans isomerase FKBP2 OS=Homo sapiens OX=9606 GN=FKBP2 PE=1 SV=2">
+<modification_info modified_peptide="RVDHCPIK">
+<mod_aminoacid_mass position="5" mass="160.030649" static="57.021464"/>
+</modification_info>
+<search_score name="xcorr" value="1.0070"/>
+<search_score name="deltacn" value="0.2016"/>
+<search_score name="spscore" value="57.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="2.54E-01"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.9846" all_ntt_prob="(0.0000,0.6975,0.9846)">
+<search_score_summary>
+<parameter name="fval" value="0.5507"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="2"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="0.976"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.937114" all_ntt_prob="(0,0.349562,0.937114)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="2"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.03546.03546.3" spectrumNativeID="controllerType=0 controllerNumber=1 scan=3546" start_scan="3546" end_scan="3546" precursor_neutral_mass="1612.755515" assumed_charge="3" index="662" retention_time_sec="506.2">
+<search_result>
+<search_hit hit_rank="1" peptide="YHTVNGHNCEVRK" peptide_prev_aa="K" peptide_next_aa="A" protein="sp|A0A2R8Y4L2|RA1L3_HUMAN" num_tot_proteins="2" num_matched_ions="17" tot_num_ions="48" calc_neutral_pep_mass="1612.752858" massdiff="0.002657" num_tol_term="2" num_missed_cleavages="0" num_matched_peptides="11342" protein_descr="Heterogeneous nuclear ribonucleoprotein A1-like 3 OS=Homo sapiens OX=9606 GN=HNRNPA1L3 PE=1 SV=2">
+<alternative_protein protein="sp|P09651|ROA1_HUMAN" protein_descr="Heterogeneous nuclear ribonucleoprotein A1 OS=Homo sapiens OX=9606 GN=HNRNPA1 PE=1 SV=5" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="A"/>
+<modification_info modified_peptide="YHTVNGHNCEVRK">
+<mod_aminoacid_mass position="9" mass="160.030649" static="57.021464"/>
+</modification_info>
+<search_score name="xcorr" value="3.0420"/>
+<search_score name="deltacn" value="0.6450"/>
+<search_score name="spscore" value="430.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="1.42E-07"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="1.0000" all_ntt_prob="(0.0000,1.0000,1.0000)">
+<search_score_summary>
+<parameter name="fval" value="8.7467"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="2"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="1.647"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.999999" all_ntt_prob="(0,1,1)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0.981"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="20"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.03993.03993.3" spectrumNativeID="controllerType=0 controllerNumber=1 scan=3993" start_scan="3993" end_scan="3993" precursor_neutral_mass="1312.575990" assumed_charge="3" index="922" retention_time_sec="526.4">
+<search_result>
+<search_hit hit_rank="1" peptide="QSTTGHCVHMR" peptide_prev_aa="V" peptide_next_aa="G" protein="sp|P52597|HNRPF_HUMAN" num_tot_proteins="3" num_matched_ions="6" tot_num_ions="40" calc_neutral_pep_mass="1312.576473" massdiff="-0.000483" num_tol_term="1" num_missed_cleavages="0" num_matched_peptides="6077" protein_descr="Heterogeneous nuclear ribonucleoprotein F OS=Homo sapiens OX=9606 GN=HNRNPF PE=1 SV=3">
+<alternative_protein protein="sp|P31943|HNRH1_HUMAN" protein_descr="Heterogeneous nuclear ribonucleoprotein H OS=Homo sapiens OX=9606 GN=HNRNPH1 PE=1 SV=4" num_tol_term="1" peptide_prev_aa="F" peptide_next_aa="G"/>
+<alternative_protein protein="sp|P55795|HNRH2_HUMAN" protein_descr="Heterogeneous nuclear ribonucleoprotein H2 OS=Homo sapiens OX=9606 GN=HNRNPH2 PE=1 SV=1" num_tol_term="1" peptide_prev_aa="F" peptide_next_aa="G"/>
+<modification_info modified_peptide="QSTTGHCVHMR">
+<mod_aminoacid_mass position="7" mass="160.030649" static="57.021464"/>
+</modification_info>
+<search_score name="xcorr" value="1.1390"/>
+<search_score name="deltacn" value="0.3143"/>
+<search_score name="spscore" value="40.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="8.07E-03"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.9161" all_ntt_prob="(0.0000,0.9161,0.9982)">
+<search_score_summary>
+<parameter name="fval" value="2.4137"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="-0.368"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.985987" all_ntt_prob="(0,0.985987,0.99972)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="20"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.04182.04182.3" spectrumNativeID="controllerType=0 controllerNumber=1 scan=4182" start_scan="4182" end_scan="4182" precursor_neutral_mass="1214.701274" assumed_charge="3" index="1040" retention_time_sec="535.0">
+<search_result>
+<search_hit hit_rank="1" peptide="KKDNSILEIR" peptide_prev_aa="T" peptide_next_aa="G" protein="sp|Q9NZU1|FLRT1_HUMAN" num_tot_proteins="2" num_matched_ions="7" tot_num_ions="36" calc_neutral_pep_mass="1214.698286" massdiff="0.002988" num_tol_term="1" num_missed_cleavages="1" num_matched_peptides="6987" protein_descr="Leucine-rich repeat transmembrane protein FLRT1 OS=Homo sapiens OX=9606 GN=FLRT1 PE=1 SV=4">
+<alternative_protein protein="sp|Q9NZU0|FLRT3_HUMAN" protein_descr="Leucine-rich repeat transmembrane protein FLRT3 OS=Homo sapiens OX=9606 GN=FLRT3 PE=1 SV=1" num_tol_term="1" peptide_prev_aa="T" peptide_next_aa="E"/>
+<search_score name="xcorr" value="1.4070"/>
+<search_score name="deltacn" value="0.1599"/>
+<search_score name="spscore" value="106.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="4.60E-01"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.2046" all_ntt_prob="(0.0000,0.2046,0.9290)">
+<search_score_summary>
+<parameter name="fval" value="1.3191"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="1"/>
+<parameter name="nmc" value="1"/>
+<parameter name="AccMass" value="2.460"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.0265559" all_ntt_prob="(0,0.0265559,0.581182)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="0.2405"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.04664.04664.2" spectrumNativeID="controllerType=0 controllerNumber=1 scan=4664" start_scan="4664" end_scan="4664" precursor_neutral_mass="1202.552185" assumed_charge="2" index="1416" retention_time_sec="556.8">
+<search_result>
+<search_hit hit_rank="1" peptide="HQGVMVGMGQK" peptide_prev_aa="R" peptide_next_aa="D" protein="sp|P62736|ACTA_HUMAN" num_tot_proteins="7" num_matched_ions="7" tot_num_ions="20" calc_neutral_pep_mass="1202.553583" massdiff="-0.001398" num_tol_term="2" num_missed_cleavages="0" num_matched_peptides="8187" protein_descr="Actin, aortic smooth muscle OS=Homo sapiens OX=9606 GN=ACTA2 PE=1 SV=1">
+<alternative_protein protein="sp|P68133|ACTS_HUMAN" protein_descr="Actin, alpha skeletal muscle OS=Homo sapiens OX=9606 GN=ACTA1 PE=1 SV=1" num_tol_term="2" peptide_prev_aa="R" peptide_next_aa="D"/>
+<alternative_protein protein="sp|P60709|ACTB_HUMAN" protein_descr="Actin, cytoplasmic 1 OS=Homo sapiens OX=9606 GN=ACTB PE=1 SV=1" num_tol_term="2" peptide_prev_aa="R" peptide_next_aa="D"/>
+<alternative_protein protein="sp|P63261|ACTG_HUMAN" protein_descr="Actin, cytoplasmic 2 OS=Homo sapiens OX=9606 GN=ACTG1 PE=1 SV=1" num_tol_term="2" peptide_prev_aa="R" peptide_next_aa="D"/>
+<alternative_protein protein="sp|Q562R1|ACTBL_HUMAN" protein_descr="Beta-actin-like protein 2 OS=Homo sapiens OX=9606 GN=ACTBL2 PE=1 SV=2" num_tol_term="2" peptide_prev_aa="R" peptide_next_aa="D"/>
+<alternative_protein protein="sp|P68032|ACTC_HUMAN" protein_descr="Actin, alpha cardiac muscle 1 OS=Homo sapiens OX=9606 GN=ACTC1 PE=1 SV=1" num_tol_term="2" peptide_prev_aa="R" peptide_next_aa="D"/>
+<alternative_protein protein="sp|P63267|ACTH_HUMAN" protein_descr="Actin, gamma-enteric smooth muscle OS=Homo sapiens OX=9606 GN=ACTG2 PE=1 SV=1" num_tol_term="2" peptide_prev_aa="R" peptide_next_aa="D"/>
+<modification_info modified_peptide="HQGVM[147]VGM[147]GQK">
+<mod_aminoacid_mass position="5" mass="147.035385" variable="15.994900" source="param"/>
+<mod_aminoacid_mass position="8" mass="147.035385" variable="15.994900" source="param"/>
+</modification_info>
+<search_score name="xcorr" value="1.4170"/>
+<search_score name="deltacn" value="0.4001"/>
+<search_score name="spscore" value="105.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="6.04E-05"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.1416" all_ntt_prob="(0.0000,0.0059,0.1416)">
+<search_score_summary>
+<parameter name="fval" value="2.9386"/>
+<parameter name="diffvmc" value="1"/>
+<parameter name="ntt" value="2"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="-1.163"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="2"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.97406" all_ntt_prob="(0,0.57465,0.97406)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0.999999"/>
+<parameter name="nsm" value="2.0523"/>
+<parameter name="nsp" value="20"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+<spectrum_query spectrum="20260415_Human_DDA_A_01.04958.04958.2" spectrumNativeID="controllerType=0 controllerNumber=1 scan=4958" start_scan="4958" end_scan="4958" precursor_neutral_mass="898.471720" assumed_charge="2" index="1644" retention_time_sec="570.2">
+<search_result>
+<search_hit hit_rank="1" peptide="IVGCSVHK" peptide_prev_aa="K" peptide_next_aa="G" protein="sp|P07910|HNRPC_HUMAN" num_tot_proteins="2" num_matched_ions="7" tot_num_ions="14" calc_neutral_pep_mass="898.469472" massdiff="0.002248" num_tol_term="2" num_missed_cleavages="0" num_matched_peptides="8638" protein_descr="Heterogeneous nuclear ribonucleoproteins C1\C2 OS=Homo sapiens OX=9606 GN=HNRNPC PE=1 SV=4">
+<alternative_protein protein="sp|Q86SE5|RALYL_HUMAN" protein_descr="RNA-binding Raly-like protein OS=Homo sapiens OX=9606 GN=RALYL PE=1 SV=2" num_tol_term="2" peptide_prev_aa="K" peptide_next_aa="G"/>
+<modification_info modified_peptide="IVGCSVHK">
+<mod_aminoacid_mass position="4" mass="160.030649" static="57.021464"/>
+</modification_info>
+<search_score name="xcorr" value="1.4070"/>
+<search_score name="deltacn" value="0.2232"/>
+<search_score name="spscore" value="221.0"/>
+<search_score name="sprank" value="1"/>
+<search_score name="expect" value="2.25E-03"/>
+<analysis_result analysis="peptideprophet">
+<peptideprophet_result probability="0.9977" all_ntt_prob="(0.0000,0.9398,0.9977)">
+<search_score_summary>
+<parameter name="fval" value="1.7187"/>
+<parameter name="diffvmc" value="0"/>
+<parameter name="ntt" value="2"/>
+<parameter name="nmc" value="0"/>
+<parameter name="AccMass" value="2.502"/>
+<parameter name="isomassd" value="0"/>
+<parameter name="vmcM15pt995" value="0"/>
+</search_score_summary>
+</peptideprophet_result>
+</analysis_result>
+<analysis_result analysis="interprophet">
+<interprophet_result probability="0.999547" all_ntt_prob="(0,0.987565,0.999547)">
+<search_score_summary>
+<parameter name="nrs" value="0"/>
+<parameter name="nsi" value="0"/>
+<parameter name="nsm" value="0"/>
+<parameter name="nsp" value="12.9695"/>
+</search_score_summary>
+</interprophet_result>
+</analysis_result>
+</search_hit>
+</search_result>
+</spectrum_query>
+</msms_run_summary>
+</msms_pipeline_analysis>
