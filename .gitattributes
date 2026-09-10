@@ -1,0 +1,6 @@
+# Store text files with LF line endings in the repository and check them out with the
+# platform's native line endings. Files git cannot classify as text are left untouched.
+* text=auto
+
+# Shell scripts must stay LF on every platform; a CRLF shebang line breaks on Linux/macOS.
+*.sh text eol=lf
