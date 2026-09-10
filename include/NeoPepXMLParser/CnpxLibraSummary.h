@@ -1,13 +1,15 @@
 #ifndef _CNPXLIBRASUMMARY_H
 #define _CNPXLIBRASUMMARY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include "CnpxFragmentMasses.h"
 #include "CnpxIsotopicContributions.h"
 #include <string>
 #include <vector>
 
-class CnpxLibraSummary {
+class NEOPEPXML_EXPORT CnpxLibraSummary {
 public:
   CnpxLibraSummary();
 

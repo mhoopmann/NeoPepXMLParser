@@ -1,12 +1,14 @@
 #ifndef _CNPXLINKEDPEPTIDE_H
 #define _CNPXLINKEDPEPTIDE_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxAlternativeProtein.h"
 #include "CnpxModificationInfo.h"
 #include "CnpxXLinkScore.h"
 #include <string>
 
-class CnpxLinkedPeptide {
+class NEOPEPXML_EXPORT CnpxLinkedPeptide {
 public:
   CnpxLinkedPeptide();
 

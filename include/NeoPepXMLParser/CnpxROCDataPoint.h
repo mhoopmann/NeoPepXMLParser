@@ -1,9 +1,11 @@
 #ifndef _CNPXROCDATAPOINT_H
 #define _CNPXROCDATAPOINT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include <iostream>
 
-class CnpxROCDataPoint {
+class NEOPEPXML_EXPORT CnpxROCDataPoint {
 public:
 
   CnpxROCDataPoint();

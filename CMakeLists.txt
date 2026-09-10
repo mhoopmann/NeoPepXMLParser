@@ -8,15 +8,67 @@ project(NeoPepXMLParser
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+include(CMakePackageConfigHelpers)
+include(GenerateExportHeader)
+include(GNUInstallDirs)
+
+# ---------------------------------------------------------------------------
+# Options
+# ---------------------------------------------------------------------------
+option(NEOPEPXML_BUILD_STATIC "Build the static library" ON)
+option(NEOPEPXML_BUILD_SHARED "Build the shared library" ON)
+option(NEOPEPXML_INSTALL "Generate install rules and the CMake package" ${PROJECT_IS_TOP_LEVEL})
+option(NeoPepXMLParser_SHARED_LIBS
+  "Make NeoPepXMLParser::NeoPepXMLParser refer to the shared library instead of the static one" OFF)
+set(NEOPEPXML_VERSION_SUFFIX "" CACHE STRING
+  "Pre-release identifier appended to the version as -<suffix>, e.g. dev.14; empty for releases")
+set(NEOPEPXML_VERSION_METADATA "" CACHE STRING
+  "Build metadata appended to the full version as +<metadata>, e.g. the short commit hash")
+set(NEOPEPXML_INSTALL_DOCDIR "${CMAKE_INSTALL_DOCDIR}" CACHE STRING
+  "Where README, VERSION, and license files are installed, relative to the prefix; '.' for a dev-kit archive")
+
+if(NOT NEOPEPXML_BUILD_STATIC AND NOT NEOPEPXML_BUILD_SHARED)
+  message(FATAL_ERROR "At least one of NEOPEPXML_BUILD_STATIC and NEOPEPXML_BUILD_SHARED must be ON.")
+endif()
+
+# Debug binaries carry a 'd' postfix so Debug and Release can be installed side by side.
+if(NOT DEFINED CMAKE_DEBUG_POSTFIX)
+  set(CMAKE_DEBUG_POSTFIX d)
+endif()
+
+# NEOPEPXML_PACKAGE_VERSION names archives (1.1.0 or 1.1.0-dev.14); NEOPEPXML_VERSION_FULL is
+# what versionNeo() reports and may add build metadata (1.1.0-dev.14+a1b2c3d).
+set(NEOPEPXML_PACKAGE_VERSION "${PROJECT_VERSION}")
+if(NEOPEPXML_VERSION_SUFFIX)
+  string(APPEND NEOPEPXML_PACKAGE_VERSION "-${NEOPEPXML_VERSION_SUFFIX}")
+endif()
+set(NEOPEPXML_VERSION_FULL "${NEOPEPXML_PACKAGE_VERSION}")
+if(NEOPEPXML_VERSION_METADATA)
+  string(APPEND NEOPEPXML_VERSION_FULL "+${NEOPEPXML_VERSION_METADATA}")
+endif()
+
 # ---------------------------------------------------------------------------
 # Dependencies
 # ---------------------------------------------------------------------------
-# Resolves expat into the interface target NeoPepXMLParser_expat. See
-# cmake/NeoPepXMLExpat.cmake for the supported ways of supplying it.
+# Defines NeoPepXMLParser_expat, NEOPEPXML_EXPAT_MODE and NEOPEPXML_EXPAT_HAS_LIBRARY. See the
+# module for the three ways expat can be supplied.
 include(NeoPepXMLExpat)
 
+if(NEOPEPXML_BUILD_SHARED AND NOT NEOPEPXML_EXPAT_HAS_LIBRARY)
+  message(FATAL_ERROR
+    "The shared library must link expat, but only expat headers were supplied. Set "
+    "NEOPEPXML_EXPAT_LIBRARY as well, or configure with -DNEOPEPXML_BUILD_SHARED=OFF.")
+endif()
+
 # ---------------------------------------------------------------------------
-# Library
+# Generated headers
+# ---------------------------------------------------------------------------
+set(NEOPEPXML_GENERATED_INCLUDE_DIR "${CMAKE_CURRENT_BINARY_DIR}/include")
+configure_file(cmake/NeoPepXMLVersion.h.in
+  "${NEOPEPXML_GENERATED_INCLUDE_DIR}/NeoPepXMLParser/NeoPepXMLVersion.h" @ONLY)
+
+# ---------------------------------------------------------------------------
+# Sources
 # ---------------------------------------------------------------------------
 set(NEOPEPXML_SOURCES
   src/CnpxAffectedChannel.cpp
@@ -160,34 +212,195 @@ set(NEOPEPXML_HEADERS
   include/NeoPepXMLParser/NeoPepXMLStructs.h
 )
 
-add_library(NeoPepXMLParser STATIC ${NEOPEPXML_SOURCES} ${NEOPEPXML_HEADERS})
-add_library(NeoPepXMLParser::NeoPepXMLParser ALIAS NeoPepXMLParser)
+# ---------------------------------------------------------------------------
+# Library targets
+# ---------------------------------------------------------------------------
+# The static and shared libraries are separate targets compiled from the same sources rather
+# than one object library feeding both. On Windows the objects differ (dllexport versus no
+# decoration), so sharing them would leak export directives into the static library.
+function(neopepxml_configure_target target)
+  target_sources(${target} PRIVATE ${NEOPEPXML_SOURCES} ${NEOPEPXML_HEADERS})
+  target_include_directories(${target}
+    PUBLIC
+      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+      $<BUILD_INTERFACE:${NEOPEPXML_GENERATED_INCLUDE_DIR}>
+      $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    PRIVATE
+      # Only NeoPepXMLParser.cpp includes expat.h; consumers never need its headers.
+      $<TARGET_PROPERTY:NeoPepXMLParser_expat,INTERFACE_INCLUDE_DIRECTORIES>)
 
-target_include_directories(NeoPepXMLParser
-  PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>)
+  # The library itself is compiled as C++17. Its public headers only require C++11, so
+  # consumers are not forced onto a newer standard; hence PRIVATE.
+  target_compile_features(${target} PRIVATE cxx_std_17)
+  set_target_properties(${target} PROPERTIES
+    CXX_EXTENSIONS OFF
+    DEFINE_SYMBOL NEOPEPXML_EXPORTS
+    VERSION ${PROJECT_VERSION}
+    # The classes expose their data members directly, so any change to them changes the binary
+    # layout. No ABI compatibility is promised between releases; the soversion says so.
+    SOVERSION ${PROJECT_VERSION})
 
-# The library itself is compiled as C++17. Its public headers only require C++11, so
-# consumers are not forced onto a newer standard; hence PRIVATE.
-target_compile_features(NeoPepXMLParser PRIVATE cxx_std_17)
-set_target_properties(NeoPepXMLParser PROPERTIES CXX_EXTENSIONS OFF)
+  # expat.h decorates its API with __declspec(dllimport) on Windows unless XML_STATIC is
+  # defined. Always defining it is safe: it is required against a static expat, and against an
+  # import library the linker still resolves the undecorated names through the library thunks.
+  target_compile_definitions(${target} PRIVATE XML_STATIC)
 
-# Only NeoPepXMLParser.cpp includes expat.h; the public header forward-declares the parser
-# handle. Consumers of the static library still link expat (CMake carries the PRIVATE link
-# dependencies of a static library through to them) but never need its headers.
-target_link_libraries(NeoPepXMLParser PRIVATE NeoPepXMLParser_expat)
+  if(MSVC)
+    target_compile_options(${target} PRIVATE /W4)
+    # fopen, sscanf, and friends are used deliberately; this silences the MSVC-only
+    # deprecation warnings about them.
+    target_compile_definitions(${target} PRIVATE _CRT_SECURE_NO_WARNINGS)
+  else()
+    target_compile_options(${target} PRIVATE -Wall -Wextra)
+  endif()
+endfunction()
 
-# expat.h decorates its API with __declspec(dllimport) on Windows unless XML_STATIC is
-# defined. Always defining it is safe: it is required against a static expat, and against an
-# import library the linker still resolves the undecorated names through the library thunks.
-target_compile_definitions(NeoPepXMLParser PRIVATE XML_STATIC)
+set(NEOPEPXML_EXPORT_TARGETS NeoPepXMLParser_expat)
 
-if(MSVC)
-  target_compile_options(NeoPepXMLParser PRIVATE /W4)
-  # fopen, sprintf, strncpy, and friends are used deliberately; this silences the
-  # MSVC-only deprecation warnings about them.
-  target_compile_definitions(NeoPepXMLParser PRIVATE _CRT_SECURE_NO_WARNINGS)
+if(NEOPEPXML_BUILD_STATIC)
+  add_library(NeoPepXMLParser_static STATIC)
+  add_library(NeoPepXMLParser::static ALIAS NeoPepXMLParser_static)
+  neopepxml_configure_target(NeoPepXMLParser_static)
+  # Consumers of the static library see the export macros expand to nothing.
+  target_compile_definitions(NeoPepXMLParser_static PUBLIC NEOPEPXML_STATIC_DEFINE)
+  # A static library links nothing itself; expat is a requirement passed on to the final link.
+  target_link_libraries(NeoPepXMLParser_static INTERFACE NeoPepXMLParser_expat)
+  # On Windows the DLL's import library would otherwise share this file name.
+  if(WIN32)
+    set(neopepxml_static_name NeoPepXMLParser_static)
+  else()
+    set(neopepxml_static_name NeoPepXMLParser)
+  endif()
+  set_target_properties(NeoPepXMLParser_static PROPERTIES
+    EXPORT_NAME static
+    OUTPUT_NAME ${neopepxml_static_name}
+    # So the static library can also be linked into a consumer's shared library.
+    POSITION_INDEPENDENT_CODE ON)
+  list(APPEND NEOPEPXML_EXPORT_TARGETS NeoPepXMLParser_static)
+endif()
+
+if(NEOPEPXML_BUILD_SHARED)
+  add_library(NeoPepXMLParser_shared SHARED)
+  add_library(NeoPepXMLParser::shared ALIAS NeoPepXMLParser_shared)
+  neopepxml_configure_target(NeoPepXMLParser_shared)
+  target_link_libraries(NeoPepXMLParser_shared PRIVATE NeoPepXMLParser_expat)
+  set_target_properties(NeoPepXMLParser_shared PROPERTIES
+    EXPORT_NAME shared
+    OUTPUT_NAME NeoPepXMLParser
+    # Only symbols marked NEOPEPXML_EXPORT leave the shared library on Linux and macOS.
+    CXX_VISIBILITY_PRESET hidden
+    VISIBILITY_INLINES_HIDDEN ON)
+  list(APPEND NEOPEPXML_EXPORT_TARGETS NeoPepXMLParser_shared)
+endif()
+
+# NeoPepXMLParser::NeoPepXMLParser is the conventional target for consumers that add this
+# project with add_subdirectory() or FetchContent. It refers to the static library unless
+# NeoPepXMLParser_SHARED_LIBS is ON or no static library is built.
+if(NeoPepXMLParser_SHARED_LIBS AND TARGET NeoPepXMLParser_shared)
+  add_library(NeoPepXMLParser::NeoPepXMLParser ALIAS NeoPepXMLParser_shared)
+elseif(TARGET NeoPepXMLParser_static)
+  add_library(NeoPepXMLParser::NeoPepXMLParser ALIAS NeoPepXMLParser_static)
 else()
-  target_compile_options(NeoPepXMLParser PRIVATE -Wall -Wextra)
+  add_library(NeoPepXMLParser::NeoPepXMLParser ALIAS NeoPepXMLParser_shared)
+endif()
+
+# ---------------------------------------------------------------------------
+# Export header
+# ---------------------------------------------------------------------------
+# Generated from the shared target when there is one, so the header carries the dllexport /
+# dllimport / visibility logic. Static consumers define NEOPEPXML_STATIC_DEFINE (propagated
+# from the static target) and get empty macros from the same header.
+if(TARGET NeoPepXMLParser_shared)
+  set(neopepxml_export_source NeoPepXMLParser_shared)
+else()
+  set(neopepxml_export_source NeoPepXMLParser_static)
+endif()
+set(NEOPEPXML_EXPORT_HEADER_EXTRA [=[
+/* The exported classes hold standard-library members such as std::string and std::vector.
+   MSVC warns (C4251) that those need a DLL interface. That is inherent to any C++ DLL API and
+   is expected here, so the warning is silenced for translation units that use the DLL. */
+#if defined(_MSC_VER) && !defined(NEOPEPXML_STATIC_DEFINE)
+#pragma warning(disable : 4251)
+#endif
+]=])
+generate_export_header(${neopepxml_export_source}
+  BASE_NAME NEOPEPXML
+  EXPORT_MACRO_NAME NEOPEPXML_EXPORT
+  NO_EXPORT_MACRO_NAME NEOPEPXML_NO_EXPORT
+  DEPRECATED_MACRO_NAME NEOPEPXML_DEPRECATED
+  STATIC_DEFINE NEOPEPXML_STATIC_DEFINE
+  EXPORT_FILE_NAME "${NEOPEPXML_GENERATED_INCLUDE_DIR}/NeoPepXMLParser/NeoPepXMLExport.h"
+  CUSTOM_CONTENT_FROM_VARIABLE NEOPEPXML_EXPORT_HEADER_EXTRA)
+
+# ---------------------------------------------------------------------------
+# Install, package config, and dev-kit archives
+# ---------------------------------------------------------------------------
+if(NEOPEPXML_INSTALL)
+  install(TARGETS ${NEOPEPXML_EXPORT_TARGETS}
+    EXPORT NeoPepXMLParserTargets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+  install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+  install(DIRECTORY "${NEOPEPXML_GENERATED_INCLUDE_DIR}/" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+  set(NEOPEPXML_CMAKE_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/cmake/NeoPepXMLParser)
+  install(EXPORT NeoPepXMLParserTargets
+    NAMESPACE NeoPepXMLParser::
+    DESTINATION ${NEOPEPXML_CMAKE_INSTALL_DIR})
+  configure_package_config_file(cmake/NeoPepXMLParserConfig.cmake.in
+    "${CMAKE_CURRENT_BINARY_DIR}/NeoPepXMLParserConfig.cmake"
+    INSTALL_DESTINATION ${NEOPEPXML_CMAKE_INSTALL_DIR})
+  write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/NeoPepXMLParserConfigVersion.cmake"
+    COMPATIBILITY SameMajorVersion)
+  install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/NeoPepXMLParserConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/NeoPepXMLParserConfigVersion.cmake"
+    DESTINATION ${NEOPEPXML_CMAKE_INSTALL_DIR})
+
+  # Documentation and provenance: the version stamp lets anyone identify an unpacked kit.
+  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/VERSION" "${NEOPEPXML_VERSION_FULL}\n")
+  install(FILES LICENSE README.md "${CMAKE_CURRENT_BINARY_DIR}/VERSION"
+    DESTINATION ${NEOPEPXML_INSTALL_DOCDIR})
+  if(NEOPEPXML_EXPAT_MODE STREQUAL "FETCH")
+    install(FILES "${NEOPEPXML_EXPAT_SOURCE_DIR}/expat/COPYING"
+      DESTINATION ${NEOPEPXML_INSTALL_DOCDIR} RENAME LICENSE.expat)
+  endif()
+
+  # CPack wraps the install tree into NeoPepXMLParser-<version>-<os>-<arch>.{zip,tar.gz}.
+  # A tarball is used outside Windows because zip cannot hold the shared library's symlinks.
+  if(WIN32)
+    set(neopepxml_os windows)
+    set(CPACK_GENERATOR ZIP)
+  elseif(APPLE)
+    set(neopepxml_os macos)
+    set(CPACK_GENERATOR TGZ)
+  else()
+    string(TOLOWER "${CMAKE_SYSTEM_NAME}" neopepxml_os)
+    set(CPACK_GENERATOR TGZ)
+  endif()
+  if(APPLE AND CMAKE_OSX_ARCHITECTURES)
+    list(LENGTH CMAKE_OSX_ARCHITECTURES neopepxml_arch_count)
+    if(neopepxml_arch_count GREATER 1)
+      set(neopepxml_arch universal)
+    else()
+      set(neopepxml_arch "${CMAKE_OSX_ARCHITECTURES}")
+    endif()
+  else()
+    string(TOLOWER "${CMAKE_SYSTEM_PROCESSOR}" neopepxml_arch)
+    if(neopepxml_arch MATCHES "^(amd64|x86_64)$")
+      set(neopepxml_arch x64)
+    elseif(neopepxml_arch MATCHES "^(aarch64|arm64)$")
+      set(neopepxml_arch arm64)
+    endif()
+  endif()
+  set(CPACK_PACKAGE_NAME NeoPepXMLParser)
+  set(CPACK_PACKAGE_VERSION "${NEOPEPXML_PACKAGE_VERSION}")
+  set(CPACK_PACKAGE_FILE_NAME "NeoPepXMLParser-${NEOPEPXML_PACKAGE_VERSION}-${neopepxml_os}-${neopepxml_arch}")
+  set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PROJECT_DESCRIPTION}")
+  set(CPACK_PACKAGE_HOMEPAGE_URL "${PROJECT_HOMEPAGE_URL}")
+  set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+  set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY ON)
+  include(CPack)
 endif()

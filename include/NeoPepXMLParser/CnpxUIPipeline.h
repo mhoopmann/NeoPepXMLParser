@@ -1,10 +1,12 @@
 #ifndef _CNPXUIPIPELINE_H
 #define _CNPXUIPIPELINE_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxMSMSPipelineAnalysis.h"
 #include <vector>
 
-class CnpxUIPipeline {
+class NEOPEPXML_EXPORT CnpxUIPipeline {
 public:
   CnpxUIPipeline();
   ~CnpxUIPipeline();

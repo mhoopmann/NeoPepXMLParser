@@ -1,10 +1,12 @@
 #ifndef _CNPXALTERNATIVEPROTEIN_H
 #define _CNPXALTERNATIVEPROTEIN_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include <string>
 
-class CnpxAlternativeProtein {
+class NEOPEPXML_EXPORT CnpxAlternativeProtein {
 public:
   CnpxAlternativeProtein();
 

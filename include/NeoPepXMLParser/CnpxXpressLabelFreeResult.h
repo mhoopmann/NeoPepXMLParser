@@ -1,10 +1,12 @@
 #ifndef _CNPXXPRESSLABELFREERESULT_H
 #define _CNPXXPRESSLABELFREERESULT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include <string>
 #include <vector>
 
-class CnpxXpressLabelFreeResult {
+class NEOPEPXML_EXPORT CnpxXpressLabelFreeResult {
 public:
 
   CnpxXpressLabelFreeResult();

@@ -1,9 +1,11 @@
 #ifndef _CNPXDISTRIBUTIONPOINT_H
 #define _CNPXDISTRIBUTIONPOINT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include <iostream>
 
-class CnpxDistributionPoint {
+class NEOPEPXML_EXPORT CnpxDistributionPoint {
 public:
 
   CnpxDistributionPoint();

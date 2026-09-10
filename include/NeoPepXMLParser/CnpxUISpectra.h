@@ -1,10 +1,12 @@
 #ifndef _CNPXUISPECTRA_H
 #define _CNPXUISPECTRA_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxSpectrumQuery.h"
 #include <vector>
 
-class CnpxUISpectra {
+class NEOPEPXML_EXPORT CnpxUISpectra {
 public:
   CnpxUISpectra();
   ~CnpxUISpectra();

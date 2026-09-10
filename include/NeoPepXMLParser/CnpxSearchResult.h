@@ -1,11 +1,13 @@
 #ifndef _CNPXSEARCHRESULT_H
 #define _CNPXSEARCHRESULT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include "CnpxSearchHit.h"
 #include <vector>
 
-class CnpxSearchResult {
+class NEOPEPXML_EXPORT CnpxSearchResult {
 public:
   CnpxSearchResult();
 

@@ -1,13 +1,15 @@
 #ifndef _CNPXSPECTRUMQUERY_H
 #define _CNPXSPECTRUMQUERY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxSearchResult.h"
 #include "NeoPepXMLStructs.h"
 #include <iostream>
 #include <string>
 #include <vector>
 
-class CnpxSpectrumQuery {
+class NEOPEPXML_EXPORT CnpxSpectrumQuery {
 public:
   CnpxSpectrumQuery();
   

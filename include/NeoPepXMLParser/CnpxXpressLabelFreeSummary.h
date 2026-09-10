@@ -1,13 +1,15 @@
 #ifndef _CNPXXPRESSLABELFREESUMMARY_H
 #define _CNPXXPRESSLABELFREESUMMARY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxInputFile.h"
 #include "CnpxMixtureModel.h"
 #include "CnpxROCErrorData.h"
 #include <string>
 #include <vector>
 
-class CnpxXpressLabelFreeSummary {
+class NEOPEPXML_EXPORT CnpxXpressLabelFreeSummary {
 public:
   CnpxXpressLabelFreeSummary();
 

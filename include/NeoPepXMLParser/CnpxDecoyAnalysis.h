@@ -1,6 +1,8 @@
 #ifndef _CNPXDECOYANALYSIS_H
 #define _CNPXDECOYANALYSIS_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -51,7 +53,7 @@ typedef struct npxPointD{
   }
 } npxPointD;
 
-class CnpxDecoyAnalysis {
+class NEOPEPXML_EXPORT CnpxDecoyAnalysis {
 public:
   void write(FILE* f);
 

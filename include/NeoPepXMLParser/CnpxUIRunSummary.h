@@ -1,10 +1,12 @@
 #ifndef _CNPXUIRUNSUMMARY_H
 #define _CNPXUIRUNSUMMARY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxMSMSRunSummary.h"
 #include <vector>
 
-class CnpxUIRunSummary {
+class NEOPEPXML_EXPORT CnpxUIRunSummary {
 public:
   CnpxUIRunSummary();
   ~CnpxUIRunSummary();

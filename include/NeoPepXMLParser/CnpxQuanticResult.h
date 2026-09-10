@@ -1,10 +1,12 @@
 #ifndef _CNPXQUANTICRESULT_H
 #define _CNPXQUANTICRESULT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include <string>
 #include <vector>
 
-class CnpxQuanticResult {
+class NEOPEPXML_EXPORT CnpxQuanticResult {
 public:
 
   CnpxQuanticResult();

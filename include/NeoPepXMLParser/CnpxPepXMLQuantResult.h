@@ -1,11 +1,13 @@
 #ifndef _CNPXPEPXMLQUANTRESULT_H
 #define _CNPXPEPXMLQUANTRESULT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxSearchScoreSummary.h"
 #include <string>
 #include <vector>
 
-class CnpxPepXMLQuantResult {
+class NEOPEPXML_EXPORT CnpxPepXMLQuantResult {
 public:
 
   CnpxPepXMLQuantResult();

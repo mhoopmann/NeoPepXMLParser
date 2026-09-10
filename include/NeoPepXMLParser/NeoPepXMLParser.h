@@ -1,6 +1,8 @@
 #ifndef _NEOPEPXMLPARSER_H
 #define _NEOPEPXMLPARSER_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxMSMSPipelineAnalysis.h"
 #include "NeoPepXMLStructs.h"
 
@@ -28,14 +30,13 @@
 #define NPX_HAS_FILESYSTEM 0
 #endif
 
-#define NPX_VERSION "1.0.6"
-#define NPX_DATE "2025 OCT 10"
+#include "NeoPepXMLParser/NeoPepXMLVersion.h"
 
 // Opaque expat parser handle. Forward-declared so that users of this header do not need the
 // expat headers on their include path; expat.h is included only by NeoPepXMLParser.cpp.
 struct XML_ParserStruct;
 
-class NeoPepXMLParser {
+class NEOPEPXML_EXPORT NeoPepXMLParser {
 public:
   NeoPepXMLParser();
   ~NeoPepXMLParser();

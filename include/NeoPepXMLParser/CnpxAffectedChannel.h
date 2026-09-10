@@ -1,11 +1,13 @@
 #ifndef _CNPXAFFECTEDCHANNEL_H
 #define _CNPXAFFECTEDCHANNEL_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include <string>
 #include <vector>
 
-class CnpxAffectedChannel {
+class NEOPEPXML_EXPORT CnpxAffectedChannel {
 public:
   CnpxAffectedChannel();
 

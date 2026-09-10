@@ -1,11 +1,13 @@
 #ifndef _CNPXSEARCHDATABASE_H
 #define _CNPXSEARCHDATABASE_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include <iostream>
 #include <string>
 
-class CnpxSearchDatabase {
+class NEOPEPXML_EXPORT CnpxSearchDatabase {
 public:
   CnpxSearchDatabase();
 

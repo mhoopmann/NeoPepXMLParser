@@ -1,11 +1,13 @@
 #ifndef _CNPXINTERPROPHETRESULT_H
 #define _CNPXINTERPROPHETRESULT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxSearchScoreSummary.h"
 #include <string>
 #include <vector>
 
-class CnpxInterprophetResult {
+class NEOPEPXML_EXPORT CnpxInterprophetResult {
 public:
 
   CnpxInterprophetResult();

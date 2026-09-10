@@ -1,6 +1,8 @@
 #ifndef _CNPXMIXTUREMODEL_H
 #define _CNPXMIXTUREMODEL_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -47,7 +49,7 @@ typedef struct npxBin{
 } npxBin;
 
 
-class CnpxMixtureModel {
+class NEOPEPXML_EXPORT CnpxMixtureModel {
 public:
   CnpxMixtureModel();
 

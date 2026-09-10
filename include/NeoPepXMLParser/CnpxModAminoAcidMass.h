@@ -1,11 +1,13 @@
 #ifndef _CNPXMODAMINOACIDMASS_H
 #define _CNPXMODAMINOACIDMASS_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include <string>
 #include <vector>
 
-class CnpxModAminoAcidMass {
+class NEOPEPXML_EXPORT CnpxModAminoAcidMass {
 public:
   CnpxModAminoAcidMass();
 

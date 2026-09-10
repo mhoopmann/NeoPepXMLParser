@@ -1,9 +1,11 @@
 #ifndef _CNPXMODAMINOACIDPROBABILITY_H
 #define _CNPXMODAMINOACIDPROBABILITY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include <string>
 
-class CnpxModAminoAcidProbability {
+class NEOPEPXML_EXPORT CnpxModAminoAcidProbability {
 public:
 
   CnpxModAminoAcidProbability();

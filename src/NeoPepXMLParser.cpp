@@ -1211,11 +1211,7 @@ size_t NeoPepXMLParser::size(){
 }
 
 string NeoPepXMLParser::versionNeo(){
-  string s;
-  s=NPX_VERSION;
-  s+="\t";
-  s+=NPX_DATE;
-  return s;
+  return NPX_VERSION_FULL;
 }
 
 bool NeoPepXMLParser::write(const char* fn, bool tabs){

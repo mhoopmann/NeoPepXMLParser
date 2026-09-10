@@ -1,6 +1,8 @@
 #ifndef _CNPXANALYSISSUMMARY_H
 #define _CNPXANALYSISSUMMARY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include "CnpxDecoyAnalysis.h"
 #include "CnpxDecoyAnalysisSummary.h"
@@ -14,7 +16,7 @@
 #include <string>
 #include <vector>
 
-class CnpxAnalysisSummary {
+class NEOPEPXML_EXPORT CnpxAnalysisSummary {
 public:
   void write(FILE* f, int tabs=-1);
 

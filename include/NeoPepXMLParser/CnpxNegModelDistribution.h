@@ -1,12 +1,14 @@
 #ifndef _CNPXNEGMODELDISTRIBUTION_H
 #define _CNPXNEGMODELDISTRIBUTION_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxParameter.h"
 #include <iostream>
 #include <string>
 #include <vector>
 
-class CnpxNegModelDistribution {
+class NEOPEPXML_EXPORT CnpxNegModelDistribution {
 public:
   CnpxNegModelDistribution();
 

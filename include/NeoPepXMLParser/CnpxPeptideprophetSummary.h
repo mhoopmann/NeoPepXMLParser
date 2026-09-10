@@ -1,6 +1,8 @@
 #ifndef _CNPXPEPTIDEPROPHETSUMMARY_H
 #define _CNPXPEPTIDEPROPHETSUMMARY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxDistributionPoint.h"
 #include "CnpxInputFile.h"
 #include "CnpxMixtureModel.h"
@@ -9,7 +11,7 @@
 #include <string>
 #include <vector>
 
-class CnpxPeptideprophetSummary {
+class NEOPEPXML_EXPORT CnpxPeptideprophetSummary {
 public:
   CnpxPeptideprophetSummary();
 

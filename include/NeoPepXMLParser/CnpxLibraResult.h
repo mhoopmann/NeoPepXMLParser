@@ -1,12 +1,14 @@
 #ifndef _CNPXLIBRARESULT_H
 #define _CNPXLIBRARESULT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include "CnpxIntensity.h"
 #include <string>
 #include <vector>
 
-class CnpxLibraResult {
+class NEOPEPXML_EXPORT CnpxLibraResult {
 public:
   CnpxLibraResult();
   CnpxLibraResult(bool b);

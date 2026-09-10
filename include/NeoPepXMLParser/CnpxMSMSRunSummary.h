@@ -1,6 +1,8 @@
 #ifndef _CNPXMSMSRUNSUMMARY_H
 #define _CNPXMSMSRUNSUMMARY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxAnalysisTimestamp.h"
 #include "CnpxSampleEnzyme.h"
 #include "CnpxSearchSummary.h"
@@ -8,7 +10,7 @@
 #include <string>
 #include <vector>
 
-class CnpxMSMSRunSummary {
+class NEOPEPXML_EXPORT CnpxMSMSRunSummary {
 public:
 
   CnpxSearchSummary* addSearchSummary(std::string baseName, std::string searchEngine, std::string precursorMassType, std::string fragmentMassType, int searchID);

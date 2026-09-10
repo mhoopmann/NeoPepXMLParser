@@ -1,13 +1,15 @@
 #ifndef _CNPXMIXTUREMODELDISTRIBUTION_H
 #define _CNPXMIXTUREMODELDISTRIBUTION_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxNegModelDistribution.h"
 #include "CnpxPosModelDistribution.h"
 #include <iostream>
 #include <string>
 #include <vector>
 
-class CnpxMixtureModelDistribution {
+class NEOPEPXML_EXPORT CnpxMixtureModelDistribution {
 public:
   CnpxMixtureModelDistribution();
 

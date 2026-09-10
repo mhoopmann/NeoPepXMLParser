@@ -1,10 +1,12 @@
 #ifndef _CNPXDECOYANALYSISSUMMARY_H
 #define _CNPXDECOYANALYSISSUMMARY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include <string>
 #include <stdio.h>
 
-class CnpxDecoyAnalysisSummary {
+class NEOPEPXML_EXPORT CnpxDecoyAnalysisSummary {
 public:
   CnpxDecoyAnalysisSummary();
 

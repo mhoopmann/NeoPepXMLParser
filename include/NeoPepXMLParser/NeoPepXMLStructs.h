@@ -1,13 +1,15 @@
 #ifndef NEOPEPXMLSTRUCTS_H
 #define NEOPEPXMLSTRUCTS_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include <cstdio>
 #include <string>
 
 // Namespace declarations written on the msms_pipeline_analysis root element.
-extern const std::string npx_xmlns;
-extern const std::string npx_xmlns_xsi;
-extern const std::string npx_xsi_schemaLocation;
+extern NEOPEPXML_EXPORT const std::string npx_xmlns;
+extern NEOPEPXML_EXPORT const std::string npx_xmlns_xsi;
+extern NEOPEPXML_EXPORT const std::string npx_xsi_schemaLocation;
 
 enum pepXMLElement:int{
   pxAffectedChannel,
@@ -98,7 +100,7 @@ typedef struct npxTime {
   }
 } npxTime;
 
-typedef struct npxDateTime{
+typedef struct NEOPEPXML_EXPORT npxDateTime{
   npxDate date;
   npxTime time;
   void clear();
@@ -111,12 +113,12 @@ typedef struct npxDateTime{
 // Converts the leading decimal number in s to a double the way atof does, but independent of
 // the process locale. pepXML always uses '.' as the decimal separator, whereas atof honors
 // whatever LC_NUMERIC the host application has set. Returns 0.0 when s holds no number.
-double npxAtof(const char* s);
+NEOPEPXML_EXPORT double npxAtof(const char* s);
 
 // Reports a missing required attribute on element el and terminates the process.
-void NPXerrMsg(const std::string& el, const std::string& attr);
+NEOPEPXML_EXPORT void NPXerrMsg(const std::string& el, const std::string& attr);
 
 // Writes 'tabs' spaces to f; used to indent nested elements when writing.
-void NPXprintTabs(FILE* f, int tabs);
+NEOPEPXML_EXPORT void NPXprintTabs(FILE* f, int tabs);
 
 #endif

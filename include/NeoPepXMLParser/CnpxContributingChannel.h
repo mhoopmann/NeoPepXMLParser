@@ -1,12 +1,14 @@
 #ifndef _CNPXCONTRIBUTINGCHANNEL_H
 #define _CNPXCONTRIBUTINGCHANNEL_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include "CnpxAffectedChannel.h"
 #include <string>
 #include <vector>
 
-class CnpxContributingChannel {
+class NEOPEPXML_EXPORT CnpxContributingChannel {
 public:
   CnpxContributingChannel();
 

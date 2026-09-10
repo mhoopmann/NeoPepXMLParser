@@ -1,6 +1,8 @@
 #ifndef _CNPXMSMSPIPELINEANALYSIS_H
 #define _CNPXMSMSPIPELINEANALYSIS_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxAnalysisSummary.h"
 #include "CnpxMSMSRunSummary.h"
 #include "NeoPepXMLStructs.h"
@@ -8,7 +10,7 @@
 #include <string>
 #include <vector>
 
-class CnpxMSMSPipelineAnalysis {
+class NEOPEPXML_EXPORT CnpxMSMSPipelineAnalysis {
 public:
 
   CnpxMSMSRunSummary* addMSMSRunSummary(std::string baseName, std::string rawDataType, std::string rawData);

@@ -1,6 +1,8 @@
 #ifndef _CNPXUIPSM_H
 #define _CNPXUIPSM_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxSpectrumQuery.h"
 #include <string>
 #include <vector>
@@ -32,7 +34,7 @@ typedef struct npxUIProbability{
   std::vector<npxUIScore> parameters;
 } npxUIProbability;
 
-class CnpxUIPSM {
+class NEOPEPXML_EXPORT CnpxUIPSM {
 public:
   int assumed_charge;
   double calcNeutralMass;

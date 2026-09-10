@@ -1,13 +1,15 @@
 #ifndef _CNPXROCERRORDATA_H
 #define _CNPXROCERRORDATA_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxROCDataPoint.h"
 #include "CnpxErrorPoint.h"
 
 #include <string>
 #include <vector>
 
-class CnpxROCErrorData {
+class NEOPEPXML_EXPORT CnpxROCErrorData {
 public:
   CnpxROCErrorData();
 

@@ -1,10 +1,12 @@
 #ifndef _CNPXSEARCHSCORE_H
 #define _CNPXSEARCHSCORE_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include <string>
 
-class CnpxSearchScore {
+class NEOPEPXML_EXPORT CnpxSearchScore {
 public:
 
   void write(FILE* f, int tabs = -1);

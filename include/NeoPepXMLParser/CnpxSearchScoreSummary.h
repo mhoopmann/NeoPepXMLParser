@@ -1,11 +1,13 @@
 #ifndef _CNPXSEARCHSCORESUMMARY_H
 #define _CNPXSEARCHSCORESUMMARY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxParameter.h"
 #include <string>
 #include <vector>
 
-class CnpxSearchScoreSummary {
+class NEOPEPXML_EXPORT CnpxSearchScoreSummary {
 public:
 
   CnpxSearchScoreSummary();

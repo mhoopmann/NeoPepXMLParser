@@ -1,10 +1,12 @@
 #ifndef _CNPXSPECIFICITY_H
 #define _CNPXSPECIFICITY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include <string>
 
-class CnpxSpecificity {
+class NEOPEPXML_EXPORT CnpxSpecificity {
 public:
   CnpxSpecificity();
 

@@ -1,9 +1,11 @@
 #ifndef _CNPXLABILITY_H
 #define _CNPXLABILITY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include <string>
 
-class CnpxLability {
+class NEOPEPXML_EXPORT CnpxLability {
 public:
 
   CnpxLability();

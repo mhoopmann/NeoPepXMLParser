@@ -1,11 +1,13 @@
 #ifndef _CNPXXLINK_H
 #define _CNPXXLINK_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxLinkedPeptide.h"
 #include "CnpxXLinkScore.h"
 #include <string>
 
-class CnpxXLink {
+class NEOPEPXML_EXPORT CnpxXLink {
 public:
   CnpxXLink();
 

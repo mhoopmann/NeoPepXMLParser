@@ -1,10 +1,12 @@
 #ifndef _CNPXPARAMETER_H
 #define _CNPXPARAMETER_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include <string>
 
-class CnpxParameter {
+class NEOPEPXML_EXPORT CnpxParameter {
 public:
 
   void write(FILE* f, int tabs=-1);

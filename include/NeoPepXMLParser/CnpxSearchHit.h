@@ -1,6 +1,8 @@
 #ifndef _CNPXSEARCHHIT_H
 #define _CNPXSEARCHHIT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxAlternativeProtein.h"
 #include "CnpxAnalysisResult.h"
 #include "CnpxModificationInfo.h"
@@ -10,7 +12,7 @@
 #include <string>
 #include <vector>
 
-class CnpxSearchHit {
+class NEOPEPXML_EXPORT CnpxSearchHit {
 public:
   CnpxSearchHit();
 

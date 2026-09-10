@@ -1,13 +1,15 @@
 #ifndef _CNPXQUANTICSUMMARY_H
 #define _CNPXQUANTICSUMMARY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxInputFile.h"
 #include "CnpxMixtureModel.h"
 #include "CnpxROCErrorData.h"
 #include <string>
 #include <vector>
 
-class CnpxQuanticSummary {
+class NEOPEPXML_EXPORT CnpxQuanticSummary {
 public:
   CnpxQuanticSummary();
 

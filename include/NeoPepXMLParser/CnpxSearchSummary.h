@@ -1,6 +1,8 @@
 #ifndef _CNPXSEARCHSUMMARY_H
 #define _CNPXSEARCHSUMMARY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxAminoAcidModification.h"
 #include "CnpxEnzymaticSearchConstraint.h"
 #include "CnpxParameter.h"
@@ -11,7 +13,7 @@
 #include <vector>
 
 
-class CnpxSearchSummary {
+class NEOPEPXML_EXPORT CnpxSearchSummary {
 public:
 
   CnpxSearchSummary();

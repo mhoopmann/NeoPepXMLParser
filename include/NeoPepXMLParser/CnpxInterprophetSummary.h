@@ -1,6 +1,8 @@
 #ifndef _CNPXINTERPROPHETSUMMARY_H
 #define _CNPXINTERPROPHETSUMMARY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxInputFile.h"
 #include "CnpxMixtureModel.h"
 #include "CnpxMixtureModelDistribution.h"
@@ -8,7 +10,7 @@
 #include <string>
 #include <vector>
 
-class CnpxInterprophetSummary {
+class NEOPEPXML_EXPORT CnpxInterprophetSummary {
 public:
   CnpxInterprophetSummary();
 

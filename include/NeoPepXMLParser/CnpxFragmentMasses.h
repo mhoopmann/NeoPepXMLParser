@@ -1,11 +1,13 @@
 #ifndef _CNPXFRAGMENTMASSES_H
 #define _CNPXFRAGMENTMASSES_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include <string>
 #include <vector>
 
-class CnpxFragmentMasses {
+class NEOPEPXML_EXPORT CnpxFragmentMasses {
 public:
   CnpxFragmentMasses();
 

@@ -1,9 +1,11 @@
 #ifndef _CNPXDATABASEREFRESHTIMESTAMP_H
 #define _CNPXDATABASEREFRESHTIMESTAMP_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include <string>
 
-class CnpxDatabaseRefreshTimestamp {
+class NEOPEPXML_EXPORT CnpxDatabaseRefreshTimestamp {
 public:
   CnpxDatabaseRefreshTimestamp();
   CnpxDatabaseRefreshTimestamp(bool b);

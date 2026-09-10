@@ -1,9 +1,11 @@
 #ifndef _CNPXMODTERMINALPROBABILITY_H
 #define _CNPXMODTERMINALPROBABILITY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include <string>
 
-class CnpxModTerminalProbability {
+class NEOPEPXML_EXPORT CnpxModTerminalProbability {
 public:
 
   CnpxModTerminalProbability();

@@ -1,12 +1,14 @@
 #ifndef _CNPXANALYSISTIMESTAMP_H
 #define _CNPXANALYSISTIMESTAMP_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include "CnpxDatabaseRefreshTimestamp.h"
 #include <iostream>
 #include <string>
 
-class CnpxAnalysisTimestamp {
+class NEOPEPXML_EXPORT CnpxAnalysisTimestamp {
 public:
   CnpxAnalysisTimestamp();
 

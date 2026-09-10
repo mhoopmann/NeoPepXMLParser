@@ -1,11 +1,13 @@
 #ifndef _CNPXAMINOACIDSUBSTITUTION_H
 #define _CNPXAMINOACIDSUBSTITUTION_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include <string>
 #include <vector>
 
-class CnpxAminoAcidSubstitution {
+class NEOPEPXML_EXPORT CnpxAminoAcidSubstitution {
 public:
   CnpxAminoAcidSubstitution();
 

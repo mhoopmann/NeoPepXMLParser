@@ -1,12 +1,14 @@
 #ifndef _CNPXSAMPLEENZYME_H
 #define _CNPXSAMPLEENZYME_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxSpecificity.h"
 #include "NeoPepXMLStructs.h"
 #include <string>
 #include <vector>
 
-class CnpxSampleEnzyme {
+class NEOPEPXML_EXPORT CnpxSampleEnzyme {
 public:
   CnpxSampleEnzyme();
 

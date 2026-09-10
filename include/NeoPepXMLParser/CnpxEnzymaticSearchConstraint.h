@@ -1,11 +1,13 @@
 #ifndef _CNPXENZYMATICSEARCHCONSTRAINT_H
 #define _CNPXENZYMATICSEARCHCONSTRAINT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include <iostream>
 #include <string>
 
-class CnpxEnzymaticSearchConstraint {
+class NEOPEPXML_EXPORT CnpxEnzymaticSearchConstraint {
 public:
   CnpxEnzymaticSearchConstraint();
 

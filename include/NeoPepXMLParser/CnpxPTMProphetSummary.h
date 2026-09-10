@@ -1,13 +1,15 @@
 #ifndef _CNPXPTMPROPHETSUMMARY_H
 #define _CNPXPTMPROPHETSUMMARY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxInputFile.h"
 #include "CnpxMixtureModel.h"
 #include "CnpxROCErrorData.h"
 #include <string>
 #include <vector>
 
-class CnpxPTMProphetSummary {
+class NEOPEPXML_EXPORT CnpxPTMProphetSummary {
 public:
   CnpxPTMProphetSummary();
 

@@ -1,6 +1,8 @@
 #ifndef _CNPXPTMPROPHETRESULT_H
 #define _CNPXPTMPROPHETRESULT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxLability.h"
 #include "CnpxModAminoAcidProbability.h"
 #include "CnpxModTerminalProbability.h"
@@ -8,7 +10,7 @@
 #include <string>
 #include <vector>
 
-class CnpxPTMProphetResult {
+class NEOPEPXML_EXPORT CnpxPTMProphetResult {
 public:
 
   CnpxPTMProphetResult();

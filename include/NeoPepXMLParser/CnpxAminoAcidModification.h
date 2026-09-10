@@ -1,11 +1,13 @@
 #ifndef _CNPXAMINOACIDMODIFICATION_H
 #define _CNPXAMINOACIDMODIFICATION_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include <iostream>
 #include <string>
 
-class CnpxAminoAcidModification {
+class NEOPEPXML_EXPORT CnpxAminoAcidModification {
 public:
   CnpxAminoAcidModification();
 

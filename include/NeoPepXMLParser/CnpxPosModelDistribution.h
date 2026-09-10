@@ -1,12 +1,14 @@
 #ifndef _CNPXPOSMODELDISTRIBUTION_H
 #define _CNPXPOSMODELDISTRIBUTION_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxParameter.h"
 #include <iostream>
 #include <string>
 #include <vector>
 
-class CnpxPosModelDistribution {
+class NEOPEPXML_EXPORT CnpxPosModelDistribution {
 public:
   CnpxPosModelDistribution();
 

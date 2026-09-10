@@ -1,9 +1,11 @@
 #ifndef _CNPXERRORPOINT_H
 #define _CNPXERRORPOINT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include <iostream>
 
-class CnpxErrorPoint {
+class NEOPEPXML_EXPORT CnpxErrorPoint {
 public:
   CnpxErrorPoint();
 

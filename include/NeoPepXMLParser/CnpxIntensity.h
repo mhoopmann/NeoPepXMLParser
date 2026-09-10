@@ -1,11 +1,13 @@
 #ifndef _CNPXINTENSITY_H
 #define _CNPXINTENSITY_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include <string>
 #include <vector>
 
-class CnpxIntensity {
+class NEOPEPXML_EXPORT CnpxIntensity {
 public:
   CnpxIntensity();
 

@@ -1,11 +1,13 @@
 #ifndef _CNPXPEPTIDEPROPHETRESULT_H
 #define _CNPXPEPTIDEPROPHETRESULT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxSearchScoreSummary.h"
 #include <string>
 #include <vector>
 
-class CnpxPeptideProphetResult {
+class NEOPEPXML_EXPORT CnpxPeptideProphetResult {
 public:
 
   CnpxPeptideProphetResult();

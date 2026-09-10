@@ -1,11 +1,13 @@
 #ifndef _CNPXMODIFICATIONINFO_H
 #define _CNPXMODIFICATIONINFO_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "CnpxModAminoAcidMass.h"
 #include <string>
 #include <vector>
 
-class CnpxModificationInfo {
+class NEOPEPXML_EXPORT CnpxModificationInfo {
 public:
   CnpxModificationInfo();
 

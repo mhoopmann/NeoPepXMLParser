@@ -1,6 +1,8 @@
 #ifndef _CNPXANALYSISRESULT_H
 #define _CNPXANALYSISRESULT_H
 
+#include "NeoPepXMLParser/NeoPepXMLExport.h"
+
 #include "NeoPepXMLStructs.h"
 #include "CnpxInterprophetResult.h"
 #include "CnpxLibraResult.h"
@@ -11,7 +13,7 @@
 #include "CnpxXpressLabelFreeResult.h"
 #include <string>
 
-class CnpxAnalysisResult {
+class NEOPEPXML_EXPORT CnpxAnalysisResult {
 public:
 
   CnpxAnalysisResult();
