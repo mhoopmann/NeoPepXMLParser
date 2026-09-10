@@ -1,5 +1,8 @@
 #include "NeoPepXMLParser/CnpxUISpectra.h"
 
+#include <cstdlib>
+#include <iostream>
+
 using namespace std;
 
 CnpxUISpectra::CnpxUISpectra(){

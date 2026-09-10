@@ -1,5 +1,8 @@
 #include "NeoPepXMLParser/CnpxUIRunSummary.h"
 
+#include <cstdlib>
+#include <iostream>
+
 using namespace std;
 
 

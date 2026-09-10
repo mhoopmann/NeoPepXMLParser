@@ -1,5 +1,8 @@
 #include "NeoPepXMLParser/CnpxUIPipeline.h"
 
+#include <cstdlib>
+#include <iostream>
+
 using namespace std;
 
 CnpxUIPipeline::CnpxUIPipeline(){

@@ -1,17 +1,40 @@
 #include "NeoPepXMLParser/NeoPepXMLParser.h"
 
+#include "expat.h"
+
+#include <cstdlib>
+#include <cstring>
+#include <filesystem>
+#include <iostream>
+#include <system_error>
+
+#ifdef XML_UNICODE
+#error "NeoPepXMLParser requires an expat built for narrow (char) strings, not XML_UNICODE."
+#endif
+
+// Opens a file by path. On Windows the wide-character API is used so that paths outside the
+// ANSI code page work; elsewhere paths are already byte strings.
+static FILE* npxOpen(const std::filesystem::path& fn, const char* mode) {
+#ifdef _WIN32
+  std::wstring wmode(mode, mode + strlen(mode));
+  return _wfopen(fn.c_str(), wmode.c_str());
+#else
+  return fopen(fn.c_str(), mode);
+#endif
+}
+
 using namespace std;
 
 // Static callback handlers
-static void CMzIdentML_startElementCallback(void *data, const XML_Char *el, const XML_Char **attr) {
+static void npxStartElementCallback(void *data, const XML_Char *el, const XML_Char **attr) {
   ((NeoPepXMLParser*)data)->startElement(el, attr);
 }
 
-static void CMzIdentML_endElementCallback(void *data, const XML_Char *el){
+static void npxEndElementCallback(void *data, const XML_Char *el){
   ((NeoPepXMLParser*)data)->endElement(el);
 }
 
-static void CMzIdentML_charactersCallback(void *data, const XML_Char *s, int len){
+static void npxCharactersCallback(void *data, const XML_Char *s, int len){
   ((NeoPepXMLParser*)data)->characters(s, len);
 }
 
@@ -55,7 +78,7 @@ void NeoPepXMLParser::calcSize(){
   }
 }
 
-void NeoPepXMLParser::characters(const XML_Char *s, int len) {
+void NeoPepXMLParser::characters(const char* /*s*/, int /*len*/) {
   /*
   switch (activeEl.back()){
   case PeptideSequence:
@@ -75,7 +98,7 @@ void NeoPepXMLParser::characters(const XML_Char *s, int len) {
   */
 }
 
-void NeoPepXMLParser::endElement(const XML_Char *el) {
+void NeoPepXMLParser::endElement(const char *el) {
 
   string s;
   for(int i=0;i<PEPXML_NUM_ELEMENTS;i++){
@@ -128,10 +151,11 @@ void NeoPepXMLParser::endElement(const XML_Char *el) {
 void NeoPepXMLParser::init() {
   parser = XML_ParserCreate(NULL);
   XML_SetUserData(parser, this);
-  XML_SetElementHandler(parser, CMzIdentML_startElementCallback, CMzIdentML_endElementCallback);
-  XML_SetCharacterDataHandler(parser, CMzIdentML_charactersCallback);
+  XML_SetElementHandler(parser, npxStartElementCallback, npxEndElementCallback);
+  XML_SetCharacterDataHandler(parser, npxCharactersCallback);
 
   version = 22;
+  showProgress = false;
   probFilter=-1;
   rsFilter.clear();
   shFilter.clear();
@@ -203,7 +227,7 @@ void NeoPepXMLParser::init() {
   elements[pxXpressLabelFreeSummary] = "xpresslabelfree_summary";
 }
 
-void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
+void NeoPepXMLParser::startElement(const char *el, const char **attr){
 
   //cout << el << endl; //for diagnostics
 
@@ -212,7 +236,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxAffectedChannel);
     CnpxAffectedChannel c;
     c.channel = atoi(getAttrValue("channel", attr));
-    c.correction = atof(getAttrValue("correction", attr));
+    c.correction = npxAtof(getAttrValue("correction", attr));
     msms_pipeline_analysis.back().analysis_summary.back().libra_summary.back().isotopic_contributions.back().contributing_channel.back().affected_channel.push_back(c);
 
   } else if (isElement("alternative_protein", el)){
@@ -226,7 +250,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.protein_descr = getAttrValue("protein_descr", attr);
     c.protein_link_pos_a = atoi(getAttrValue("protein_link_pos_a", attr));
     c.protein_link_pos_b = atoi(getAttrValue("protein_link_pos_b", attr));
-    c.protein_mw = atof(getAttrValue("protein_mw", attr));
+    c.protein_mw = npxAtof(getAttrValue("protein_mw", attr));
     switch (activeEl[activeEl.size() - 2]) {
     case pxSearchHit:
       msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().alternative_protein.push_back(c);
@@ -245,8 +269,8 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.aminoacid=getAttrValue("aminoacid",attr);
     c.binary=getAttrValue("binary",attr);
     c.description=getAttrValue("description",attr);
-    c.mass=(float)atof(getAttrValue("mass",attr));
-    c.massdiff=(float)atof(getAttrValue("massdiff",attr));
+    c.mass=(float)npxAtof(getAttrValue("mass",attr));
+    c.massdiff=(float)npxAtof(getAttrValue("massdiff",attr));
     c.peptide_terminus=getAttrValue("peptide_terminus",attr);
     c.protein_terminus=getAttrValue("protein_terminus",attr);
     c.symbol=getAttrValue("symbol",attr);
@@ -290,8 +314,8 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
   } else if (isElement("bin", el)) {
     activeEl.push_back(pxBin);
     npxBin c;
-    c.pos_prob = atof(getAttrValue("pos_prob", attr));
-    c.pos_prob = atof(getAttrValue("neg_prob", attr));
+    c.pos_prob = npxAtof(getAttrValue("pos_prob", attr));
+    c.pos_prob = npxAtof(getAttrValue("neg_prob", attr));
     if(strcmp(getAttrValue("value",attr),"true")==0) c.value=true;
     else c.value=false;
     msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.back().mixturemodel.back().bin.push_back(c);
@@ -321,7 +345,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
   } else if (isElement("decoy_analysis_summary", el)){
     activeEl.push_back(pxDecoyAnalysisSummary);
     CnpxDecoyAnalysisSummary c;
-    c.decoy_ratio = atof(getAttrValue("decoy_ratio", attr));
+    c.decoy_ratio = npxAtof(getAttrValue("decoy_ratio", attr));
     c.decoy_string=getAttrValue("decoy_string",attr);
     c.exclude_string = getAttrValue("exclude_string", attr);
     c.uniq_iproph_peps = getAttrValue("uniq_iproph_peps", attr);
@@ -333,28 +357,28 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
   } else if (isElement("distribution_point", el)) {
     activeEl.push_back(pxDistributionPoint);
     CnpxDistributionPoint c;
-    c.fvalue=atof(getAttrValue("fvalue",attr));
+    c.fvalue=npxAtof(getAttrValue("fvalue",attr));
     c.obs_1_distr=atoi(getAttrValue("obs_1_distr",attr));
-    c.model_1_pos_distr=atof(getAttrValue("model_1_pos_distr",attr));
-    c.model_1_neg_distr=atof(getAttrValue("model_1_neg_distr",attr));
+    c.model_1_pos_distr=npxAtof(getAttrValue("model_1_pos_distr",attr));
+    c.model_1_neg_distr=npxAtof(getAttrValue("model_1_neg_distr",attr));
     c.obs_2_distr = atoi(getAttrValue("obs_2_distr", attr));
-    c.model_2_pos_distr = atof(getAttrValue("model_2_pos_distr", attr));
-    c.model_2_neg_distr = atof(getAttrValue("model_2_neg_distr", attr));
+    c.model_2_pos_distr = npxAtof(getAttrValue("model_2_pos_distr", attr));
+    c.model_2_neg_distr = npxAtof(getAttrValue("model_2_neg_distr", attr));
     c.obs_3_distr = atoi(getAttrValue("obs_3_distr", attr));
-    c.model_3_pos_distr = atof(getAttrValue("model_3_pos_distr", attr));
-    c.model_3_neg_distr = atof(getAttrValue("model_3_neg_distr", attr));
+    c.model_3_pos_distr = npxAtof(getAttrValue("model_3_pos_distr", attr));
+    c.model_3_neg_distr = npxAtof(getAttrValue("model_3_neg_distr", attr));
     c.obs_4_distr = atoi(getAttrValue("obs_4_distr", attr));
-    c.model_4_pos_distr = atof(getAttrValue("model_4_pos_distr", attr));
-    c.model_4_neg_distr = atof(getAttrValue("model_4_neg_distr", attr));
+    c.model_4_pos_distr = npxAtof(getAttrValue("model_4_pos_distr", attr));
+    c.model_4_neg_distr = npxAtof(getAttrValue("model_4_neg_distr", attr));
     c.obs_5_distr = atoi(getAttrValue("obs_5_distr", attr));
-    c.model_5_pos_distr = atof(getAttrValue("model_5_pos_distr", attr));
-    c.model_5_neg_distr = atof(getAttrValue("model_5_neg_distr", attr));
+    c.model_5_pos_distr = npxAtof(getAttrValue("model_5_pos_distr", attr));
+    c.model_5_neg_distr = npxAtof(getAttrValue("model_5_neg_distr", attr));
     c.obs_6_distr = atoi(getAttrValue("obs_6_distr", attr));
-    c.model_6_pos_distr = atof(getAttrValue("model_6_pos_distr", attr));
-    c.model_6_neg_distr = atof(getAttrValue("model_6_neg_distr", attr));
+    c.model_6_pos_distr = npxAtof(getAttrValue("model_6_pos_distr", attr));
+    c.model_6_neg_distr = npxAtof(getAttrValue("model_6_neg_distr", attr));
     c.obs_7_distr = atoi(getAttrValue("obs_7_distr", attr));
-    c.model_7_pos_distr = atof(getAttrValue("model_7_pos_distr", attr));
-    c.model_7_neg_distr = atof(getAttrValue("model_7_neg_distr", attr));
+    c.model_7_pos_distr = npxAtof(getAttrValue("model_7_pos_distr", attr));
+    c.model_7_neg_distr = npxAtof(getAttrValue("model_7_neg_distr", attr));
     switch (activeEl[activeEl.size() - 2]) {
     case pxPeptideprophetSummary:
       msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().distribution_point.push_back(c);
@@ -375,8 +399,8 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
   } else if (isElement("error_point", el)){
     activeEl.push_back(pxErrorPoint);
     CnpxErrorPoint c;
-    c.error=atof(getAttrValue("error",attr));
-    c.min_prob= atof(getAttrValue("min_prob", attr));
+    c.error=npxAtof(getAttrValue("error",attr));
+    c.min_prob= npxAtof(getAttrValue("min_prob", attr));
     c.num_corr = atoi(getAttrValue("num_corr", attr));
     c.num_incorr = atoi(getAttrValue("num_incorr", attr));
     switch (activeEl[activeEl.size() - 3]) {
@@ -398,8 +422,8 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxFragmentMasses);
     CnpxFragmentMasses c;
     c.channel = atoi(getAttrValue("channel", attr));
-    c.mz = atof(getAttrValue("mz", attr));
-    c.offset = atof(getAttrValue("offset", attr));
+    c.mz = npxAtof(getAttrValue("mz", attr));
+    c.offset = npxAtof(getAttrValue("offset", attr));
     msms_pipeline_analysis.back().analysis_summary.back().libra_summary.back().fragment_masses.push_back(c);
 
   } else if (isElement("inputfile", el)){
@@ -432,9 +456,9 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxIntensity);
     CnpxIntensity c;
     c.channel = atoi(getAttrValue("channel", attr));
-    c.absolute = atof(getAttrValue("absolute", attr));
-    c.target_mass = atof(getAttrValue("target_mass", attr));
-    c.normalized = atof(getAttrValue("normalized", attr));
+    c.absolute = npxAtof(getAttrValue("absolute", attr));
+    c.target_mass = npxAtof(getAttrValue("target_mass", attr));
+    c.normalized = npxAtof(getAttrValue("normalized", attr));
     string s = getAttrValue("reject", attr);
     if(s.size()>0 && s[0]!='0') c.reject=true;
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().libra_result.intensity.push_back(c);
@@ -450,14 +474,14 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxInterprophetResult);
     CnpxInterprophetResult c(true);
     c.all_ntt_prob = getAttrValue("all_ntt_prob", attr);
-    c.probability = atof(getAttrValue("probability", attr));
+    c.probability = npxAtof(getAttrValue("probability", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().interprophet_result = c;
 
   } else if (isElement("interprophet_summary", el)){
     activeEl.push_back(pxInterprophetSummary);
     CnpxInterprophetSummary c;
-    c.est_tot_num_correct_pep=atof(getAttrValue("est_tot_num_correct_pep",attr));
-    c.est_tot_num_correct_psm = atof(getAttrValue("est_tot_num_correct_psm", attr));
+    c.est_tot_num_correct_pep=npxAtof(getAttrValue("est_tot_num_correct_pep",attr));
+    c.est_tot_num_correct_psm = npxAtof(getAttrValue("est_tot_num_correct_psm", attr));
     c.options=getAttrValue("options",attr);
     c.version=getAttrValue("version",attr);
     msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.push_back(c);
@@ -471,12 +495,12 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxLability);
     CnpxLability c;
     c.numlosses = atoi(getAttrValue("numlosses", attr));
-    c.pval = atof(getAttrValue("pval", attr));
-    c.probability = atof(getAttrValue("probability", attr));
-    c.oscore = atof(getAttrValue("oscore", attr));
-    c.mscore = atof(getAttrValue("mscore", attr));
-    c.cterm_score = atof(getAttrValue("cterm_score", attr));
-    c.nterm_score = atof(getAttrValue("nterm_score", attr));
+    c.pval = npxAtof(getAttrValue("pval", attr));
+    c.probability = npxAtof(getAttrValue("probability", attr));
+    c.oscore = npxAtof(getAttrValue("oscore", attr));
+    c.mscore = npxAtof(getAttrValue("mscore", attr));
+    c.cterm_score = npxAtof(getAttrValue("cterm_score", attr));
+    c.nterm_score = npxAtof(getAttrValue("nterm_score", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.back().lability.push_back(c);
 
 
@@ -488,7 +512,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
   } else if (isElement("libra_summary", el)){
     activeEl.push_back(pxLibraSummary);
     CnpxLibraSummary c;
-    c.mass_tolerance = atof(getAttrValue("mass_tolerance", attr));
+    c.mass_tolerance = npxAtof(getAttrValue("mass_tolerance", attr));
     c.centroiding_preference = atoi(getAttrValue("centroiding_preference", attr));
     c.normalization = atoi(getAttrValue("normalization", attr));
     c.output_type = atoi(getAttrValue("output_type", attr));
@@ -498,7 +522,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
   } else if (isElement("linked_peptide", el)){
     activeEl.push_back(pxLinkedPeptide);
     CnpxLinkedPeptide c;
-    c.calc_neutral_pep_mass = atof(getAttrValue("calc_neutral_pep_mass", attr));
+    c.calc_neutral_pep_mass = npxAtof(getAttrValue("calc_neutral_pep_mass", attr));
     c.num_tot_proteins = atoi(getAttrValue("num_tot_proteins", attr));
     c.peptide = getAttrValue("peptide", attr);
     c.peptide_next_aa = getAttrValue("peptide_next_aa", attr);
@@ -507,17 +531,17 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.protein = getAttrValue("protein", attr);
     c.protein_link_pos_a = atoi(getAttrValue("protein_link_pos_a", attr));
     c.designation = getAttrValue("designation", attr);
-    c.complement_mass = atof(getAttrValue("complement_mass", attr));
+    c.complement_mass = npxAtof(getAttrValue("complement_mass", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink.back().linked_peptide.push_back(c);
 
   } else if(isElement("mixture_model",el)){
     activeEl.push_back(pxMixture_Model);
     CnpxMixture_Model c;
     c.comments=getAttrValue("comments",attr);
-    c.est_tot_correct=atof(getAttrValue("est_tot_correct",attr));
+    c.est_tot_correct=npxAtof(getAttrValue("est_tot_correct",attr));
     c.num_iterations=atoi(getAttrValue("num_iterations",attr));
     c.precursor_ion_charge = atoi(getAttrValue("precursor_ion_charge", attr));
-    c.prior_probability = atof(getAttrValue("prior_proability", attr));
+    c.prior_probability = npxAtof(getAttrValue("prior_proability", attr));
     c.tot_num_spectra = atoi(getAttrValue("tot_num_spectra", attr));
     msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.push_back(c);
 
@@ -525,8 +549,8 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxMixturemodel);
     CnpxMixtureModel c;
     c.name = getAttrValue("name",attr);
-    c.neg_bandwidth = (float)atof(getAttrValue("neg_bandwidth", attr));
-    c.pos_bandwidth = (float)atof(getAttrValue("pos_bandwidth",attr));
+    c.neg_bandwidth = (float)npxAtof(getAttrValue("neg_bandwidth", attr));
+    c.pos_bandwidth = (float)npxAtof(getAttrValue("pos_bandwidth",attr));
     switch (activeEl[activeEl.size() - 2]) {
     case pxInterprophetSummary:
       msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.back().mixturemodel.push_back(c);
@@ -558,24 +582,24 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxModAminoAcidMass);
     CnpxModAminoAcidMass c;
     c.id = getAttrValue("id", attr);
-    c.mass = atof(getAttrValue("mass", attr));
+    c.mass = npxAtof(getAttrValue("mass", attr));
     c.position = atoi(getAttrValue("position", attr));
     c.source = getAttrValue("source", attr);
-    c.staticMass = atof(getAttrValue("static", attr));
-    c.variable = atof(getAttrValue("variable", attr));
+    c.staticMass = npxAtof(getAttrValue("static", attr));
+    c.variable = npxAtof(getAttrValue("variable", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().modification_info.back().mod_aminoacid_mass.push_back(c);
 
   } else if (isElement("mod_aminoacid_probability", el)) {
     activeEl.push_back(pxModAminoAcidProbability);
     CnpxModAminoAcidProbability c;
     c.position = atoi(getAttrValue("position", attr));
-    c.probability = atof(getAttrValue("probability", attr));
-    c.oscore = atof(getAttrValue("oscore", attr));
-    c.mscore = atof(getAttrValue("mscore", attr));
-    c.direct_oscore = atof(getAttrValue("direct_oscore", attr));
-    c.direct_mscore = atof(getAttrValue("direct_mscore", attr));
-    c.cterm_score = atof(getAttrValue("cterm_score", attr));
-    c.nterm_score = atof(getAttrValue("nterm_score", attr));
+    c.probability = npxAtof(getAttrValue("probability", attr));
+    c.oscore = npxAtof(getAttrValue("oscore", attr));
+    c.mscore = npxAtof(getAttrValue("mscore", attr));
+    c.direct_oscore = npxAtof(getAttrValue("direct_oscore", attr));
+    c.direct_mscore = npxAtof(getAttrValue("direct_mscore", attr));
+    c.cterm_score = npxAtof(getAttrValue("cterm_score", attr));
+    c.nterm_score = npxAtof(getAttrValue("nterm_score", attr));
     c.shift = getAttrValue("shift",attr)[0];
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.back().mod_amino_acid_probability.push_back(c);
 
@@ -583,21 +607,21 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxModificationInfo);
     CnpxModificationInfo c;
     c.modified_peptide = getAttrValue("modified_peptide", attr);
-    c.mod_cterm_mass = atof(getAttrValue("mod_cterm_mass", attr));
-    c.mod_nterm_mass = atof(getAttrValue("mod_nterm_mass", attr));
+    c.mod_cterm_mass = npxAtof(getAttrValue("mod_cterm_mass", attr));
+    c.mod_nterm_mass = npxAtof(getAttrValue("mod_nterm_mass", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().modification_info.push_back(c);
 
   } else if (isElement("mod_terminal_probability", el)) {
     activeEl.push_back(pxModTerminalProbability);
     CnpxModTerminalProbability c;
     c.terminus = getAttrValue("position", attr)[0];
-    c.probability = atof(getAttrValue("probability", attr));
-    c.oscore = atof(getAttrValue("oscore", attr));
-    c.mscore = atof(getAttrValue("mscore", attr));
-    c.direct_oscore = atof(getAttrValue("direct_oscore", attr));
-    c.direct_mscore = atof(getAttrValue("direct_mscore", attr));
-    c.cterm_score = atof(getAttrValue("cterm_score", attr));
-    c.nterm_score = atof(getAttrValue("nterm_score", attr));
+    c.probability = npxAtof(getAttrValue("probability", attr));
+    c.oscore = npxAtof(getAttrValue("oscore", attr));
+    c.mscore = npxAtof(getAttrValue("mscore", attr));
+    c.direct_oscore = npxAtof(getAttrValue("direct_oscore", attr));
+    c.direct_mscore = npxAtof(getAttrValue("direct_mscore", attr));
+    c.cterm_score = npxAtof(getAttrValue("cterm_score", attr));
+    c.nterm_score = npxAtof(getAttrValue("nterm_score", attr));
     c.shift = getAttrValue("shift", attr)[0];
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.back().mod_terminal_probability.push_back(c);
 
@@ -688,17 +712,17 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     CnpxPeptideProphetResult c(true);
     c.all_ntt_prob = getAttrValue("all_ntt_prob", attr);
     c.analysis = getAttrValue("analysis", attr);
-    c.probability = atof(getAttrValue("probability", attr));
-    c.pep1_probability = atof(getAttrValue("pep1_probability",attr));
-    c.pep2_probability = atof(getAttrValue("pep2_probability", attr));
+    c.probability = npxAtof(getAttrValue("probability", attr));
+    c.pep1_probability = npxAtof(getAttrValue("pep1_probability",attr));
+    c.pep2_probability = npxAtof(getAttrValue("pep2_probability", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().peptide_prophet_result = c;
 
   } else if (isElement("peptideprophet_summary", el)) {
     activeEl.push_back(pxPeptideprophetSummary);
     CnpxPeptideprophetSummary c;
     c.author = getAttrValue("author",attr);
-    c.est_tot_num_correct=atof(getAttrValue("est_tot_num_correct",attr));
-    c.min_prob= atof(getAttrValue("min_prob", attr));
+    c.est_tot_num_correct=npxAtof(getAttrValue("est_tot_num_correct",attr));
+    c.min_prob= npxAtof(getAttrValue("min_prob", attr));
     c.options = getAttrValue("options", attr);
     c.type=getAttrValue("type",attr);
     c.version = getAttrValue("version", attr);
@@ -707,8 +731,8 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
   } else if (isElement("pepxmlquant_result", el)){
     activeEl.push_back(pxPepXMLQuantResult);
     CnpxPepXMLQuantResult c(true);
-    c.area = atof(getAttrValue("area", attr));
-    c.retention_time_sec = atof(getAttrValue("retention_time_sec", attr));
+    c.area = npxAtof(getAttrValue("area", attr));
+    c.retention_time_sec = npxAtof(getAttrValue("retention_time_sec", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().pepxmlquant_result = c;
 
   } else if (isElement("point", el)){
@@ -717,27 +741,27 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     npxPointM m;  
     switch (activeEl[activeEl.size() - 2]){
     case pxDecoyAnalysis:
-      c.fdr_ip = atof(getAttrValue("fdr_ip", attr));
-      c.fdr_ip_decoy = atof(getAttrValue("fdr_ip_decoy", attr));
-      c.fdr_pp = atof(getAttrValue("fdr_pp", attr));
-      c.fdr_pp_decoy = atof(getAttrValue("fdr_pp_decoy", attr));
-      c.ip_decoy_uncert = atof(getAttrValue("ip_decoy_uncert", attr));
-      c.ip_uncert = atof(getAttrValue("ip_uncert", attr));
-      c.num_corr_ip = atof(getAttrValue("num_corr_ip", attr));
-      c.num_corr_ip_decoy = atof(getAttrValue("num_corr_ip_decoy", attr));
-      c.num_corr_pp = atof(getAttrValue("num_corr_pp", attr));
-      c.num_corr_pp_decoy = atof(getAttrValue("num_corr_pp_decoy", attr));
-      c.pp_decoy_uncert = atof(getAttrValue("pp_decoy_uncert", attr));
-      c.pp_uncert = atof(getAttrValue("pp_uncert", attr));
-      c.prob_cutoff = atof(getAttrValue("prob_cutoff", attr));
+      c.fdr_ip = npxAtof(getAttrValue("fdr_ip", attr));
+      c.fdr_ip_decoy = npxAtof(getAttrValue("fdr_ip_decoy", attr));
+      c.fdr_pp = npxAtof(getAttrValue("fdr_pp", attr));
+      c.fdr_pp_decoy = npxAtof(getAttrValue("fdr_pp_decoy", attr));
+      c.ip_decoy_uncert = npxAtof(getAttrValue("ip_decoy_uncert", attr));
+      c.ip_uncert = npxAtof(getAttrValue("ip_uncert", attr));
+      c.num_corr_ip = npxAtof(getAttrValue("num_corr_ip", attr));
+      c.num_corr_ip_decoy = npxAtof(getAttrValue("num_corr_ip_decoy", attr));
+      c.num_corr_pp = npxAtof(getAttrValue("num_corr_pp", attr));
+      c.num_corr_pp_decoy = npxAtof(getAttrValue("num_corr_pp_decoy", attr));
+      c.pp_decoy_uncert = npxAtof(getAttrValue("pp_decoy_uncert", attr));
+      c.pp_uncert = npxAtof(getAttrValue("pp_uncert", attr));
+      c.prob_cutoff = npxAtof(getAttrValue("prob_cutoff", attr));
       msms_pipeline_analysis.back().analysis_summary.back().decoy_analysis.back().point.push_back(c);
       break;
     case pxMixturemodel:
-      m.neg_dens = (float)atof(getAttrValue("neg_dens", attr));
-      m.neg_obs_dens = (float)atof(getAttrValue("neg_obs_dens", attr));
-      m.pos_dens = (float)atof(getAttrValue("pos_dens", attr));
-      m.pos_obs_dens = (float)atof(getAttrValue("pos_obs_dens", attr));
-      m.value = (float)atof(getAttrValue("value", attr));
+      m.neg_dens = (float)npxAtof(getAttrValue("neg_dens", attr));
+      m.neg_obs_dens = (float)npxAtof(getAttrValue("neg_obs_dens", attr));
+      m.pos_dens = (float)npxAtof(getAttrValue("pos_dens", attr));
+      m.pos_obs_dens = (float)npxAtof(getAttrValue("pos_obs_dens", attr));
+      m.value = (float)npxAtof(getAttrValue("value", attr));
       switch (activeEl[activeEl.size()-3]){
       case pxInterprophetSummary:
         msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.back().mixturemodel.back().point.push_back(m);
@@ -792,7 +816,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
   } else if (isElement("quantic_result", el)) {
     activeEl.push_back(pxQuanticResult);
     CnpxQuanticResult c(true);
-    c.antic = atof(getAttrValue("antic", attr));
+    c.antic = npxAtof(getAttrValue("antic", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().quantic_result = c;
 
   } else if (isElement("quantic_summary", el)) {
@@ -807,7 +831,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxROCErrorData);
     CnpxROCErrorData c;
     c.charge=getAttrValue("charge",attr);
-    c.charge_est_correct=atof(getAttrValue("charge_est_correct",attr));
+    c.charge_est_correct=npxAtof(getAttrValue("charge_est_correct",attr));
     switch (activeEl[activeEl.size() - 2]) {
     case pxInterprophetSummary:
       msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.back().roc_error_data.push_back(c);
@@ -826,11 +850,11 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
   } else if (isElement("roc_data_point", el)){
     activeEl.push_back(pxROCDataPoint);
     CnpxROCDataPoint c;
-    c.error = atof(getAttrValue("error", attr));
-    c.min_prob = atof(getAttrValue("min_prob", attr));
+    c.error = npxAtof(getAttrValue("error", attr));
+    c.min_prob = npxAtof(getAttrValue("min_prob", attr));
     c.num_corr = atoi(getAttrValue("num_corr", attr));
     c.num_incorr = atoi(getAttrValue("num_incorr", attr));
-    c.sensitivity = atof(getAttrValue("sensitivity", attr));
+    c.sensitivity = npxAtof(getAttrValue("sensitivity", attr));
     switch (activeEl[activeEl.size() - 3]) {
     case pxInterprophetSummary:
       msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.back().roc_error_data.back().roc_data_point.push_back(c);
@@ -875,11 +899,11 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
   } else if(isElement("search_hit",el)){
     activeEl.push_back(pxSearchHit);
     CnpxSearchHit c;
-    c.calc_neutral_pep_mass=atof(getAttrValue("calc_neutral_pep_mass",attr));
-    c.calc_pI=atof(getAttrValue("calc_pI",attr));
+    c.calc_neutral_pep_mass=npxAtof(getAttrValue("calc_neutral_pep_mass",attr));
+    c.calc_pI=npxAtof(getAttrValue("calc_pI",attr));
     c.hit_rank=atoi(getAttrValue("hit_rank",attr));
     c.is_rejected=atoi(getAttrValue("is_rejected",attr));
-    c.massdiff=atof(getAttrValue("massdiff",attr));
+    c.massdiff=npxAtof(getAttrValue("massdiff",attr));
     c.num_matched_ions=atoi(getAttrValue("num_matched_ions",attr));
     c.num_matched_peptides=atoi(getAttrValue("num_matched_peptides",attr));
     c.num_missed_cleavages=atoi(getAttrValue("num_missed_cleavages",attr));
@@ -893,7 +917,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     c.protein_descr=getAttrValue("protein_descr",attr);
     c.protein_link_pos_a = atoi(getAttrValue("protein_link_pos_a", attr));
     c.protein_link_pos_b = atoi(getAttrValue("protein_link_pos_b", attr));
-    c.protein_mw=atof(getAttrValue("protein_mw",attr));
+    c.protein_mw=npxAtof(getAttrValue("protein_mw",attr));
     c.tot_num_ions=atoi(getAttrValue("tot_num_ions",attr));
     c.xlink_type=getAttrValue("xlink_type",attr);
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.push_back(c);
@@ -954,13 +978,13 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     CnpxSpectrumQuery c;
     c.activation_method=getAttrValue("activation_method",attr);
     c.assumed_charge=atoi(getAttrValue("assumed_charge",attr));
-    c.collision_energy=atof(getAttrValue("collison_energy",attr));
-    c.compensation_voltage=atof(getAttrValue("compensation_voltage",attr));
+    c.collision_energy=npxAtof(getAttrValue("collison_energy",attr));
+    c.compensation_voltage=npxAtof(getAttrValue("compensation_voltage",attr));
     c.end_scan=atoi(getAttrValue("end_scan",attr));
     c.index=atoi(getAttrValue("index",attr));
-    c.precursor_intensity=atof(getAttrValue("precursor_intensity",attr));
-    c.precursor_neutral_mass=atof(getAttrValue("precursor_neutral_mass",attr));
-    c.retention_time_sec=atof(getAttrValue("retention_time_sec",attr));
+    c.precursor_intensity=npxAtof(getAttrValue("precursor_intensity",attr));
+    c.precursor_neutral_mass=npxAtof(getAttrValue("precursor_neutral_mass",attr));
+    c.retention_time_sec=npxAtof(getAttrValue("retention_time_sec",attr));
     c.search_specification=getAttrValue("search_specification",attr);
     c.spectrum=getAttrValue("spectrum",attr);
     c.spectrumNativeID=getAttrValue("spectrumNativeID",attr);
@@ -971,8 +995,8 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxTerminalModification);
     CnpxTerminalModification c;
     c.description = getAttrValue("description", attr);
-    c.mass = (float)atof(getAttrValue("mass", attr));
-    c.massdiff = (float)atof(getAttrValue("massdiff", attr));
+    c.mass = (float)npxAtof(getAttrValue("mass", attr));
+    c.massdiff = (float)npxAtof(getAttrValue("massdiff", attr));
     c.terminus = getAttrValue("terminus", attr);
     c.protein_terminus = getAttrValue("protein_terminus", attr);
     c.symbol = getAttrValue("symbol", attr);
@@ -983,7 +1007,7 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
     activeEl.push_back(pxXLink);
     CnpxXLink c;
     c.identifier = getAttrValue("identifier",attr);
-    c.mass = atof(getAttrValue("mass", attr));
+    c.mass = npxAtof(getAttrValue("mass", attr));
     msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink.push_back(c);
 
   } else if (isElement("xlink_score", el)) {
@@ -1041,58 +1065,73 @@ void NeoPepXMLParser::startElement(const XML_Char *el, const XML_Char **attr){
 }
 
 bool NeoPepXMLParser::read(const char* fn){
-  XML_ParserFree(parser);
-  parser = XML_ParserCreate(NULL);
-  XML_SetUserData(parser, this);
-  XML_SetElementHandler(parser, CMzIdentML_startElementCallback, CMzIdentML_endElementCallback);
-  XML_SetCharacterDataHandler(parser, CMzIdentML_charactersCallback);
+  return read(std::filesystem::path(fn));
+}
 
-  // clear data
-  msms_pipeline_analysis.clear();
-  FILE* fptr = fopen(fn, "rb");
+bool NeoPepXMLParser::read(const std::filesystem::path& fn){
+  // Binary mode: expat normalizes line endings itself, and this keeps behavior identical on
+  // every platform.
+  FILE* fptr = npxOpen(fn, "rb");
   if (fptr == NULL){
     cerr << "Error parse(): No open file." << endl;
     return false;
   }
-  npxfseek(fptr, 0, SEEK_END);
-  f_off iEOF=npxftell(fptr);
+
+  // The size only feeds the progress meter; if it cannot be determined the meter stays at 0%.
+  std::error_code ec;
+  std::uintmax_t fileSize = std::filesystem::file_size(fn, ec);
+  if (ec) fileSize = 0;
+
+  std::string displayName;
+  try { displayName = fn.string(); } catch (...) { displayName = "<file>"; }
+
+  bool success = readFile(fptr, fileSize, displayName);
   fclose(fptr);
+  return success;
+}
 
-  fptr = fopen(fn, "rt");
+bool NeoPepXMLParser::readFile(FILE* fptr, std::uintmax_t fileSize, const std::string& displayName){
+  XML_ParserFree(parser);
+  parser = XML_ParserCreate(NULL);
+  XML_SetUserData(parser, this);
+  XML_SetElementHandler(parser, npxStartElementCallback, npxEndElementCallback);
+  XML_SetCharacterDataHandler(parser, npxCharactersCallback);
 
-  int iTmp;
-  f_off prog=0;
+  // clear data
+  msms_pipeline_analysis.clear();
+
+  std::uintmax_t prog = 0;
   int iPercent = 0;
-  printf("%2d%%", iPercent);
-  fflush(stdout);
+  if (showProgress) {
+    printf("%2d%%", iPercent);
+    fflush(stdout);
+  }
 
   char buffer[16384];
   int readBytes = 0;
   bool success = true;
-  int chunk = 0;
   killRead = false;
 
   while (success && (readBytes = (int)fread(buffer, 1, sizeof(buffer), fptr)) != 0){
     success = (XML_Parse(parser, buffer, readBytes, false) != 0);
-    if (killRead){
-      fclose(fptr);
-      return false;
-    }
-    prog += sizeof(buffer);
-    iTmp = (int)((double)prog / iEOF * 100);
-    if (iTmp>iPercent){
-      iPercent = iTmp;
-      printf("\b\b\b%2d%%", iPercent);
-      fflush(stdout);
+    if (killRead) return false;
+    if (showProgress && fileSize > 0) {
+      prog += readBytes;
+      int iTmp = (int)((double)prog / (double)fileSize * 100);
+      if (iTmp > iPercent){
+        iPercent = iTmp;
+        printf("\b\b\b%2d%%", iPercent);
+        fflush(stdout);
+      }
     }
   }
   success = success && (XML_Parse(parser, buffer, 0, true) != 0);
-  cout << endl;
+  if (showProgress) cout << endl;
 
   if (!success) {
     XML_Error error = XML_GetErrorCode(parser);
 
-    cerr << fn << "(" << XML_GetCurrentLineNumber(parser) << ") : error " << (int)error << ": ";
+    cerr << displayName << "(" << XML_GetCurrentLineNumber(parser) << ") : error " << (int)error << ": ";
     switch (error) {
     case XML_ERROR_SYNTAX:
       cerr << "Syntax error parsing XML.";
@@ -1120,11 +1159,8 @@ bool NeoPepXMLParser::read(const char* fn){
       break;
     }
     cerr << "\n";
-    fclose(fptr);
     return false;
   }
-
-  fclose(fptr);
 
   if(msms_pipeline_analysis.size()==0){
     cerr << "PepXML file contains no MS/MS results." << endl;
@@ -1133,18 +1169,6 @@ bool NeoPepXMLParser::read(const char* fn){
   uiPipelines.set(&msms_pipeline_analysis);
   setRunSummaries(0);
   calcSize();
-
-  /*
-  fileFull = fn;
-  filePath = fileFull;
-  if (filePath.find_last_of("\\") != string::npos) filePath = filePath.substr(0, filePath.find_last_of("\\"));
-  else if (filePath.find_last_of("/") != string::npos) filePath = filePath.substr(0, filePath.find_last_of("/"));
-  else filePath.clear();
-  fileBase = fileFull;
-  if (fileBase.find_last_of("\\") != string::npos) fileBase = fileBase.substr(fileBase.find_last_of("\\") + 1, fileBase.size());
-  else if (fileBase.find_last_of("/") != string::npos) fileBase = fileBase.substr(fileBase.find_last_of("/") + 1, fileBase.size());
-  if (fileBase.find_last_of(".") != string::npos) fileBase = fileBase.substr(0, fileBase.find_last_of("."));
-  */
   return true;
 }
 
@@ -1158,6 +1182,10 @@ void NeoPepXMLParser::setFilterRunSummary(string str) {
 
 void NeoPepXMLParser::setFilterSearchHit(string str) {
   shFilter = str;
+}
+
+void NeoPepXMLParser::setProgressOutput(bool enabled){
+  showProgress = enabled;
 }
 
 bool NeoPepXMLParser::setRunSummaries(const size_t pipeIndex){
@@ -1191,17 +1219,19 @@ string NeoPepXMLParser::versionNeo(){
 }
 
 bool NeoPepXMLParser::write(const char* fn, bool tabs){
-  FILE* f = fopen(fn, "wt");
+  return write(std::filesystem::path(fn), tabs);
+}
+
+bool NeoPepXMLParser::write(const std::filesystem::path& fn, bool tabs){
+  // Binary mode so the "\n" line endings written below are identical on every platform.
+  FILE* f = npxOpen(fn, "wb");
   if (f == NULL) return false;
 
-  size_t i;
-
   fprintf(f, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-  for(i=0;i<msms_pipeline_analysis.size();i++){
+  for(size_t i=0;i<msms_pipeline_analysis.size();i++){
     if (tabs) msms_pipeline_analysis[i].write(f,0);
     else msms_pipeline_analysis[i].write(f);
   }
   fclose(f);
   return true;
-
 }

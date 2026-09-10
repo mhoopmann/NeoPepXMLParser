@@ -3,8 +3,8 @@
 using namespace std;
 
 CnpxPeptideprophetSummary::CnpxPeptideprophetSummary() {
-  double est_tot_num_correct=0;
-  double min_prob=0;
+  est_tot_num_correct=0;
+  min_prob=0;
   author.clear();
   options.clear();
   type.clear();

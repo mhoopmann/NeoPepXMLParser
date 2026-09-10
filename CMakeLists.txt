@@ -84,6 +84,7 @@ set(NEOPEPXML_SOURCES
   src/CnpxXpressLabelFreeResult.cpp
   src/CnpxXpressLabelFreeSummary.cpp
   src/NeoPepXMLParser.cpp
+  src/NeoPepXMLStructs.cpp
 )
 
 # Every header is public: users navigate the parsed object tree directly, so the
@@ -172,9 +173,15 @@ target_include_directories(NeoPepXMLParser
 target_compile_features(NeoPepXMLParser PRIVATE cxx_std_17)
 set_target_properties(NeoPepXMLParser PROPERTIES CXX_EXTENSIONS OFF)
 
-# PUBLIC for now because NeoPepXMLParser.h still includes expat.h directly. This becomes
-# PRIVATE once the parser handle is forward-declared in the header.
-target_link_libraries(NeoPepXMLParser PUBLIC NeoPepXMLParser_expat)
+# Only NeoPepXMLParser.cpp includes expat.h; the public header forward-declares the parser
+# handle. Consumers of the static library still link expat (CMake carries the PRIVATE link
+# dependencies of a static library through to them) but never need its headers.
+target_link_libraries(NeoPepXMLParser PRIVATE NeoPepXMLParser_expat)
+
+# expat.h decorates its API with __declspec(dllimport) on Windows unless XML_STATIC is
+# defined. Always defining it is safe: it is required against a static expat, and against an
+# import library the linker still resolves the undecorated names through the library thunks.
+target_compile_definitions(NeoPepXMLParser PRIVATE XML_STATIC)
 
 if(MSVC)
   target_compile_options(NeoPepXMLParser PRIVATE /W4)

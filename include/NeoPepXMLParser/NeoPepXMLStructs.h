@@ -1,64 +1,13 @@
 #ifndef NEOPEPXMLSTRUCTS_H
 #define NEOPEPXMLSTRUCTS_H
 
-#include <cstdlib>
-#include <iostream>
+#include <cstdio>
 #include <string>
-#include <cstring>
 
-//For Windows
-#ifdef _MSC_VER
-#define __inline__ __inline
-typedef _int64  __int64_t;
-typedef unsigned _int32 uint32_t;
-typedef unsigned _int64 uint64_t;
-typedef __int64 f_off;
-#define npxfseek(h,p,o) _fseeki64(h,p,o)
-#define npxftell(h) _ftelli64(h)
-#define npxatoi64(h) _atoi64(h)
-#endif
-
-//For MinGW toolset, which lacks the ftello, fseeko, etc functions
-#ifdef MINGW
-//typedef __int64 f_off;
-//#define __int64_t int64_t
-#define npxfseek(h,p,o) fseeko64(h,p,o)
-#define npxftell(h) ftello64(h)
-#define npxatoi64(h) _atoi64(h)
-//#include <stdexcept>
-#endif
-
-#if defined(GCC) || defined(__LINUX__) || defined(GNUC) || defined(__MINGW32__)
-#include <stdint.h>
-#include <stdexcept>
-#ifndef _LARGEFILE_SOURCE
-#error "need to define _LARGEFILE_SOURCE!!"
-#endif    /* end _LARGEFILE_SOURCE */
-#if _FILE_OFFSET_BITS<64
-#error "need to define _FILE_OFFSET_BITS=64"
-#endif
-
-typedef off_t f_off;
-#define npxfseek(h,p,o) fseeko(h,p,o)
-#define npxftell(h) ftello(h)
-#define npxatoi64(h) atoll(h)
-#endif
-
-#ifdef OSX
-#define __inline__ inline
-#ifndef OSX_TIGER
-#define __int64_t int64_t
-#endif
-#endif
-
-// this define for the INTEL-based OSX platform is untested and may not work
-#ifdef OSX_INTEL
-#define __inline__ inline
-#endif
-
-static std::string npx_xmlns = "http://regis-web.systemsbiology.net/pepXML";
-static std::string npx_xmlns_xsi = "http://www.w3.org/2001/XMLSchema-instance";
-static std::string npx_xsi_schemaLocation = "http://regis-web.systemsbiology.net/pepXML /tools/bin/TPP/tpp/schema/pepXML_v123.xsd";
+// Namespace declarations written on the msms_pipeline_analysis root element.
+extern const std::string npx_xmlns;
+extern const std::string npx_xmlns_xsi;
+extern const std::string npx_xsi_schemaLocation;
 
 enum pepXMLElement:int{
   pxAffectedChannel,
@@ -152,40 +101,22 @@ typedef struct npxTime {
 typedef struct npxDateTime{
   npxDate date;
   npxTime time;
-  void clear(){
-    date.day=0;
-    date.month=0;
-    date.year=0;
-    time.hour=0;
-    time.minute=0;
-    time.second=0;
-  }
-  void parseDateTime(const char* dt){
-    if(strlen(dt)<2){
-      clear();
-      return;
-    }
-    int x = sscanf(dt, "%d-%d-%dT%d:%d:%d", &date.year, &date.month, &date.day, &time.hour, &time.minute, &time.second);
-  }
-  void parseDateTime(std::string s){
-    parseDateTime(s.c_str());
-  }
-  std::string write(){
-    std::string s;
-    char str[64];
-    sprintf(str, "%4d-%02d-%02dT%02d:%02d:%02d", date.year, date.month, date.day, time.hour, time.minute, time.second);
-    s=str;
-    return s;
-  }
+  void clear();
+  // Parses "YYYY-MM-DDThh:mm:ss". A string shorter than two characters clears the value.
+  void parseDateTime(const char* dt);
+  void parseDateTime(const std::string& s);
+  std::string write();
 } npxDateTime;
 
-static void NPXerrMsg(std::string el, std::string attr){
-  std::cerr << el << "::" << attr << " required." << std::endl;
-  exit(69);
-}
+// Converts the leading decimal number in s to a double the way atof does, but independent of
+// the process locale. pepXML always uses '.' as the decimal separator, whereas atof honors
+// whatever LC_NUMERIC the host application has set. Returns 0.0 when s holds no number.
+double npxAtof(const char* s);
 
-static void NPXprintTabs(FILE* f, int tabs){
-  for (int i = 0; i<tabs; i++) fprintf(f, " ");
-}
+// Reports a missing required attribute on element el and terminates the process.
+void NPXerrMsg(const std::string& el, const std::string& attr);
+
+// Writes 'tabs' spaces to f; used to indent nested elements when writing.
+void NPXprintTabs(FILE* f, int tabs);
 
 #endif

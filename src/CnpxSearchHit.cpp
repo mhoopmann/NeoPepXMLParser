@@ -20,9 +20,9 @@ CnpxSearchHit::CnpxSearchHit(){
   peptide_start_pos=0;
 }
 
-CnpxAlternativeProtein* CnpxSearchHit::addAlternativeProtein(std::string protein){
+CnpxAlternativeProtein* CnpxSearchHit::addAlternativeProtein(std::string proteinName){
   CnpxAlternativeProtein s;
-  s.protein=protein;
+  s.protein=proteinName;
   alternative_protein.push_back(s);
   return &alternative_protein.back();
 }
@@ -41,14 +41,14 @@ string CnpxSearchHit::getModifiedPeptide(){
   char str[32];
   string pep;
   if(modification_info[0].mod_nterm_mass!=0){
-    sprintf(str, "n[%.2lf]", modification_info[0].mod_nterm_mass);
+    snprintf(str, sizeof(str), "n[%.2lf]", modification_info[0].mod_nterm_mass);
     pep+=str;
   }
   for(i=0;i<peptide.size();i++){
     pep+=peptide[i];
     for(j=0;j<modification_info[0].mod_aminoacid_mass.size();j++){
       if(modification_info[0].mod_aminoacid_mass[j].position==(i+1)){
-        sprintf(str,"[%.2lf]",modification_info[0].mod_aminoacid_mass[j].mass);
+        snprintf(str, sizeof(str), "[%.2lf]",modification_info[0].mod_aminoacid_mass[j].mass);
         pep+=str;
         break;
       }
