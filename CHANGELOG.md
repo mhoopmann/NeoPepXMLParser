@@ -7,6 +7,9 @@ All notable changes to NeoPepXMLParser are recorded here. Versions follow
 
 ### Fixed
 
+- Writing a `parameter` element whose `value` attribute is empty terminated the process. Comet
+  emits `value=""` for unset parameters such as `mass_offsets`, so every Comet result file
+  failed to write back.
 - Dated dev releases (`dev-<version>-<run>`) now tag the commit that was built. Previously the
   tag was created on the default branch, so the source links of `dev-1.1.0-1` and
   `dev-1.1.0-2` pointed at the pre-restructure tree even though their kits were correct.
