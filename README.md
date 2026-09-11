@@ -174,4 +174,6 @@ The project can also be consumed in-tree with `add_subdirectory()` or `FetchCont
   separate manual step in the GitHub UI. The version is set once, in `project()` in
   `CMakeLists.txt`.
 
-See `CHANGELOG.md` for what changed in each version.
+See `CHANGELOG.md` for what changed in each version, and `docs/` for the status of ongoing work
+(`progress.md`), outstanding issues (`known-issues.md`), and the record of the 2026 restructuring
+(`history.md`).
