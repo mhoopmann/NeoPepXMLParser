@@ -9,7 +9,11 @@ element, so anything the file contains can be inspected, changed, and written ba
 
 int main() {
   NeoPepXMLParser xml;
-  if (!xml.read("some.pep.xml")) return 1;
+  if (!xml.read("some.pep.xml")) {
+    fprintf(stderr, "%s
+", xml.lastError().text().c_str());
+    return 1;
+  }
   // Navigate and edit: xml.msms_pipeline_analysis[i].msms_run_summary[j].spectrum_query[k]...
   return xml.write("edited.pep.xml") ? 0 : 1;
 }
@@ -85,22 +89,40 @@ program.
 
 - `read()` and `write()` accept `const char*` and, in C++17 code, `std::filesystem::path`. The
   path overloads open through the wide-character API on Windows, so non-ASCII paths work.
-- The library is silent by default. `setProgressOutput(true)` turns on the percentage meter
-  that `read()` prints to stdout.
 - Numbers are parsed and written independently of the process locale. An application that
   calls `setlocale()` with a comma-decimal locale reads the same values and writes the same
   files as any other; the writer switches only the calling thread's numeric locale, and only
   for the duration of the call.
 - Files are read and written in binary mode, so output is byte-identical on every platform.
-- `read()` and `write()` return false on failure and never throw; `lastError()` says why, with the
-  input line where known. `warnings()` lists elements the parser did not recognize and skipped;
-  such content is absent from a later `write()`. Only the reference-returning accessors throw,
-  `npxRangeError` for an index or rank out of range. The library writes nothing to the console
-  unless `setDiagnosticOutput(true)` or `setProgressOutput(true)` is called.
 - The public headers compile as C++11; the library itself is built as C++17.
 - **No ABI guarantee.** The classes expose their data members directly, so any change to them
   changes the binary layout. Rebuild against each kit you upgrade to; the shared library's
   soversion equals the full version for that reason.
+
+### Errors, warnings, and console output
+
+`read()` and `write()` return false on failure and never throw. `lastError()` explains why, as an
+`npxDiagnostic` with a message, the element involved, and the input line where known. An element
+the parser does not recognize is skipped together with its content, the read still succeeds, and
+`warnings()` lists what was dropped; that content is absent from a later `write()`.
+
+```cpp
+NeoPepXMLParser xml;
+if (!xml.read(path)) {
+  std::cerr << xml.lastError().text() << "\n";        // e.g. "XML tag mismatch in x.pep.xml (line 812)"
+  return 1;
+}
+for (const npxDiagnostic& w : xml.warnings()) std::cerr << "warning: " << w.text() << "\n";
+```
+
+Only the reference-returning accessors throw: `operator[]` on the parser and on the `CnpxUI*`
+classes, and `CnpxUISpectra::getHit()`, raise `npxRangeError` for an index or rank out of range,
+or when nothing is loaded. `npxRangeError` derives from `npxError`, which derives from
+`std::runtime_error`; both are declared in `NeoPepXMLError.h`, which the main header includes.
+
+The library writes nothing to the console unless asked. `setDiagnosticOutput(true)` echoes errors
+and warnings to stderr as they are recorded; `setProgressOutput(true)` shows a percentage meter on
+stdout while `read()` runs. Both are off by default.
 
 ## Building from source
 
