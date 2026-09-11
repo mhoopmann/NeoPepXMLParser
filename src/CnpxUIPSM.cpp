@@ -70,6 +70,7 @@ void CnpxUIPSM::setPSM(CnpxSpectrumQuery& s){
       for (j = 0; j<sh->analysis_result[i].peptide_prophet_result.search_score_summary.parameter.size();j++){
         sc.name = sh->analysis_result[i].peptide_prophet_result.search_score_summary.parameter[j].name;
         sc.value = sh->analysis_result[i].peptide_prophet_result.search_score_summary.parameter[j].value;
+        peptideProphet.parameters.push_back(sc);
       }
     }
     if (sh->analysis_result[i].interprophet_result.present()){
@@ -78,6 +79,7 @@ void CnpxUIPSM::setPSM(CnpxSpectrumQuery& s){
       for (j = 0; j<sh->analysis_result[i].interprophet_result.search_score_summary.parameter.size(); j++){
         sc.name = sh->analysis_result[i].interprophet_result.search_score_summary.parameter[j].name;
         sc.value = sh->analysis_result[i].interprophet_result.search_score_summary.parameter[j].value;
+        iProphet.parameters.push_back(sc);
       }
     }
   }  

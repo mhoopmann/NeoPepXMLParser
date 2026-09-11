@@ -1,9 +1,4 @@
 // The read-time filters and the CnpxUI* convenience layer.
-//
-// One test is tagged [!mayfail]: it describes behavior the code does not have yet, so it reports
-// without failing the run. Remove the tag when the underlying issue is fixed:
-//   - CnpxUIPSM::setPSM() fills a parameter entry for each Prophet score but never pushes it,
-//     so peptideProphet.parameters and iProphet.parameters stay empty.
 #include "NeoPepXMLParser/NeoPepXMLParser.h"
 #include "test_support.h"
 
@@ -129,7 +124,7 @@ TEST_CASE("UI layer exposes pipelines, runs, spectra, and PSMs", "[ui]") {
   }
 }
 
-TEST_CASE("UI PSM carries the Prophet score parameters", "[ui][!mayfail]") {
+TEST_CASE("UI PSM carries the Prophet score parameters", "[ui]") {
   NeoPepXMLParser xml;
   REQUIRE(xml.read(dataPath(fixtureName()).c_str()));
   CnpxUIPSM& p = xml[0];

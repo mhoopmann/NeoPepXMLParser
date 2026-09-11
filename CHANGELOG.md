@@ -14,6 +14,8 @@ All notable changes to NeoPepXMLParser are recorded here. Versions follow
 
 ### Fixed
 
+- `CnpxUIPSM::setPSM()` left `peptideProphet.parameters` and `iProphet.parameters` empty; the
+  loops copied each Prophet score into a local and never stored it.
 - `setFilterRunSummary()` removed every `search_hit` from the document, leaving queries without
   hits and crashing any later access to them: a stub in the `search_hit` handler, present since
   2020, was guarded by the wrong filter and compared an `int` against `std::string::npos`. The
@@ -32,7 +34,6 @@ error-handling work:
 
 - Writing is locale-sensitive: under a comma-decimal locale the numeric attributes are written
   with commas.
-- `CnpxUIPSM` never fills `peptideProphet.parameters` or `iProphet.parameters`.
 
 ## 1.1.0 (2026-09-10)
 
