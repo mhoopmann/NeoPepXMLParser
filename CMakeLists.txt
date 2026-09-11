@@ -137,6 +137,7 @@ set(NEOPEPXML_SOURCES
   src/CnpxXLinkScore.cpp
   src/CnpxXpressLabelFreeResult.cpp
   src/CnpxXpressLabelFreeSummary.cpp
+  src/NeoPepXMLError.cpp
   src/NeoPepXMLLocale.h
   src/NeoPepXMLParser.cpp
   src/NeoPepXMLStructs.cpp
@@ -211,6 +212,7 @@ set(NEOPEPXML_HEADERS
   include/NeoPepXMLParser/CnpxXLinkScore.h
   include/NeoPepXMLParser/CnpxXpressLabelFreeResult.h
   include/NeoPepXMLParser/CnpxXpressLabelFreeSummary.h
+  include/NeoPepXMLParser/NeoPepXMLError.h
   include/NeoPepXMLParser/NeoPepXMLParser.h
   include/NeoPepXMLParser/NeoPepXMLStructs.h
 )
@@ -319,11 +321,12 @@ else()
   set(neopepxml_export_source NeoPepXMLParser_static)
 endif()
 set(NEOPEPXML_EXPORT_HEADER_EXTRA [=[
-/* The exported classes hold standard-library members such as std::string and std::vector.
-   MSVC warns (C4251) that those need a DLL interface. That is inherent to any C++ DLL API and
-   is expected here, so the warning is silenced for translation units that use the DLL. */
+/* The exported classes hold standard-library members such as std::string and std::vector, and
+   the exception types derive from std::runtime_error. MSVC warns that those need a DLL
+   interface (C4251, C4275). That is inherent to any C++ DLL API and is expected here, so the
+   warnings are silenced for translation units that use the DLL. */
 #if defined(_MSC_VER) && !defined(NEOPEPXML_STATIC_DEFINE)
-#pragma warning(disable : 4251)
+#pragma warning(disable : 4251 4275)
 #endif
 ]=])
 generate_export_header(${neopepxml_export_source}

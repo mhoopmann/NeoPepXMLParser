@@ -18,14 +18,14 @@ int main(int argc, char** argv) {
   // then navigate out.msms_pipeline_analysis[i].msms_run_summary[j].spectrum_query[k]...
   out.addMSMSPipelineAnalysis("2026-09-10T12:00:00", "interact.pep.xml");
   if (!out.write(fileName)) {
-    printf("could not write %s\n", fileName);
+    printf("could not write %s: %s\n", fileName, out.lastError().text().c_str());
     return 1;
   }
 
   NeoPepXMLParser in;
   in.setProgressOutput(true);  // opt-in percentage meter on stdout; off by default
   if (!in.read(fileName)) {
-    printf("could not read %s\n", fileName);
+    printf("could not read %s: %s\n", fileName, in.lastError().text().c_str());
     return 1;
   }
 

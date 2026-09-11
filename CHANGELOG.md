@@ -7,10 +7,32 @@ All notable changes to NeoPepXMLParser are recorded here. Versions follow
 
 ### Added
 
+- `NeoPepXMLParser::lastError()` explains why the last `read()` or `write()` returned false, with
+  the element and input line where known; `warnings()` lists what the last `read()` skipped;
+  `setDiagnosticOutput(true)` echoes both to stderr as they happen.
+- `npxError` and `npxRangeError` (header `NeoPepXMLError.h`), thrown by the reference-returning
+  accessors (`operator[]` on the parser and the `CnpxUI*` classes, `CnpxUISpectra::getHit()`)
+  for an index or rank out of range or before anything is loaded.
 - A Catch2 test suite under `tests/`, run by CTest and in CI: round trip against a committed
   expected output, hand-verified values, filters, the UI layer, locale independence, error
   paths, and non-ASCII file names. The first fixture is a trimmed real Comet + PeptideProphet +
   iProphet result; see `tests/data/README.md`.
+
+### Changed
+
+- The library never terminates the process. The twelve `exit()` calls are gone: `read()` and
+  `write()` report through their return value and `lastError()`, the accessors throw.
+- The library is silent by default. Parse errors and skipped elements are no longer printed;
+  `setDiagnosticOutput(true)` restores console output for tools that want it.
+- An element the parser does not know is skipped, along with its content, with a warning; the
+  read succeeds. Previously it terminated the process. Misplaced known elements are handled
+  the same way.
+- The writers no longer refuse to write "required" attributes that are empty or zero. Those
+  checks inferred absence from the value, rejected valid files, and could only abort.
+
+### Removed
+
+- `NPXerrMsg()`, the helper behind those checks.
 
 ### Fixed
 

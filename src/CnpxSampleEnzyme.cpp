@@ -14,8 +14,6 @@ CnpxSampleEnzyme::CnpxSampleEnzyme(){
 void CnpxSampleEnzyme::write(FILE* f, int tabs){
   size_t i;
 
-  string el = "sample_enzyme";
-  if (name.empty()) NPXerrMsg(el, "name");
 
   int t = tabs;
   if (t>-1) t++;

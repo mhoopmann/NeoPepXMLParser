@@ -1,7 +1,6 @@
 #include "NeoPepXMLParser/CnpxUIRunSummary.h"
 
-#include <cstdlib>
-#include <iostream>
+#include "NeoPepXMLParser/NeoPepXMLError.h"
 
 using namespace std;
 
@@ -17,11 +16,9 @@ CnpxUIRunSummary::~CnpxUIRunSummary(){
 
 CnpxMSMSRunSummary& CnpxUIRunSummary::operator[](const size_t& index){
   if (runs == NULL){
-    cerr << "ERROR: CnpxUIRunSummary object is pointing to NULL." << endl;
-    exit(-91);
+    throw npxRangeError("CnpxUIRunSummary object is pointing to NULL.");
   } else if (index >= runs->size()){
-    cerr << "ERROR: Requested msms_run_summary beyond CnpxUIRunSummary boundary." << endl;
-    exit(-92);
+    throw npxRangeError("Requested msms_run_summary beyond CnpxUIRunSummary boundary.");
   }
   return runs->at(index);
 }

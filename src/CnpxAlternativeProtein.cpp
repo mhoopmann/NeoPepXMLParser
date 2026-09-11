@@ -11,8 +11,6 @@ CnpxAlternativeProtein::CnpxAlternativeProtein() {
 }
 
 void CnpxAlternativeProtein::write(FILE* f, int tabs) {
-  string el = "alternative_protein";
-  if (protein.empty()) NPXerrMsg(el, "protein");
 
   int t = tabs;
   if (t>-1) t++;

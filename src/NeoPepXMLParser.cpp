@@ -59,8 +59,7 @@ CnpxUIPSM& NeoPepXMLParser::operator[](const size_t& index){
       return psm;
     }
   }
-  cerr << "ERROR, NeoPepXMLParser::operator[]: index out of bounds." << endl;
-  exit(-50);
+  throw npxRangeError("NeoPepXMLParser::operator[]: index out of range");
 }
 
 void NeoPepXMLParser::addMSMSPipelineAnalysis(std::string date, std::string summary_xml){
@@ -101,10 +100,15 @@ void NeoPepXMLParser::characters(const char* /*s*/, int /*len*/) {
 
 void NeoPepXMLParser::endElement(const char *el) {
 
+  if (skipDepth > 0) {  // closing tag inside an unknown element that is being skipped
+    --skipDepth;
+    return;
+  }
+
   string s;
   for(int i=0;i<PEPXML_NUM_ELEMENTS;i++){
     if(isElement(elements[i].c_str(),el)){
-      if(activeEl.back()!=(pepXMLElement)i) cout << "Error: unexpected end element: " << elements[i] << " should be " << elements[activeEl.back()] << endl;
+      if(activeEl.back()!=(pepXMLElement)i) warn("unexpected end of element " + elements[i] + " while inside " + elements[activeEl.back()], el, currentLine());
       else activeEl.pop_back();
       break;
     }
@@ -158,6 +162,8 @@ void NeoPepXMLParser::init() {
 
   version = 22;
   showProgress = false;
+  diagnosticOutput = false;
+  skipDepth = 0;
   probFilter=-1;
   rsFilter.clear();
   shFilter.clear();
@@ -231,6 +237,11 @@ void NeoPepXMLParser::init() {
 
 void NeoPepXMLParser::startElement(const char *el, const char **attr){
 
+  if (skipDepth > 0) {  // inside an unknown element: its content is skipped too
+    ++skipDepth;
+    return;
+  }
+
   //cout << el << endl; //for diagnostics
 
   //string s;
@@ -261,7 +272,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
       msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink.back().linked_peptide.back().alternative_protein.push_back(c);
       break;
     default:
-      cout << "Error: stray alternative_protein element" << endl;
+      warn("misplaced alternative_protein element ignored", "alternative_protein", currentLine());
       break;
     }
 
@@ -386,7 +397,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
       msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().distribution_point.push_back(c);
       break;
     default:
-      cout << "Error: stray distribution_point element" << endl;
+      warn("misplaced distribution_point element ignored", "distribution_point", currentLine());
       break;
     }
 
@@ -416,7 +427,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
       msms_pipeline_analysis.back().analysis_summary.back().ptmprophet_summary.back().roc_error_data.back().error_point.push_back(c);
       break;
     default:
-      cout << "Error: stray error_point element" << endl;
+      warn("misplaced error_point element ignored", "error_point", currentLine());
       break;
     }
 
@@ -450,7 +461,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
       msms_pipeline_analysis.back().analysis_summary.back().quantic_summary.back().inputfile.push_back(c);
       break;
     default:
-      cout << "Error: stray inputfile element" << endl;
+      warn("misplaced inputfile element ignored", "inputfile", currentLine());
       break;
     }
 
@@ -564,7 +575,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
       msms_pipeline_analysis.back().analysis_summary.back().ptmprophet_summary.back().mixturemodel.push_back(c);
       break;
     default:
-      cout << "Error: stray mixturemodel element" << endl;
+      warn("misplaced mixturemodel element ignored", "mixturemodel", currentLine());
       break;
     }
 
@@ -577,7 +588,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
     } else if (activeEl[activeEl.size() - 3] == pxPeptideprophetSummary) {
       msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.push_back(c);
     } else {
-      cout << "Error: stray mixturemodel_distribution element" << endl;
+      warn("misplaced mixturemodel_distribution element ignored", "mixturemodel_distribution", currentLine());
     }
 
   } else if (isElement("mod_aminoacid_mass", el)) {
@@ -656,7 +667,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
     } else if (activeEl[activeEl.size() - 4] == pxPeptideprophetSummary){
       msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.back().negmodel_distribution.push_back(c);
     } else {
-      cout << "Error: stray negmodel_distribution element" << endl;
+      warn("misplaced negmodel_distribution element ignored", "negmodel_distribution", currentLine());
     }
 
   } else if (isElement("parameter", el)) {
@@ -677,7 +688,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
       } else if (activeEl[activeEl.size() - 3] == pxPepXMLQuantResult) {
         msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().pepxmlquant_result.search_score_summary.parameter.push_back(c);
       } else {
-        cout << "Unknown location for parameter: " << pxSearchScoreSummary << endl;
+        warn("parameter element in an unexpected location ignored", "parameter", currentLine());
       }
       break;
     case pxSearchSummary:
@@ -689,7 +700,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
       } else if (activeEl[activeEl.size() - 4] == pxInterprophetSummary) {
         msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.back().mixturemodel_distribution.back().negmodel_distribution.back().parameter.push_back(c);
       } else {
-        cout << "Unknown location for parameter: " << pxNegmodelDistribution << endl;
+        warn("parameter element in an unexpected location ignored", "parameter", currentLine());
       }
       break;
     case pxPosmodelDistribution:
@@ -698,14 +709,14 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
       } else if (activeEl[activeEl.size() - 4] == pxInterprophetSummary) {
         msms_pipeline_analysis.back().analysis_summary.back().interprophet_summary.back().mixturemodel_distribution.back().posmodel_distribution.back().parameter.push_back(c);
       } else {
-        cout << "Unknown location for parameter: " << pxPosmodelDistribution << endl;
+        warn("parameter element in an unexpected location ignored", "parameter", currentLine());
       }
       break;
     case pxPTMProphetResult:
       msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().ptmprophet_result.back().parameter.push_back(c);
       break;
     default:
-      cout << "Error: stray parameter element: " << elements[activeEl[activeEl.size() - 2]] << endl;
+      warn("misplaced parameter element ignored", "parameter", currentLine());
       break;
     }
 
@@ -775,12 +786,12 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
         msms_pipeline_analysis.back().analysis_summary.back().ptmprophet_summary.back().mixturemodel.back().point.push_back(m);
         break;
       default:
-        cout << "Error: stray point element" << endl;
+        warn("misplaced point element ignored", "point", currentLine());
         break;
       }
       break;
     default:
-      cout << "Error: stray point element" << endl;
+      warn("misplaced point element ignored", "point", currentLine());
       break;
     }
 
@@ -793,7 +804,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
     } else if (activeEl[activeEl.size() - 4] == pxPeptideprophetSummary) {
       msms_pipeline_analysis.back().analysis_summary.back().peptideprophet_summary.back().mixture_model.back().mixturemodel_distribution.back().posmodel_distribution.push_back(c);
     } else {
-      cout << "Error: stray posmodel_distribution element" << endl;
+      warn("misplaced posmodel_distribution element ignored", "posmodel_distribution", currentLine());
     }
 
   } else if (isElement("ptmprophet_result", el)) {
@@ -845,7 +856,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
       msms_pipeline_analysis.back().analysis_summary.back().ptmprophet_summary.back().roc_error_data.push_back(c);
       break;
     default:
-      cout << "Error: stray roc_error_data element" << endl;
+      warn("misplaced roc_error_data element ignored", "roc_error_data", currentLine());
       break;
     }
 
@@ -868,7 +879,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
       msms_pipeline_analysis.back().analysis_summary.back().ptmprophet_summary.back().roc_error_data.back().roc_data_point.push_back(c);
       break;
     default:
-      cout << "Error: stray roc_data_point element" << endl;
+      warn("misplaced roc_data_point element ignored", "roc_data_point", currentLine());
       break;
     }
 
@@ -951,7 +962,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
       msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().analysis_result.back().pepxmlquant_result.search_score_summary = c;
       break;
     default:
-      cout << "Error: stray search_score_summary element" << endl;
+      warn("misplaced search_score_summary element ignored", "search_score_summary", currentLine());
       break;
     }
 
@@ -1026,7 +1037,7 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
       msms_pipeline_analysis.back().msms_run_summary.back().spectrum_query.back().search_result.back().search_hit.back().xlink.back().xlink_score.push_back(c);
       break;
     default:
-      cout << "Error: stray xlink_score element: " << (int)activeEl[activeEl.size() - 2] << endl;
+      warn("misplaced xlink_score element ignored", "xlink_score", currentLine());
       break;
     }
 
@@ -1057,12 +1068,12 @@ void NeoPepXMLParser::startElement(const char *el, const char **attr){
     msms_pipeline_analysis.back().analysis_summary.back().xpresslabelfree_summary.push_back(c);
 
   } else if (isElement("xpresslabelfree_timestamp", el)) {
-    cout << "Ignoring: xpresslabelfree_timestamp" << endl;
+    warn("xpresslabelfree_timestamp element is not supported and was ignored", el, currentLine());
     
 
   } else {
-    cout << "WARNING: Element undefined: " << el << endl;
-    exit(1);
+    warn(std::string("unknown element ") + el + " skipped, along with its content", el, currentLine());
+    skipDepth = 1;
   }
 }
 
@@ -1071,11 +1082,17 @@ bool NeoPepXMLParser::read(const char* fn){
 }
 
 bool NeoPepXMLParser::read(const std::filesystem::path& fn){
+  error.clear();
+  warningList.clear();
+
+  std::string displayName;
+  try { displayName = fn.string(); } catch (...) { displayName = "<file>"; }
+
   // Binary mode: expat normalizes line endings itself, and this keeps behavior identical on
   // every platform.
   FILE* fptr = npxOpen(fn, "rb");
   if (fptr == NULL){
-    cerr << "Error parse(): No open file." << endl;
+    fail("cannot open " + displayName + " for reading");
     return false;
   }
 
@@ -1083,9 +1100,6 @@ bool NeoPepXMLParser::read(const std::filesystem::path& fn){
   std::error_code ec;
   std::uintmax_t fileSize = std::filesystem::file_size(fn, ec);
   if (ec) fileSize = 0;
-
-  std::string displayName;
-  try { displayName = fn.string(); } catch (...) { displayName = "<file>"; }
 
   bool success = readFile(fptr, fileSize, displayName);
   fclose(fptr);
@@ -1101,6 +1115,7 @@ bool NeoPepXMLParser::readFile(FILE* fptr, std::uintmax_t fileSize, const std::s
 
   // clear data
   msms_pipeline_analysis.clear();
+  skipDepth = 0;
 
   std::uintmax_t prog = 0;
   int iPercent = 0;
@@ -1131,41 +1146,25 @@ bool NeoPepXMLParser::readFile(FILE* fptr, std::uintmax_t fileSize, const std::s
   if (showProgress) cout << endl;
 
   if (!success) {
-    XML_Error error = XML_GetErrorCode(parser);
-
-    cerr << displayName << "(" << XML_GetCurrentLineNumber(parser) << ") : error " << (int)error << ": ";
-    switch (error) {
-    case XML_ERROR_SYNTAX:
-      cerr << "Syntax error parsing XML.";
-      break;
-    case XML_ERROR_INVALID_TOKEN:
-      cerr << "XML invalid token.";
-      break;
-    case XML_ERROR_UNCLOSED_TOKEN:
-      cerr << "XML unclosed token.";
-      break;
-    case XML_ERROR_TAG_MISMATCH:
-      cerr << "XML tag mismatch.";
-      break;
-    case XML_ERROR_DUPLICATE_ATTRIBUTE:
-      cerr << "XML duplicate attribute.";
-      break;
-    case XML_ERROR_JUNK_AFTER_DOC_ELEMENT:
-      cerr << "XML junk after doc element.";
-      break;
-    case XML_ERROR_BAD_CHAR_REF:
-      cerr << "XML bad character reference.";
-      break;
-    default:
-      cerr << "XML Parsing error.";
-      break;
+    XML_Error code = XML_GetErrorCode(parser);
+    std::string what;
+    switch (code) {
+    case XML_ERROR_SYNTAX:                 what = "XML syntax error"; break;
+    case XML_ERROR_INVALID_TOKEN:          what = "XML invalid token"; break;
+    case XML_ERROR_UNCLOSED_TOKEN:         what = "XML unclosed token"; break;
+    case XML_ERROR_TAG_MISMATCH:           what = "XML tag mismatch"; break;
+    case XML_ERROR_DUPLICATE_ATTRIBUTE:    what = "XML duplicate attribute"; break;
+    case XML_ERROR_JUNK_AFTER_DOC_ELEMENT: what = "XML content after the document element"; break;
+    case XML_ERROR_BAD_CHAR_REF:           what = "XML bad character reference"; break;
+    case XML_ERROR_NO_ELEMENTS:            what = "no XML content"; break;
+    default:                               what = std::string("XML parsing error: ") + XML_ErrorString(code); break;
     }
-    cerr << "\n";
+    fail(what + " in " + displayName, std::string(), currentLine());
     return false;
   }
 
   if(msms_pipeline_analysis.size()==0){
-    cerr << "PepXML file contains no MS/MS results." << endl;
+    fail("no msms_pipeline_analysis element found in " + displayName);
     return false;
   }
   uiPipelines.set(&msms_pipeline_analysis);
@@ -1221,17 +1220,67 @@ bool NeoPepXMLParser::write(const char* fn, bool tabs){
 }
 
 bool NeoPepXMLParser::write(const std::filesystem::path& fn, bool tabs){
+  error.clear();
+
+  std::string displayName;
+  try { displayName = fn.string(); } catch (...) { displayName = "<file>"; }
+
   // Binary mode so the "\n" line endings written below are identical on every platform.
   FILE* f = npxOpen(fn, "wb");
-  if (f == NULL) return false;
-  // Numbers must come out with a period regardless of the host application's locale.
-  npxCNumericLocale cLocale;
-
-  fprintf(f, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-  for(size_t i=0;i<msms_pipeline_analysis.size();i++){
-    if (tabs) msms_pipeline_analysis[i].write(f,0);
-    else msms_pipeline_analysis[i].write(f);
+  if (f == NULL) {
+    fail("cannot open " + displayName + " for writing");
+    return false;
   }
-  fclose(f);
+
+  {
+    // Numbers must come out with a period regardless of the host application's locale.
+    npxCNumericLocale cLocale;
+    fprintf(f, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    for(size_t i=0;i<msms_pipeline_analysis.size();i++){
+      if (tabs) msms_pipeline_analysis[i].write(f,0);
+      else msms_pipeline_analysis[i].write(f);
+    }
+  }
+
+  bool failed = ferror(f) != 0;
+  failed = (fclose(f) != 0) || failed;
+  if (failed) {
+    std::error_code ec;
+    std::filesystem::remove(fn, ec);  // do not leave a truncated file behind
+    fail("error while writing " + displayName);
+    return false;
+  }
   return true;
+}
+
+long NeoPepXMLParser::currentLine() const {
+  return parser ? (long)XML_GetCurrentLineNumber(parser) : 0;
+}
+
+void NeoPepXMLParser::fail(const std::string& message, const std::string& element, long line){
+  error.message = message;
+  error.element = element;
+  error.line = line;
+  if (diagnosticOutput) std::cerr << "NeoPepXMLParser: error: " << error.text() << std::endl;
+}
+
+void NeoPepXMLParser::warn(const std::string& message, const std::string& element, long line){
+  npxDiagnostic d;
+  d.message = message;
+  d.element = element;
+  d.line = line;
+  warningList.push_back(d);
+  if (diagnosticOutput) std::cerr << "NeoPepXMLParser: warning: " << d.text() << std::endl;
+}
+
+const npxDiagnostic& NeoPepXMLParser::lastError() const {
+  return error;
+}
+
+const std::vector<npxDiagnostic>& NeoPepXMLParser::warnings() const {
+  return warningList;
+}
+
+void NeoPepXMLParser::setDiagnosticOutput(bool enabled){
+  diagnosticOutput = enabled;
 }

@@ -16,9 +16,6 @@ CnpxMSMSRunSummary* CnpxMSMSPipelineAnalysis::addMSMSRunSummary(std::string base
 
 void CnpxMSMSPipelineAnalysis::write(FILE* f, int tabs){
   npxCNumericLocale cLocale;  // see NeoPepXMLLocale.h
-  string el = "msms_pipeline_analysis";
-  if(date.date.year==0) NPXerrMsg(el, "date");
-  if (summary_xml.empty()) NPXerrMsg(el, "summary_xml");
 
   size_t i;
   fprintf(f, "<msms_pipeline_analysis date=\"%4d-%02d-%02dT%02d:%02d:%02d\"", date.date.year, date.date.month, date.date.day, date.time.hour, date.time.minute, date.time.second);

@@ -7,8 +7,6 @@ CnpxContributingChannel::CnpxContributingChannel(){
 }
 
 void CnpxContributingChannel::write(FILE* f, int tabs){
-  string el = "contributing_channel";
-  if (channel == -1) NPXerrMsg(el, "contributing_channel");
 
   int t = tabs;
   if (t>-1) t++;

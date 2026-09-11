@@ -92,6 +92,11 @@ program.
   files as any other; the writer switches only the calling thread's numeric locale, and only
   for the duration of the call.
 - Files are read and written in binary mode, so output is byte-identical on every platform.
+- `read()` and `write()` return false on failure and never throw; `lastError()` says why, with the
+  input line where known. `warnings()` lists elements the parser did not recognize and skipped;
+  such content is absent from a later `write()`. Only the reference-returning accessors throw,
+  `npxRangeError` for an index or rank out of range. The library writes nothing to the console
+  unless `setDiagnosticOutput(true)` or `setProgressOutput(true)` is called.
 - The public headers compile as C++11; the library itself is built as C++17.
 - **No ABI guarantee.** The classes expose their data members directly, so any change to them
   changes the binary layout. Rebuild against each kit you upgrade to; the shared library's

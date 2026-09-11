@@ -44,12 +44,6 @@ CnpxSearchDatabase* CnpxSearchSummary::addSearchDatabase(std::string localPath, 
 void CnpxSearchSummary::write(FILE* f, int tabs){
   size_t i;
 
-  string el = "search_summary";
-  if (base_name.empty()) NPXerrMsg(el, "base_name");
-  if (search_engine.empty()) NPXerrMsg(el, "search_engine");
-  if (precursor_mass_type.empty()) NPXerrMsg(el, "precursor_mass_type");
-  if (fragment_mass_type.empty()) NPXerrMsg(el, "fragment_mass_type");
-  if (search_id == 0) NPXerrMsg(el, "search_id");
 
   int t = tabs;
   if (t>-1) t++;

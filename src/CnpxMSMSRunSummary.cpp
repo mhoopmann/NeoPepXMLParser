@@ -44,10 +44,6 @@ void CnpxMSMSRunSummary::clear(){
 void CnpxMSMSRunSummary::write(FILE* f, int tabs){
   size_t i;
 
-  string el = "msms_run_summary";
-  if (base_name.empty()) NPXerrMsg(el, "base_name");
-  if (raw_data_type.empty()) NPXerrMsg(el, "raw_data_type");
-  if (raw_data.empty()) NPXerrMsg(el, "raw_data");
 
   int t = tabs;
   if (t>-1) t++;

@@ -3,8 +3,6 @@
 using namespace std;
 
 void CnpxParameter::write(FILE* f, int tabs) {
-  string el = "parameter";
-  if (name.empty()) NPXerrMsg(el, "name");
   // value is required by the schema but may legitimately be empty: Comet writes value="" for
   // unset parameters such as mass_offsets, and such files must round-trip.
 

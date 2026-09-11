@@ -15,9 +15,6 @@ CnpxSearchDatabase::CnpxSearchDatabase(){
 }
 
 void CnpxSearchDatabase::write(FILE* f, int tabs){
-  string el = "search_database";
-  if (local_path.empty()) NPXerrMsg(el, "local_path");
-  if (type.empty()) NPXerrMsg(el, "type");
 
   int t = tabs;
   if (t>-1) t++;

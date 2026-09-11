@@ -11,9 +11,6 @@ CnpxSpecificity::CnpxSpecificity(){
 
 void CnpxSpecificity::write(FILE* f, int tabs){
 
-  string el = "specificity";
-  if (sense.empty()) NPXerrMsg(el, "sense");
-  if (cut.empty()) NPXerrMsg(el, "cut");
 
   NPXprintTabs(f, tabs);
   fprintf(f, "<specificity cut=\"%s\"", cut.c_str());

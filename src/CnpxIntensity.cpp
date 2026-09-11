@@ -11,8 +11,6 @@ CnpxIntensity::CnpxIntensity(){
 }
 
 void CnpxIntensity::write(FILE* f, int tabs){
-  string el = "intensity";
-  if (channel == -1) NPXerrMsg(el, "channel");
 
   int t = tabs;
   if (t>-1) t++;

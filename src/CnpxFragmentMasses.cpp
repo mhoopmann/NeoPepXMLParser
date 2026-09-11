@@ -8,9 +8,6 @@ CnpxFragmentMasses::CnpxFragmentMasses(){
 }
 
 void CnpxFragmentMasses::write(FILE* f, int tabs){
-  string el = "fragment_masses";
-  if (channel == -1) NPXerrMsg(el, "channel");
-  if (mz == -1) NPXerrMsg(el, "mz");
 
   int t = tabs;
   if (t>-1) t++;

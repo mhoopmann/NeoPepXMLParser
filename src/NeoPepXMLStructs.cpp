@@ -2,7 +2,6 @@
 
 #include <cstdlib>
 #include <cstring>
-#include <iostream>
 
 // std::from_chars is locale-independent by specification. MSVC and libstdc++ (GCC 11 and
 // later) implement the floating-point overloads and advertise them through
@@ -68,11 +67,6 @@ double npxAtof(const char* s) {
   if (cLocale == (locale_t)0) return strtod(s, nullptr);
   return strtod_l(s, nullptr, cLocale);
 #endif
-}
-
-void NPXerrMsg(const std::string& el, const std::string& attr) {
-  std::cerr << el << "::" << attr << " required." << std::endl;
-  exit(69);
 }
 
 void NPXprintTabs(FILE* f, int tabs) {

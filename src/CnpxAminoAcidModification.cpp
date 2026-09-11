@@ -15,11 +15,6 @@ CnpxAminoAcidModification::CnpxAminoAcidModification(){
 }
 
 void CnpxAminoAcidModification::write(FILE* f, int tabs){
-  string el = "aminoacid_modification";
-  if (aminoacid.empty()) NPXerrMsg(el, "aminoacid");
-  if (variable.empty()) NPXerrMsg(el, "variable");
-  if (massdiff == 0) NPXerrMsg(el, "massdiff");
-  if (mass == 0) NPXerrMsg(el, "mass");
 
   int t = tabs;
   if (t>-1) t++;

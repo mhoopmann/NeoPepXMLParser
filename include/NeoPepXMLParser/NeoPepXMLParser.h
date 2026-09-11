@@ -5,6 +5,7 @@
 
 #include "CnpxMSMSPipelineAnalysis.h"
 #include "NeoPepXMLStructs.h"
+#include "NeoPepXMLError.h"
 
 #include "CnpxUIPipeline.h"
 #include "CnpxUIPSM.h"
@@ -58,6 +59,14 @@ public:
   // Prints a percentage progress meter to stdout while read() runs. Off by default so the
   // library stays silent inside applications that own their console or have none.
   void setProgressOutput(bool enabled);
+  // Why the last read() or write() returned false; empty after a success.
+  const npxDiagnostic& lastError() const;
+  // What the last read() skipped or tolerated: unknown or misplaced elements. Their content is
+  // absent from a later write().
+  const std::vector<npxDiagnostic>& warnings() const;
+  // Echo errors and warnings to stderr as they are recorded. Off by default: the library is
+  // silent unless asked, and lastError() and warnings() carry the same information.
+  void setDiagnosticOutput(bool enabled);
   bool setRunSummaries(const size_t pipeIndex);
   bool setSpectra(const size_t pipeIndex, const size_t runIndex);
   size_t size();
@@ -101,6 +110,10 @@ private:
   std::string rsFilter;
   std::string shFilter;
   bool showProgress;
+  bool diagnosticOutput;
+  int skipDepth;  // greater than zero while inside an unknown element that is being skipped
+  npxDiagnostic error;
+  std::vector<npxDiagnostic> warningList;
 
   double pProb;
   double iProb;
@@ -112,6 +125,9 @@ private:
   // Parses an open file. fileSize only drives the progress meter; displayName appears in
   // error messages.
   bool readFile(FILE* fptr, std::uintmax_t fileSize, const std::string& displayName);
+  long currentLine() const;
+  void fail(const std::string& message, const std::string& element = std::string(), long line = 0);
+  void warn(const std::string& message, const std::string& element = std::string(), long line = 0);
 
 };
 

@@ -27,13 +27,6 @@ CnpxSearchResult* CnpxSpectrumQuery::addSearchResult(){
 void CnpxSpectrumQuery::write(FILE* f, int tabs){
   size_t i;
 
-  string el = "spectrum_query";
-  if (spectrum.empty()) NPXerrMsg(el, "spectrum");
-  if (start_scan == 0) NPXerrMsg(el, "start_scan");
-  if (end_scan == 0) NPXerrMsg(el, "end_scan");
-  if (precursor_neutral_mass == 0) NPXerrMsg(el, "precursor_neutral_mass");
-  if (assumed_charge == 0) NPXerrMsg(el, "assumed_charge");
-  if (index == 0) NPXerrMsg(el, "index");
 
   int t = tabs;
   if (t>-1) t++;

@@ -8,8 +8,6 @@ CnpxAffectedChannel::CnpxAffectedChannel(){
 }
 
 void CnpxAffectedChannel::write(FILE* f, int tabs){
-  string el = "affected_channel";
-  if (channel == -1) NPXerrMsg(el, "channel");
 
   int t = tabs;
   if (t>-1) t++;

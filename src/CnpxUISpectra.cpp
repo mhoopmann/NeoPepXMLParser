@@ -1,7 +1,6 @@
 #include "NeoPepXMLParser/CnpxUISpectra.h"
 
-#include <cstdlib>
-#include <iostream>
+#include "NeoPepXMLParser/NeoPepXMLError.h"
 
 using namespace std;
 
@@ -17,26 +16,24 @@ CnpxUISpectra::~CnpxUISpectra(){
 
 CnpxSpectrumQuery& CnpxUISpectra::operator[](const size_t& index){
   if(spectra==NULL){
-    cerr << "ERROR, CnpxUISpectra::operator[]: CnpxUISpectra object is pointing to NULL." << endl;
-    exit(-101);
+    throw npxRangeError("CnpxUISpectra::operator[]: CnpxUISpectra object is pointing to NULL.");
   } else if(index>=spectra->size()){
-    cerr << "ERROR, CnpxUISpectra::operator[]: Requested spectrum beyond CnpxUISpectra boundary." << endl;
-    exit(-101);
+    throw npxRangeError("CnpxUISpectra::operator[]: Requested spectrum beyond CnpxUISpectra boundary.");
   }
   return spectra->at(index);
 }
 
 CnpxSearchHit& CnpxUISpectra::getHit(const size_t& queryIndex, const size_t& rank){
+  if (spectra == NULL) throw npxRangeError("CnpxUISpectra::getHit(): no spectra are selected.");
   if(rank<1){
-    cerr << "ERROR, CnpxUISpectra::getHit(): user requested rank less than 1." << endl;
-    exit(-101);
+    throw npxRangeError("CnpxUISpectra::getHit(): user requested rank less than 1.");
   }
   if(queryIndex>=spectra->size()){
-    cerr << "ERROR, CnpxUISpectra::getHit(): spectrum_query index out of bounds." << endl;
-    exit(-101);
+    throw npxRangeError("CnpxUISpectra::getHit(): spectrum_query index out of bounds.");
+  } else if (spectra->at(queryIndex).search_result.empty()) {
+    throw npxRangeError("CnpxUISpectra::getHit(): the spectrum_query has no search_result.");
   } else if(rank>spectra->at(queryIndex).search_result[0].search_hit.size()){
-    cerr << "ERROR, CnpxUISpectra::getHit(): requested rank out of bounds." << endl;
-    exit(-101);
+    throw npxRangeError("CnpxUISpectra::getHit(): requested rank out of bounds.");
   }
   return spectra->at(queryIndex).search_result[0].search_hit[rank-1];
 }

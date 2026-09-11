@@ -1,7 +1,6 @@
 #include "NeoPepXMLParser/CnpxUIPipeline.h"
 
-#include <cstdlib>
-#include <iostream>
+#include "NeoPepXMLParser/NeoPepXMLError.h"
 
 using namespace std;
 
@@ -15,11 +14,9 @@ CnpxUIPipeline::~CnpxUIPipeline(){
 
 CnpxMSMSPipelineAnalysis& CnpxUIPipeline::operator[](const size_t& index){
   if (pipeline == NULL){
-    cerr << "ERROR: CnpxUIPipeline object is pointing to NULL." << endl;
-    exit(-81);
+    throw npxRangeError("CnpxUIPipeline object is pointing to NULL.");
   } else if (index >= pipeline->size()){
-    cerr << "ERROR: Requested msms_pipeline_analysis beyond CnpxUIPipeline boundary." << endl;
-    exit(-82);
+    throw npxRangeError("Requested msms_pipeline_analysis beyond CnpxUIPipeline boundary.");
   }
   return pipeline->at(index);
 }

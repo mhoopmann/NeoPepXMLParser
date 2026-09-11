@@ -5,9 +5,6 @@ using namespace std;
 void CnpxAnalysisSummary::write(FILE* f, int tabs){
   size_t i;
 
-  string el = "analysis_summary";
-  if (time.date.year==0) NPXerrMsg(el, "time");
-  if (analysis.empty()) NPXerrMsg(el, "analysis");
 
   int t = tabs;
   if (t>-1) t++;

@@ -63,10 +63,6 @@ string CnpxSearchHit::getModifiedPeptide(){
 void CnpxSearchHit::write(FILE* f, int tabs){
   size_t i;
 
-  string el = "search_hit";
-  if (peptide.empty()) NPXerrMsg(el, "peptide");
-  if (protein.empty()) NPXerrMsg(el, "protein");
-  if (hit_rank == 0) NPXerrMsg(el, "hit_Rank");
 
   int t = tabs;
   if (t>-1) t++;

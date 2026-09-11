@@ -115,9 +115,6 @@ typedef struct NEOPEPXML_EXPORT npxDateTime{
 // whatever LC_NUMERIC the host application has set. Returns 0.0 when s holds no number.
 NEOPEPXML_EXPORT double npxAtof(const char* s);
 
-// Reports a missing required attribute on element el and terminates the process.
-NEOPEPXML_EXPORT void NPXerrMsg(const std::string& el, const std::string& attr);
-
 // Writes 'tabs' spaces to f; used to indent nested elements when writing.
 NEOPEPXML_EXPORT void NPXprintTabs(FILE* f, int tabs);
 
