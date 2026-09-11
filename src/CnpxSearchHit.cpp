@@ -1,5 +1,7 @@
 #include "NeoPepXMLParser/CnpxSearchHit.h"
 
+#include "NeoPepXMLLocale.h"
+
 using namespace std;
 
 CnpxSearchHit::CnpxSearchHit(){
@@ -36,6 +38,7 @@ CnpxSearchScore* CnpxSearchHit::addSearchScore(std::string name, std::string val
 }
 
 string CnpxSearchHit::getModifiedPeptide(){
+  npxCNumericLocale cLocale;  // see NeoPepXMLLocale.h
   if(modification_info.size()==0) return peptide;
   size_t i,j;
   char str[32];

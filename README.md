@@ -87,8 +87,10 @@ program.
   path overloads open through the wide-character API on Windows, so non-ASCII paths work.
 - The library is silent by default. `setProgressOutput(true)` turns on the percentage meter
   that `read()` prints to stdout.
-- Numbers are parsed independently of the process locale. An application that calls
-  `setlocale()` with a comma-decimal locale reads the same values as any other.
+- Numbers are parsed and written independently of the process locale. An application that
+  calls `setlocale()` with a comma-decimal locale reads the same values and writes the same
+  files as any other; the writer switches only the calling thread's numeric locale, and only
+  for the duration of the call.
 - Files are read and written in binary mode, so output is byte-identical on every platform.
 - The public headers compile as C++11; the library itself is built as C++17.
 - **No ABI guarantee.** The classes expose their data members directly, so any change to them

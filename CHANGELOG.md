@@ -14,6 +14,9 @@ All notable changes to NeoPepXMLParser are recorded here. Versions follow
 
 ### Fixed
 
+- Writing was locale-sensitive: under a comma-decimal locale every numeric attribute came out
+  with a comma, and so did the modified-peptide string. The writers now run with the calling
+  thread's numeric locale set to "C" and restore it afterwards.
 - `CnpxUIPSM::setPSM()` left `peptideProphet.parameters` and `iProphet.parameters` empty; the
   loops copied each Prophet score into a local and never stored it.
 - `setFilterRunSummary()` removed every `search_hit` from the document, leaving queries without
@@ -26,14 +29,6 @@ All notable changes to NeoPepXMLParser are recorded here. Versions follow
 - Dated dev releases (`dev-<version>-<run>`) now tag the commit that was built. Previously the
   tag was created on the default branch, so the source links of `dev-1.1.0-1` and
   `dev-1.1.0-2` pointed at the pre-restructure tree even though their kits were correct.
-
-### Known limitations
-
-Found by the new tests and covered by test cases tagged `[!mayfail]`, to be addressed with the
-error-handling work:
-
-- Writing is locale-sensitive: under a comma-decimal locale the numeric attributes are written
-  with commas.
 
 ## 1.1.0 (2026-09-10)
 

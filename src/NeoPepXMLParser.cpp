@@ -1,6 +1,7 @@
 #include "NeoPepXMLParser/NeoPepXMLParser.h"
 
 #include "expat.h"
+#include "NeoPepXMLLocale.h"
 
 #include <cstdlib>
 #include <cstring>
@@ -1223,6 +1224,8 @@ bool NeoPepXMLParser::write(const std::filesystem::path& fn, bool tabs){
   // Binary mode so the "\n" line endings written below are identical on every platform.
   FILE* f = npxOpen(fn, "wb");
   if (f == NULL) return false;
+  // Numbers must come out with a period regardless of the host application's locale.
+  npxCNumericLocale cLocale;
 
   fprintf(f, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
   for(size_t i=0;i<msms_pipeline_analysis.size();i++){

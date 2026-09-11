@@ -137,6 +137,7 @@ set(NEOPEPXML_SOURCES
   src/CnpxXLinkScore.cpp
   src/CnpxXpressLabelFreeResult.cpp
   src/CnpxXpressLabelFreeSummary.cpp
+  src/NeoPepXMLLocale.h
   src/NeoPepXMLParser.cpp
   src/NeoPepXMLStructs.cpp
 )

@@ -1,5 +1,7 @@
 #include "NeoPepXMLParser/CnpxMSMSPipelineAnalysis.h"
 
+#include "NeoPepXMLLocale.h"
+
 using namespace std;
 
 
@@ -13,6 +15,7 @@ CnpxMSMSRunSummary* CnpxMSMSPipelineAnalysis::addMSMSRunSummary(std::string base
 }
 
 void CnpxMSMSPipelineAnalysis::write(FILE* f, int tabs){
+  npxCNumericLocale cLocale;  // see NeoPepXMLLocale.h
   string el = "msms_pipeline_analysis";
   if(date.date.year==0) NPXerrMsg(el, "date");
   if (summary_xml.empty()) NPXerrMsg(el, "summary_xml");

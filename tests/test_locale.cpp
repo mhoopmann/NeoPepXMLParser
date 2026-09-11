@@ -1,6 +1,5 @@
-// Host applications may run under a locale whose decimal separator is a comma. Parsing must not
-// care. Writing currently does (fprintf honors LC_NUMERIC); that test is tagged [!mayfail] so it
-// reports without failing the run. Remove the tag once the writer is locale-independent.
+// Host applications may run under a locale whose decimal separator is a comma. Neither parsing
+// nor writing may care.
 #include "NeoPepXMLParser/NeoPepXMLParser.h"
 #include "test_support.h"
 
@@ -53,7 +52,7 @@ TEST_CASE("parsing is unaffected by a comma-decimal locale", "[locale]") {
   CHECK(r.spectrum_query[28].search_result[0].search_hit[0].modification_info[0].mod_aminoacid_mass[0].mass == Approx(147.035385));
 }
 
-TEST_CASE("writing is unaffected by a comma-decimal locale", "[locale][!mayfail]") {
+TEST_CASE("writing is unaffected by a comma-decimal locale", "[locale]") {
   CommaLocale locale;
   if (!locale.active) SKIP("no comma-decimal locale is available on this machine");
 
@@ -65,4 +64,13 @@ TEST_CASE("writing is unaffected by a comma-decimal locale", "[locale][!mayfail]
   const std::string expected = readBytes(dataPath(std::string("expected/") + fixtureName()));
   INFO(describeDifference(written, expected));
   CHECK(written == expected);
+
+  // The modified-peptide string formats masses as well.
+  CnpxSearchHit& hit = xml.msms_pipeline_analysis[0].msms_run_summary[0].spectrum_query[28].search_result[0].search_hit[0];
+  CHECK(hit.getModifiedPeptide() == "HQGVM[147.04]VGM[147.04]GQK");
+
+  // And the guard restores the caller's locale afterwards.
+  char buffer[16];
+  std::snprintf(buffer, sizeof(buffer), "%.1f", 1.5);
+  CHECK(std::strchr(buffer, ',') != nullptr);
 }
